@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# zordev.com
 
-## Getting Started
+Studio website for Zordev. Built from `../Zordev-Website-Plan.md`.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # also regenerates PLACEHOLDERS.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `content/` holds all copy and data: site config, services, pricing, process, FAQ, case studies, testimonials. Edit these files; pages read from them.
+- `ph("...")` marks missing information. Placeholders show as yellow striped badges in the browser, and `PLACEHOLDERS.md` lists them all.
+- `npm run check:launch` fails while any placeholder remains. Vercel production builds run the same check automatically.
+- `app/contact/actions.ts` handles the brief form: honeypot, rate limit, Turnstile, Zod validation, Resend emails, CRM webhook.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Before launch
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Copy `.env.example` to `.env.local` (and to the host's env settings) and fill every value.
+2. Replace every placeholder (`npm run check:launch` must pass).
+3. Add real screenshots to `public/work/` and the owner photo to `public/fahim.jpg`, then point the `src` fields at them.
+4. Swap the approximate logo in `components/layout/Logo.tsx` and `app/icon.svg` for the official SVG.
+5. After checking the browser console in production, rename the `Content-Security-Policy-Report-Only` header in `next.config.ts` to `Content-Security-Policy`.

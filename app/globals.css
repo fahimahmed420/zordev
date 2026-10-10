@@ -1,26 +1,285 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Deep charcoal editorial theme.
+ * Contrast (WCAG) on the darkest surface used for text (#1a1a1a):
+ *   ink #f2eee8 ≈ 15.6:1 · muted #b3ada4 ≈ 8.2:1 · orange #f37842 ≈ 6.4:1 · blue-ink #8cc8ff ≈ 10:1
+ * Never use opacity-based text colours (text-white/xx); use these tokens.
+ */
+@theme {
+  --color-navy: #0c0c0c; /* page background (name kept for compatibility) */
+  --color-navy-800: #111111;
+  --color-navy-700: #171717;
+  --color-paper: #101010; /* alternate section background */
+  --color-surface: #151515; /* cards */
+  --color-surface-2: #1a1a1a; /* raised / open state */
+  --color-ink: #f2eee8;
+  --color-muted: #b3ada4;
+  --color-line: #2a2826;
+  --color-line-strong: #3d3a36;
+  --color-orange: #f37842;
+  --color-orange-soft: #2a1a12;
+  --color-blue: #2b8cf0;
+  --color-blue-bright: #4aa8ff;
+  --color-blue-ink: #8cc8ff;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-serif), Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --animate-marquee: marquee 50s linear infinite;
+  --animate-blink: blink 1s step-end infinite;
+  --animate-float: float 7s ease-in-out infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes float {
+  50% {
+    transform: translateY(-12px);
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  color-scheme: dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-navy);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film grain, static and GPU-cheap. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Editorial serif headings: single weight, no faux bold. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400 !important;
+  letter-spacing: -0.015em;
+  font-synthesis: none;
+}
+h1 em,
+h2 em,
+h3 em {
+  font-style: italic;
+  color: var(--color-orange);
+}
+
+::selection {
+  background: var(--color-orange);
+  color: #0c0c0c;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hairline column rules used in heroes instead of a grid. */
+.grid-bg {
+  background-image: linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: calc(100% / 6) 100%;
+  mask-image: linear-gradient(to bottom, black 30%, transparent);
+}
+
+.text-gradient {
+  font-style: italic;
+  color: var(--color-orange);
+}
+
+/* Cards: flat charcoal with a warm spotlight border on hover (--x/--y from Interactions.tsx). */
+.spot {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  transition:
+    border-color 0.3s,
+    transform 0.3s,
+    background-color 0.3s;
+}
+.spot:hover {
+  border-color: var(--color-line-strong);
+}
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(360px circle at var(--x, 50%) var(--y, 50%), rgb(243 120 66 / 0.7), transparent 65%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.spot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgb(243 120 66 / 0.05), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.spot:hover::before,
+.spot:hover::after {
+  opacity: 1;
+}
+
+.tilt {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease-out;
+}
+
+.magnetic {
+  transform: translate(var(--mx, 0), var(--my, 0));
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+/* Animated underline for text links. */
+.link-u {
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  transition: background-size 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.link-u:hover,
+.link-u[aria-current="page"] {
+  background-size: 100% 1px;
+}
+
+/* Scroll reveal. Content stays visible without JS. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal {
+  animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Live-code hero: components animate in when they first mount; the cart count bumps on change. */
+.mount {
+  animation: mount 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes mount {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+}
+.bump {
+  animation: bump 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes bump {
+  40% {
+    transform: scale(1.6);
+  }
+}
+
+/* Code syntax colours (all ≥ 4.5:1 on #121212) */
+.tk-n {
+  color: #f78c6c;
+}
+.tk-f {
+  color: #82aaff;
+}
+.tk-v {
+  color: #e6e1da;
+}
+.tk-k {
+  color: #d3a6f5;
+}
+.tk-t {
+  color: #7cc0ff;
+}
+.tk-a {
+  color: #ffcb6b;
+}
+.tk-s {
+  color: #f6a679;
+}
+.tk-c {
+  color: #8592a8;
+}
+.tk-p {
+  color: #a3adbf;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  .tilt,
+  .magnetic {
+    transform: none !important;
+  }
+}
+
+/* Dev-only placeholder badge (placeholders fail the production build). */
+.ph {
+  background: repeating-linear-gradient(45deg, #3a3110, #3a3110 6px, #4a3d12 6px, #4a3d12 12px);
+  color: #ffe58a;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
 }
