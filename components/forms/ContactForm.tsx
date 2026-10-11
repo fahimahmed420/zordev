@@ -4,6 +4,7 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef } from "react";
 import { submitContact } from "@/app/contact/actions";
+import { Select } from "./Select";
 import { budgetOptions, needOptions, timelineOptions, type ContactState } from "@/lib/contact";
 
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -72,36 +73,34 @@ export function ContactForm() {
       </Field>
       <div className="grid gap-5 sm:grid-cols-3">
         <Field label="What do you need?" name="need" error={err.need}>
-          <select id="need" name="need" required defaultValue={v.need ?? ""} className={input} aria-invalid={!!err.need}>
-            <option value="" disabled>
-              Choose one
-            </option>
-            {needOptions.map((o) => (
-              <option key={o}>{o}</option>
-            ))}
-          </select>
+          <Select
+            name="need"
+            options={needOptions.map((o) => ({ value: o, label: o }))}
+            placeholder="Choose one"
+            defaultValue={v.need}
+            invalid={!!err.need}
+            describedBy={err.need ? "need-error" : undefined}
+          />
         </Field>
         <Field label="Budget" name="budget" error={err.budget}>
-          <select id="budget" name="budget" required defaultValue={v.budget ?? ""} className={input} aria-invalid={!!err.budget}>
-            <option value="" disabled>
-              Choose a range
-            </option>
-            {budgetOptions.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+          <Select
+            name="budget"
+            options={budgetOptions.map((o) => ({ value: o.value, label: o.label }))}
+            placeholder="Choose a range"
+            defaultValue={v.budget}
+            invalid={!!err.budget}
+            describedBy={err.budget ? "budget-error" : undefined}
+          />
         </Field>
         <Field label="Timeline" name="timeline" error={err.timeline}>
-          <select id="timeline" name="timeline" required defaultValue={v.timeline ?? ""} className={input} aria-invalid={!!err.timeline}>
-            <option value="" disabled>
-              Choose one
-            </option>
-            {timelineOptions.map((o) => (
-              <option key={o}>{o}</option>
-            ))}
-          </select>
+          <Select
+            name="timeline"
+            options={timelineOptions.map((o) => ({ value: o, label: o }))}
+            placeholder="Choose one"
+            defaultValue={v.timeline}
+            invalid={!!err.timeline}
+            describedBy={err.timeline ? "timeline-error" : undefined}
+          />
         </Field>
       </div>
       <Field label="Project details" name="details" error={err.details}>
@@ -135,7 +134,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex min-h-11 items-center justify-center rounded-full bg-orange px-7 py-3 font-semibold text-navy hover:bg-[#f68d5f] disabled:opacity-60"
+        className="inline-flex min-h-11 items-center justify-center rounded-full bg-orange px-7 py-3 font-semibold text-[#0c0c0c] hover:bg-ink disabled:opacity-60"
       >
         {pending ? "Sending…" : "Send brief"}
       </button>
