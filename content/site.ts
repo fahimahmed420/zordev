@@ -1,4 +1,4 @@
-import { ph, type Text } from "@/lib/placeholder";
+import type { Text } from "@/lib/placeholder";
 
 export const site = {
   name: "Zordev",
@@ -9,17 +9,19 @@ export const site = {
   owner: {
     name: "Fahim Ahmed",
     role: "Founder and developer",
-    photo: ph("owner photo, square, at public/fahim.jpg") as Text,
     portfolio: "https://fahim-cloud.vercel.app/?mode=pro",
   },
-  email: "hello@zordev.com",
+  email: "fahim@zordev.com",
   location: "Dhaka, Bangladesh",
   locationDetail: "Savar, Dhaka, Bangladesh",
   timezone: "Asia/Dhaka",
   timezoneLabel: "GMT+6",
-  hours: "Sunday to Thursday, 10:00–19:00 GMT+6" as Text,
+  hours: "Monday to Friday, 10 PM–4 AM GMT+6" as Text,
+  // Call slots for the built-in scheduler (Dhaka time, GMT+6, no daylight saving).
+  // endHour past 24 means the window runs past midnight (22:00 → 04:00 next day).
+  schedule: { days: [1, 2, 3, 4, 5], startHour: 22, endHour: 28, slotMinutes: 30, callMinutes: 20, noticeHours: 12, daysAhead: 14 },
   overlap:
-    "Live calls in your morning for the UK, EU and Gulf, and early-morning slots for the US East Coast. Written updates in between.",
+    "Live calls 10 PM–4 AM Dhaka time: the working day across the US, and afternoon to evening in the UK and EU. Written updates in between.",
   socials: {
     linkedin: "https://www.linkedin.com/company/zordev/",
     x: "https://x.com/zordevdotcom",
@@ -34,7 +36,7 @@ export const site = {
     replySla: "within one business day",
     supportDays: 30,
     updateCadence: "a written update and a staging link every week",
-    capacity: ph("number of projects taken on at a time, e.g. 2") as Text,
+    capacity: "one project at a time" as Text,
   },
   foundingYear: "2026",
 } as const;

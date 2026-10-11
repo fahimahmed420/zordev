@@ -5,6 +5,8 @@ import { Resend } from "resend";
 import { site } from "@/content/site";
 import { budgetLabel, contactSchema, isQualified, type ContactState } from "@/lib/contact";
 import { rateLimit } from "@/lib/ratelimit";
+import { icsFor, isBookable } from "@/lib/schedule";
+import { z } from "zod";
 
 async function verifyTurnstile(token: string, ip: string) {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -52,7 +54,7 @@ export async function submitContact(_prev: ContactState, formData: FormData): Pr
 
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL ?? site.email;
-  const from = process.env.CONTACT_FROM_EMAIL ?? "Zordev <hello@send.zordev.com>";
+  const from = process.env.CONTACT_FROM_EMAIL ?? "Fahim at Zordev <fahim@zordev.com>";
 
   try {
     if (apiKey) {
@@ -105,8 +107,8 @@ function autoReply(name: string, qualified: boolean) {
     "",
     `Thanks for sending your project brief to Zordev. I read every inquiry myself and will reply ${site.commitments.replySla} (I'm in Dhaka, ${site.timezoneLabel}).`,
     "",
-    qualified && site.bookingUrl
-      ? `If you'd like to talk sooner, you can book a free 20-minute call here: ${site.bookingUrl}`
+    qualified
+      ? `If you'd like to talk sooner, you can pick a time for a free 20-minute call here: ${site.url}/contact#book`
       : "I'll reply with a few questions or some honest suggestions on the best way forward.",
     "",
     "In the meantime, you can see recent work at https://zordev.com/work",
@@ -115,4 +117,88 @@ function autoReply(name: string, qualified: boolean) {
     "Zordev, web development studio",
     site.email,
   ].join("\n");
+}
+
+/* ── Call requests from the built-in scheduler ─────────────────────────── */
+
+export type CallState = { status: "idle" | "error" | "success"; message?: string; slot?: number };
+
+const callSchema = z.object({
+  name: z.string().trim().min(2, "Please enter your name.").max(100),
+  email: z.email("Please enter a valid email address.").max(200),
+  note: z.string().trim().max(1000).optional().or(z.literal("")),
+  slot: z.coerce.number().int(),
+  tz: z.string().max(80),
+});
+
+export async function requestCall(_prev: CallState, formData: FormData): Promise<CallState> {
+  if (String(formData.get("website") ?? "") !== "") return { status: "success" };
+
+  const h = await headers();
+  const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip") ?? "unknown";
+  if (!(await rateLimit(ip))) return { status: "error", message: "Too many requests. Please try again in a few minutes." };
+
+  const parsed = callSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { status: "error", message: parsed.error.issues[0]?.message ?? "Please check the form." };
+  const d = parsed.data;
+  if (!isBookable(d.slot, Date.now())) return { status: "error", message: "That time is no longer available. Please pick another slot." };
+
+  const fmt = (tz: string) =>
+    new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: tz, timeZoneName: "short" }).format(d.slot);
+  let visitorTime = fmt("UTC");
+  try {
+    visitorTime = fmt(d.tz);
+  } catch {}
+  const ownerTime = fmt("Asia/Dhaka");
+  const ics = Buffer.from(icsFor(d.slot, d.email)).toString("base64");
+  const apiKey = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO_EMAIL ?? site.email;
+  const from = process.env.CONTACT_FROM_EMAIL ?? `${site.owner.name} at Zordev <${site.email}>`;
+
+  try {
+    if (apiKey) {
+      const resend = new Resend(apiKey);
+      await resend.emails.send({
+        from,
+        to,
+        replyTo: d.email,
+        subject: `Call request: ${d.name} · ${ownerTime}`,
+        text: [`${d.name} <${d.email}> requested a 20-minute call.`, "", `Your time: ${ownerTime}`, `Their time: ${visitorTime} (${d.tz})`, "", d.note ? `Note: ${d.note}` : "No note.", "", "Reply to confirm and send a meeting link."].join("\n"),
+        attachments: [{ filename: "zordev-call.ics", content: ics }],
+      });
+      await resend.emails.send({
+        from,
+        to: d.email,
+        replyTo: to,
+        subject: "Your Zordev call request",
+        text: [
+          `Hi ${d.name.split(" ")[0]},`,
+          "",
+          `Thanks for requesting a call for ${visitorTime}. I'll confirm ${site.commitments.replySla} and send a meeting link.`,
+          "If that time stops working for you, just reply to this email.",
+          "",
+          site.owner.name,
+          "Zordev, web development studio",
+          site.email,
+        ].join("\n"),
+        attachments: [{ filename: "zordev-call.ics", content: ics }],
+      });
+    } else if (process.env.NODE_ENV === "production") {
+      throw new Error("RESEND_API_KEY is not set");
+    } else {
+      console.info("[call] Email not configured. Request:", { ...d, ownerTime, visitorTime });
+    }
+    const webhook = process.env.LEAD_WEBHOOK_URL;
+    if (webhook) {
+      await fetch(webhook, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ date: new Date().toISOString(), type: "call", name: d.name, email: d.email, note: d.note, slot: ownerTime, status: "New" }),
+      }).catch((e) => console.error("[call] CRM webhook failed", e));
+    }
+  } catch (e) {
+    console.error("[call] send failed", e);
+    return { status: "error", message: `Something went wrong. Please email ${site.email} directly.` };
+  }
+  return { status: "success", slot: d.slot };
 }

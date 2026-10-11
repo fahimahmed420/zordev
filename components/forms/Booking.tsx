@@ -3,6 +3,7 @@
 import { getCalApi } from "@calcom/embed-react";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { Scheduler } from "./Scheduler";
 
 const Cal = dynamic(() => import("@calcom/embed-react"), { ssr: false });
 
@@ -20,13 +21,7 @@ export function Booking({ url }: { url: string }) {
     })();
   }, [open]);
 
-  if (!url) {
-    return (
-      <p className="rounded-2xl border border-dashed border-line p-6 text-muted">
-        <span className="ph">[PLACEHOLDER: Cal.com booking link in NEXT_PUBLIC_BOOKING_URL]</span>
-      </p>
-    );
-  }
+  if (!url) return <Scheduler />;
 
   if (!open) {
     return (
@@ -36,7 +31,7 @@ export function Booking({ url }: { url: string }) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-orange px-7 py-3 font-semibold text-navy hover:bg-[#f68d5f]"
+          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-orange px-7 py-3 font-semibold text-[#0c0c0c] hover:bg-ink"
         >
           Pick a time
         </button>
