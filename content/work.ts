@@ -1,4 +1,4 @@
-import { ph, type Text } from "@/lib/placeholder";
+import type { Text } from "@/lib/placeholder";
 
 export type CaseStudy = {
   slug: string;
@@ -37,12 +37,12 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "An import e-commerce store that ships across Bangladesh, with courier booking automated for trusted repeat customers.",
     label: "client",
-    clientPermission: "pending",
+    clientPermission: "named",
     client: "Family Fashion Hub China",
     industry: "Import retail and wholesale",
     services: ["Custom online store", "Ongoing care"],
     year: "2026",
-    duration: ph("engagement length, e.g. 10 weeks"),
+    duration: "About 4 months",
     // liveUrl is added once the public stats band on ffhchina.com is fixed (plan §3a).
     stack: ["Next.js 16", "React 19", "MongoDB", "Firebase Auth", "Steadfast courier API"],
     problem:
@@ -66,15 +66,12 @@ export const caseStudies: CaseStudy[] = [
     results: [
       { label: "Products live", value: "74", source: "ffhchina.com, Oct 2026" },
       { label: "Automated test files", value: "14", source: "project repository" },
-      { label: "Orders per month", value: ph("client-reported orders per month"), source: "client-reported" },
-      { label: "Orders booked automatically", value: ph("share of orders auto-booked"), source: "admin data" },
     ],
     demonstrates: [],
     gallery: [
-      { src: ph("FFHC desktop screenshot"), alt: "Family Fashion Hub China storefront on desktop", device: "desktop" },
-      { src: ph("FFHC mobile screenshot"), alt: "Family Fashion Hub China storefront on mobile", device: "mobile" },
+      { src: "/work/family-fashion-hub-china/desktop.png", alt: "Family Fashion Hub China storefront on desktop", device: "desktop" },
+      { src: "/work/family-fashion-hub-china/mobile.png", alt: "Family Fashion Hub China storefront on mobile", device: "mobile" },
     ],
-    testimonial: { quote: ph("client quote"), name: ph("client name"), role: ph("client role") },
     featured: true,
     order: 1,
   },
@@ -116,8 +113,8 @@ export const caseStudies: CaseStudy[] = [
       "Bilingual AI customer support with human handover",
     ],
     gallery: [
-      { src: ph("Aura Goli admin dashboard screenshot"), alt: "Aura Goli admin dashboard", device: "desktop" },
-      { src: ph("Bot conversation screenshot"), alt: "Bilingual chat assistant conversation", device: "mobile" },
+      { src: "/work/aura-goli/desktop.png", alt: "Aura Goli storefront home page", device: "desktop" },
+      { src: "art:aura-goli", alt: "Bilingual chat assistant conversation", device: "mobile" },
     ],
     featured: true,
     order: 2,
@@ -152,8 +149,8 @@ export const caseStudies: CaseStudy[] = [
     results: [],
     demonstrates: ["Distinctive brand storytelling", "About 62 KB of JavaScript in total", "Accessible motion design"],
     gallery: [
-      { src: ph("Ember & Oak desktop screenshot"), alt: "Ember & Oak home page", device: "desktop" },
-      { src: ph("Ember & Oak mobile screenshot"), alt: "Ember & Oak on mobile", device: "mobile" },
+      { src: "/work/ember-and-oak/desktop.png", alt: "Ember & Oak home page", device: "desktop" },
+      { src: "/work/ember-and-oak/mobile.png", alt: "Ember & Oak on mobile", device: "mobile" },
     ],
     featured: true,
     order: 3,

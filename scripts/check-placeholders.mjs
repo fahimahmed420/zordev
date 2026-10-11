@@ -26,7 +26,6 @@ for (const file of walk(join(root, "content"))) {
   });
 }
 
-if (!process.env.NEXT_PUBLIC_BOOKING_URL) issues.push("env: NEXT_PUBLIC_BOOKING_URL (Cal.com link) not set");
 
 const md = [
   "# Remaining placeholders",

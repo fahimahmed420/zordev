@@ -1,6 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
+import type { Text } from "@/lib/placeholder";
 import { cta, site } from "@/content/site";
 import type { FaqItem } from "@/content/faq";
+import { FaqAccordion } from "./FaqAccordion";
 import { labelText, type CaseStudy } from "@/content/work";
 import { Badge, ButtonLink, Container, Heading, Section } from "@/components/ui";
 
@@ -48,27 +51,7 @@ export function CtaBand({ title = "Have a project in mind?", location }: { title
 }
 
 export function FaqList({ items }: { items: FaqItem[] }) {
-  return (
-    <div className="border-t border-line">
-      {items.map((f, i) => (
-        <details key={f.id} data-reveal style={{ ["--d" as string]: `${i * 40}ms` }} className="group border-b border-line">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg text-ink transition-colors hover:text-orange [&::-webkit-details-marker]:hidden">
-            <span className="flex gap-5">
-              <span className="pt-1.5 font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
-              {f.q}
-            </span>
-            <span
-              aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-strong text-lg text-ink transition-all duration-300 group-open:rotate-45 group-open:border-orange group-open:bg-orange group-open:text-[#0c0c0c]"
-            >
-              +
-            </span>
-          </summary>
-          <p className="max-w-2xl pb-7 pl-10 leading-relaxed text-muted">{f.a}</p>
-        </details>
-      ))}
-    </div>
-  );
+  return <FaqAccordion items={items} />;
 }
 
 export function FaqSection({ items, title = "Questions, answered honestly", n }: { items: FaqItem[]; title?: string; n?: string }) {
@@ -146,17 +129,19 @@ export function CoverArt({ slug }: { slug: string }) {
   );
 }
 
+/** Project image: a real screenshot via next/image, or generated cover art for "art:<slug>" (and placeholders in dev). */
+export function Media({ src, alt, slug, sizes, priority = false }: { src: Text; alt: string; slug: string; sizes: string; priority?: boolean }) {
+  if (typeof src !== "string" || src.startsWith("art:")) return <CoverArt slug={typeof src === "string" ? src.slice(4) : slug} />;
+  return <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover object-top" />;
+}
+
 export function CaseStudyCard({ c, wide = false, index }: { c: CaseStudy; wide?: boolean; index?: number }) {
   const cover = c.gallery[0];
-  const media =
-    typeof cover.src === "string" ? (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={cover.src} alt={cover.alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-    ) : (
-      <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]">
-        <CoverArt slug={c.slug} />
-      </div>
-    );
+  const media = (
+    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]">
+      <Media src={cover.src} alt={cover.alt} slug={c.slug} sizes={wide ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 45vw, 100vw"} />
+    </div>
+  );
 
   return (
     <Link href={`/work/${c.slug}`} className={`group flex h-full flex-col ${wide ? "gap-8 md:grid md:grid-cols-[1.35fr_1fr] md:items-end" : "gap-6"}`}>

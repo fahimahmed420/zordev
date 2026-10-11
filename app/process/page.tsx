@@ -42,7 +42,7 @@ export default function ProcessPage() {
       </Section>
       <Section className="bg-paper">
         <Heading eyebrow="Working style" title="How we'll work together" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {workingStyle.map((w) => (
             <div key={w.title} className="spot rounded-2xl p-6">
               <h3 className="font-bold">{w.title}</h3>

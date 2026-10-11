@@ -48,7 +48,8 @@ export const workingStyle = [
   { title: "Updates", text: "A written update and a staging link every week, so you never have to chase progress." },
   {
     title: "Time zones",
-    text: "Based in Dhaka (GMT+6). Live calls in your morning for the UK, EU and Gulf, and early-morning slots for the US East Coast.",
+    text: "Based in Dhaka (GMT+6). Calls run 10 PM–4 AM Dhaka time: the US working day, and UK and EU afternoons.",
   },
+  { title: "Focus", text: "I take on one project at a time, so yours gets my full attention until it ships." },
   { title: "Ownership", text: "The code, domain and every account are yours from day one, and handed over in full at the end." },
 ];

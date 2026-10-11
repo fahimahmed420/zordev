@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CoverArt, CtaBand, labelTone } from "@/components/sections/shared";
+import { CtaBand, labelTone, Media } from "@/components/sections/shared";
 import { Badge, Container, Section, T } from "@/components/ui";
 import { caseStudies, getCaseStudy, labelText, sortedCaseStudies } from "@/content/work";
 import { isPh } from "@/lib/placeholder";
@@ -45,8 +45,8 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
             <h1 className="reveal mt-5 text-5xl font-bold leading-[1.02] sm:text-6xl" style={{ ["--d" as string]: "80ms" }}>{c.title}</h1>
             <p className="reveal mt-5 max-w-xl text-lg text-muted" style={{ ["--d" as string]: "160ms" }}>{c.summary}</p>
           </div>
-          <div className="reveal tilt relative aspect-[16/11] overflow-hidden rounded-3xl border border-line shadow-2xl shadow-black/50" style={{ ["--d" as string]: "200ms" }}>
-            <CoverArt slug={c.slug} />
+          <div className="reveal tilt relative aspect-[16/10] overflow-hidden rounded-3xl border border-line shadow-2xl shadow-black/50" style={{ ["--d" as string]: "200ms" }}>
+            <Media src={c.gallery[0].src} alt={c.gallery[0].alt} slug={c.slug} sizes="(min-width: 1024px) 45vw, 100vw" priority />
           </div>
         </Container>
       </section>
@@ -128,20 +128,13 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
               </Block>
             )}
             <Block title="Screens">
-              <div className="grid gap-4 sm:grid-cols-[2fr_1fr]">
+              <div className="grid items-start gap-4 sm:grid-cols-[2.6fr_1fr]">
                 {c.gallery.map((g) => (
                   <figure
                     key={g.alt}
-                    className={`flex items-center justify-center overflow-hidden rounded-2xl bg-surface-2 p-4 text-center text-sm text-muted ${
-                      g.device === "desktop" ? "aspect-[16/10]" : "aspect-[9/16] sm:aspect-auto"
-                    }`}
+                    className={`relative overflow-hidden rounded-2xl border border-line bg-surface-2 ${g.device === "desktop" ? "aspect-[16/10]" : "aspect-[390/844]"}`}
                   >
-                    {typeof g.src === "string" ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={g.src} alt={g.alt} className="h-full w-full object-cover" />
-                    ) : (
-                      <T v={g.src} />
-                    )}
+                    <Media src={g.src} alt={g.alt} slug={c.slug} sizes={g.device === "desktop" ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 640px) 18vw, 100vw"} />
                   </figure>
                 ))}
               </div>
