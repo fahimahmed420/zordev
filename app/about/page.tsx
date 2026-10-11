@@ -1,7 +1,7 @@
 import { CtaBand } from "@/components/sections/shared";
-import { Heading, Section, T, PageHero } from "@/components/ui";
+import { Avatar3D } from "@/components/sections/Avatar3D";
+import { Heading, Section, PageHero } from "@/components/ui";
 import { site } from "@/content/site";
-import { isPh } from "@/lib/placeholder";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
@@ -25,15 +25,8 @@ export default function AboutPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr]">
           <div>
-            <div className="flex aspect-square max-w-sm items-center justify-center overflow-hidden rounded-3xl bg-paper p-6 text-center text-sm">
-              {isPh(site.owner.photo) ? (
-                <T v={site.owner.photo} />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={site.owner.photo} alt={`${site.owner.name}, founder of Zordev`} className="h-full w-full object-cover" />
-              )}
-            </div>
-            <p className="mt-5 text-xl font-bold">{site.owner.name}</p>
+            <Avatar3D />
+            <p className="mt-5 font-display text-3xl text-ink">{site.owner.name}</p>
             <p className="text-muted">{site.owner.role}</p>
           </div>
           <div className="space-y-5 text-lg text-muted">
