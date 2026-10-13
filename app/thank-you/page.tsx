@@ -8,7 +8,7 @@ export const metadata = { title: "Thanks for your brief", robots: { index: false
 export default function ThankYouPage() {
   return (
     <>
-      <section className="relative overflow-hidden"><div aria-hidden="true" className="grid-bg absolute inset-0" /><div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-orange/[0.07] blur-[120px]" />
+      <section className="relative overflow-hidden"><div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-orange/[0.07] blur-[120px]" />
         <Container className="relative py-20">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Brief received</p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Thanks, I've got it.</h1>

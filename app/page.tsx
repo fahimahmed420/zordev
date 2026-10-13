@@ -69,7 +69,7 @@ export default function Home() {
     <>
       {/* 1. Hero: live code that becomes a website (layout unchanged; owner will edit later) */}
       <section className="relative overflow-hidden">
-        <div aria-hidden="true" className="grid-bg absolute inset-0" />
+        
         <div aria-hidden="true" className="pointer-events-none absolute -top-48 left-1/4 h-[36rem] w-[36rem] rounded-full bg-orange/[0.08] blur-[140px]" />
         <Container className="relative pb-16 pt-14 text-center sm:pb-24 sm:pt-20">
           <p className="reveal inline-flex items-center gap-2 rounded-full border border-line-strong px-3 py-1.5 font-mono text-xs text-muted">

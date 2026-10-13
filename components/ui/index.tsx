@@ -67,7 +67,7 @@ export function Heading({
 export function PageHero({ eyebrow, title, intro, children }: { eyebrow: string; title: ReactNode; intro?: string; children?: ReactNode }) {
   return (
     <section className="relative overflow-hidden">
-      <div aria-hidden="true" className="grid-bg absolute inset-0" />
+      
       <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-[10%] h-[26rem] w-[26rem] rounded-full bg-orange/[0.07] blur-[120px]" />
       <Container className="relative pb-16 pt-16 sm:pb-24 sm:pt-24">
         <div className="reveal">
