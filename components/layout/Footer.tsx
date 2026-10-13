@@ -3,6 +3,7 @@ import { services } from "@/content/services";
 import { cta, site } from "@/content/site";
 import { sortedCaseStudies } from "@/content/work";
 import { Container } from "@/components/ui";
+import { Marquee } from "@/components/ui/Marquee";
 import { DhakaClock } from "./DhakaClock";
 import { Logo } from "./Logo";
 
@@ -21,16 +22,14 @@ export function Footer() {
       <div aria-hidden="true" className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-orange/[0.06] blur-[120px]" />
 
       {/* Marquee */}
-      <div className="group relative border-b border-line py-7 [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-        <div className="flex w-max animate-marquee items-center gap-10 group-hover:[animation-play-state:paused]" aria-hidden="true">
-          {[...marquee, ...marquee, ...marquee, ...marquee].map((m, i) => (
-            <span key={i} className="flex items-center gap-10 font-display text-5xl italic text-ink transition-colors hover:text-orange sm:text-6xl">
-              {m}
-              <span className="text-2xl not-italic text-orange">✦</span>
-            </span>
-          ))}
-        </div>
-      </div>
+      <Marquee label="services ticker" className="border-b border-line py-7">
+        {marquee.map((m) => (
+          <span key={m} className="flex items-center gap-10 pr-10 font-display text-5xl italic text-ink transition-colors hover:text-orange sm:text-6xl">
+            {m}
+            <span aria-hidden="true" className="text-2xl not-italic text-orange">✦</span>
+          </span>
+        ))}
+      </Marquee>
 
       <Container className="relative grid gap-12 py-16 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         {/* Brand + live status */}

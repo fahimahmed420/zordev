@@ -18,12 +18,26 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
         <div className="p-7 sm:p-10">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Quick estimate</p>
           <h3 className="mt-3 text-4xl sm:text-5xl">What are you <em>building?</em></h3>
-          <div role="radiogroup" aria-label="Project type" className="mt-7 flex flex-wrap gap-2">
+          <div
+            role="radiogroup"
+            aria-label="Project type"
+            className="mt-7 flex flex-wrap gap-2"
+            onKeyDown={(ev) => {
+              const keys: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+              if (!(ev.key in keys)) return;
+              ev.preventDefault();
+              const i = packages.findIndex((x) => x.id === id);
+              const next = (i + keys[ev.key] + packages.length) % packages.length;
+              setId(packages[next].id);
+              (ev.currentTarget.querySelectorAll<HTMLButtonElement>("[role=radio]")[next])?.focus();
+            }}
+          >
             {packages.map((x) => (
               <button
                 key={x.id}
                 role="radio"
                 aria-checked={id === x.id}
+                tabIndex={id === x.id ? 0 : -1}
                 onClick={() => setId(x.id)}
                 className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-all ${
                   id === x.id ? "border-transparent bg-ink text-[#0c0c0c]" : "border-line-strong text-muted hover:border-ink hover:text-ink"
@@ -39,7 +53,7 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
               <span className="absolute inset-0 rounded-full bg-line-strong transition-colors peer-checked:bg-orange peer-focus-visible:ring-2 peer-focus-visible:ring-orange" />
               <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white transition-transform peer-checked:translate-x-5" />
             </span>
-            Add an {addOn.name.toLowerCase()} (+{usd(addOn.from)})
+            Add an {addOn.name} (+{usd(addOn.from)})
           </label>
           <ul className="mt-7 grid gap-2 text-sm text-muted sm:grid-cols-2">
             {p.includes.map((i) => (

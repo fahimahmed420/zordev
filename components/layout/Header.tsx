@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cta, nav } from "@/content/site";
 import { Logo } from "./Logo";
 
@@ -10,6 +10,20 @@ import { Logo } from "./Logo";
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Escape closes the mobile menu and returns focus to its button.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -73,6 +87,7 @@ export function Header() {
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line-strong text-ink md:hidden"
             aria-expanded={open}
+            ref={toggleRef}
             aria-controls="mobile-menu"
             onClick={() => setOpen((o) => !o)}
           >
@@ -88,7 +103,12 @@ export function Header() {
         <nav
           id="mobile-menu"
           aria-label="Mobile"
-          className="reveal pointer-events-auto mx-auto mt-2 max-w-4xl rounded-3xl border border-line-strong bg-[#121212]/95 p-4 shadow-2xl shadow-black/60 backdrop-blur-xl md:hidden"
+          className="reveal pointer-events-auto mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-4xl overflow-y-auto overscroll-contain rounded-3xl border border-line-strong bg-[#121212]/95 p-4 shadow-2xl shadow-black/60 backdrop-blur-xl md:hidden"
+          onBlur={(e) => {
+            // Close when keyboard focus leaves the menu (so focused links never sit hidden underneath it).
+            const next = e.relatedTarget as Node | null;
+            if (next && !e.currentTarget.contains(next) && next !== toggleRef.current) setOpen(false);
+          }}
           onClick={(e) => {
             if ((e.target as HTMLElement).closest("a")) setOpen(false);
           }}

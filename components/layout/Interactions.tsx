@@ -9,7 +9,6 @@ import { useEffect } from "react";
  */
 export function Interactions() {
   useEffect(() => {
-    document.documentElement.classList.add("js");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const fine = window.matchMedia("(pointer: fine)").matches;
     if (reduce || !fine) return;
@@ -106,6 +105,15 @@ export function Interactions() {
     // Start only once the page has loaded and React has finished hydrating (the "in" class is a DOM change too).
     let safety = 0;
     const start = () => {
+      // Anything already on screen counts as revealed, so it never flashes out and back in.
+      document.querySelectorAll("[data-reveal]").forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add("in");
+          seen.add(el);
+        }
+      });
+      document.documentElement.classList.add("js");
       scan();
       mo.observe(document.body, { childList: true, subtree: true });
       // Safety net: if something is on screen but was never revealed, show everything.

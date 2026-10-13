@@ -40,7 +40,7 @@ export function CtaBand({ title = "Have a project in mind?", location }: { title
             <ButtonLink href={cta.primary.href} location={location}>
               {cta.primary.label}
             </ButtonLink>
-            <ButtonLink href={cta.secondary.href} variant="ghost">
+            <ButtonLink href={cta.secondary.href} variant="ghost" location={`${location}_brief`}>
               {cta.secondary.label}
             </ButtonLink>
           </div>
@@ -131,23 +131,28 @@ export function CoverArt({ slug }: { slug: string }) {
 
 /** Project image: a real screenshot via next/image, or generated cover art for "art:<slug>" (and placeholders in dev). */
 export function Media({ src, alt, slug, sizes, priority = false }: { src: Text; alt: string; slug: string; sizes: string; priority?: boolean }) {
-  if (typeof src !== "string" || src.startsWith("art:")) return <CoverArt slug={typeof src === "string" ? src.slice(4) : slug} />;
+  if (typeof src !== "string" || src.startsWith("art:"))
+    return (
+      <div role="img" aria-label={alt} className="absolute inset-0">
+        <CoverArt slug={typeof src === "string" ? src.slice(4) : slug} />
+      </div>
+    );
   return <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover object-top" />;
 }
 
-export function CaseStudyCard({ c, wide = false, index }: { c: CaseStudy; wide?: boolean; index?: number }) {
+export function CaseStudyCard({ c, wide = false, index, priority = false }: { c: CaseStudy; wide?: boolean; index?: number; priority?: boolean }) {
   const cover = c.gallery[0];
   const media = (
     <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]">
-      <Media src={cover.src} alt={cover.alt} slug={c.slug} sizes={wide ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 45vw, 100vw"} />
+      <Media src={cover.src} alt={cover.alt} slug={c.slug} priority={priority} sizes={wide ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 45vw, 100vw"} />
     </div>
   );
 
   return (
     <Link href={`/work/${c.slug}`} className={`group flex h-full flex-col ${wide ? "gap-8 md:grid md:grid-cols-[1.35fr_1fr] md:items-end" : "gap-6"}`}>
-      <div className={`relative overflow-hidden rounded-2xl border border-line ${wide ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
+      <div className={`relative overflow-hidden rounded-2xl border border-line aspect-[16/10]`}>
         {media}
-        <div className="absolute left-4 top-4">
+        <div className="absolute bottom-4 left-4">
           <Badge tone={labelTone[c.label]}>{labelText[c.label]}</Badge>
         </div>
       </div>

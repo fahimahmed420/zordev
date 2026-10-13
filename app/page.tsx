@@ -4,6 +4,7 @@ import { PriceEstimator } from "@/components/sections/PriceEstimator";
 import { ProcessTabs } from "@/components/sections/ProcessTabs";
 import { CaseStudyCard, CtaBand, FaqSection } from "@/components/sections/shared";
 import { ButtonLink, Container, Heading, Section, usd } from "@/components/ui";
+import { Marquee } from "@/components/ui/Marquee";
 import { faqFor } from "@/content/faq";
 import { addOns, packages } from "@/content/pricing";
 import { services } from "@/content/services";
@@ -18,7 +19,7 @@ export const metadata = {
 };
 
 const problems = [
-  { pain: "The freelancer disappeared halfway through.", answer: "Weekly written updates and a staging link. You own the code from day one." },
+  { pain: "The freelancer disappeared halfway through.", answer: "Weekly written updates and a staging link. Code, domain and accounts are set up in your name." },
   { pain: "The site looks fine but brings no inquiries.", answer: "Every page is built around one clear next step, and loads fast on a phone." },
   { pain: "The quote kept growing.", answer: "A fixed price for an agreed scope. Changes are quoted before any work starts." },
 ];
@@ -59,7 +60,7 @@ const serviceArt: Record<string, React.ReactNode> = {
 const reasons = [
   { icon: "i.", title: "You talk to the builder", text: "No account managers. The person on the call writes the code." },
   { icon: "ii.", title: "Fixed scope, fixed price", text: "A written scope and price before work starts. No surprise invoices." },
-  { icon: "iii.", title: "Real e-commerce experience", text: "Production stores with payments, admin panels and courier automation." },
+  { icon: "iii.", title: "Real e-commerce experience", text: "A live store with an admin panel and courier automation, plus local payment integrations." },
   { icon: "iv.", title: "You own everything", text: "Code, domain and accounts are in your name, handed over in full." },
 ];
 
@@ -97,21 +98,19 @@ export default function Home() {
             <LiveCodeHero />
           </div>
           <p className="mx-auto mt-16 max-w-2xl text-sm text-muted">
-            <span className="text-ink">Live work:</span> an import e-commerce store shipping across Bangladesh, a bilingual AI support assistant, and a scroll-driven brand site.
+            <span className="text-ink">Shipped work:</span> a live import e-commerce store selling across Bangladesh, a demo store with a bilingual AI support assistant, and a scroll-driven brand site.
           </p>
         </Container>
 
         {/* Stack marquee */}
-        <div className="group relative border-y border-line py-6 [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
-          <div className="flex w-max animate-marquee items-center gap-10 group-hover:[animation-play-state:paused]">
-            {[...stack, ...stack].map((s, i) => (
-              <span key={i} className="flex items-center gap-10 font-display text-2xl italic text-muted transition-colors hover:text-ink">
-                {s}
-                <span aria-hidden="true" className="text-sm not-italic text-orange">✦</span>
-              </span>
-            ))}
-          </div>
-        </div>
+        <Marquee label="technology list" className="border-y border-line py-6">
+          {stack.map((s) => (
+            <span key={s} className="flex items-center gap-10 pr-10 font-display text-2xl italic text-muted transition-colors hover:text-ink">
+              {s}
+              <span aria-hidden="true" className="text-sm not-italic text-orange">✦</span>
+            </span>
+          ))}
+        </Marquee>
       </section>
 
       {/* 2. Problem */}
@@ -165,7 +164,7 @@ export default function Home() {
               href={`/services#${s.slug}`}
               data-reveal
               style={{ ["--d" as string]: `${i * 90}ms` }}
-              className="group relative flex min-h-[26rem] flex-col bg-surface p-8 transition-colors duration-300 hover:bg-surface-2"
+              className="group relative flex min-h-[26rem] flex-col bg-surface p-8 transition-colors duration-300 hover:bg-surface-2 focus-visible:outline-offset-[-4px]"
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-orange">0{i + 1}</span>

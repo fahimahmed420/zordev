@@ -236,6 +236,21 @@ export function LiveCodeHero() {
   const [pointer, setPointer] = useState<Pointer>({ x: 0, y: 0, show: false, press: null });
   const [run, setRun] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+  const visibleRef = useRef(true);
+  const [paused, setPaused] = useState(false);
+
+  // Pause while the hero is scrolled out of view (saves CPU and battery).
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(([e]) => {
+      visibleRef.current = e.isIntersecting;
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -250,7 +265,8 @@ export function LiveCodeHero() {
       });
     const sleep = async (ms: number) => {
       await wait(ms);
-      while (alive && document.hidden) await wait(400); // pause in background tabs
+      // Hold while the tab is hidden, the hero is off-screen, or the visitor paused it.
+      while (alive && (document.hidden || !visibleRef.current || pausedRef.current)) await wait(250);
     };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -368,29 +384,12 @@ export function LiveCodeHero() {
         commit(true, true);
         return;
       }
-      while (alive) {
-        for (const op of SCRIPT) {
-          if (!alive) return;
-          await apply(op, false);
-        }
-        commit(true, true);
-        await sleep(5200);
+      // Play once, then stop (WCAG 2.2.2). Visitors can replay with the button.
+      for (const op of SCRIPT) {
         if (!alive) return;
-        // Select all, delete, start over.
-        ed.sel = [0, ed.buf.length];
-        ed.cur = ed.buf.length;
-        commit(true, true);
-        await sleep(650);
-        ed.buf = "";
-        ed.cur = 0;
-        ed.sel = null;
-        v = null;
-        status = EMPTY.status;
-        cartN = 0;
-        setCart(0);
-        commit(true);
-        await sleep(900);
+        await apply(op, false);
       }
+      if (alive) commit(true, true);
     })();
 
     return () => {
@@ -400,10 +399,17 @@ export function LiveCodeHero() {
   }, [run]);
 
   const replay = () => {
+    pausedRef.current = false;
+    setPaused(false);
     setCart(0);
     setPointer({ x: 0, y: 0, show: false, press: null });
     setUi(EMPTY);
     setRun((r) => r + 1);
+  };
+
+  const togglePause = () => {
+    pausedRef.current = !pausedRef.current;
+    setPaused(pausedRef.current);
   };
 
   const addByHand = () => {
@@ -427,6 +433,16 @@ export function LiveCodeHero() {
   const host = v?.brand ? `${v.brand.toLowerCase().replace(/[^a-z0-9]/g, "") || "localhost"}.shop` : "localhost:3000";
 
   return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        onClick={ui.done ? replay : togglePause}
+        aria-label={ui.done ? "Replay the live-code demo" : paused ? "Play the live-code demo" : "Pause the live-code demo"}
+        className="absolute -top-12 right-0 z-20 inline-flex min-h-9 items-center gap-2 rounded-full border border-line-strong bg-[#0c0c0c]/80 px-3.5 font-mono text-xs text-ink backdrop-blur transition-colors hover:border-orange hover:text-orange"
+      >
+        <span aria-hidden="true">{ui.done ? "↻" : paused ? "▶" : "❚❚"}</span>
+        {ui.done ? "Replay" : paused ? "Play" : "Pause"}
+      </button>
     <div className="relative mx-auto grid w-full max-w-xl items-center lg:max-w-none lg:grid-cols-[0.92fr_1.08fr]" aria-hidden="true">
       <div className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(243,120,66,0.12),transparent)] blur-2xl" />
 
@@ -568,16 +584,6 @@ export function LiveCodeHero() {
             {!ui.done && <span className="h-1.5 w-1.5 rounded-full" style={{ background: SYNC }} />}
           </span>
           <span className="ml-auto flex items-center gap-2">
-            {ui.done && (
-              <button
-                type="button"
-                tabIndex={-1}
-                onClick={replay}
-                className="rounded-full border border-white/15 px-2 py-0.5 font-mono text-[10px] text-[#d9d3cb] transition-colors hover:border-white/40 hover:text-white"
-              >
-                ↻ replay
-              </button>
-            )}
             <span className={`rounded-full px-2 py-0.5 font-mono text-[10px] ${v?.closed ? "bg-emerald-400/15 text-emerald-300" : "bg-orange/15 text-orange"}`}>
               {v?.closed ? "● live" : "● compiling"}
             </span>
@@ -621,6 +627,7 @@ export function LiveCodeHero() {
           </span>
         </div>
       </div>
+    </div>
     </div>
   );
 }

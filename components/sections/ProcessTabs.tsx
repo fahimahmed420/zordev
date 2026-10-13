@@ -9,7 +9,23 @@ export function ProcessTabs() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-      <div role="tablist" aria-label="Process steps" className="relative flex flex-col gap-2">
+      <div
+        role="tablist"
+        aria-label="Process steps"
+        aria-orientation="vertical"
+        className="relative flex flex-col gap-2"
+        onKeyDown={(e) => {
+          const keys: Record<string, number> = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+          let next = active;
+          if (e.key in keys) next = (active + keys[e.key] + processSteps.length) % processSteps.length;
+          else if (e.key === "Home") next = 0;
+          else if (e.key === "End") next = processSteps.length - 1;
+          else return;
+          e.preventDefault();
+          setActive(next);
+          (e.currentTarget.querySelectorAll<HTMLButtonElement>("[role=tab]")[next])?.focus();
+        }}
+      >
         <span aria-hidden="true" className="absolute bottom-8 left-[27px] top-8 w-px bg-line">
           <span
             className="absolute inset-x-0 top-0 bg-gradient-to-b from-orange to-orange transition-[height] duration-500"
@@ -23,6 +39,7 @@ export function ProcessTabs() {
             id={`step-tab-${i}`}
             aria-selected={active === i}
             aria-controls="step-panel"
+            tabIndex={active === i ? 0 : -1}
             onClick={() => setActive(i)}
             onMouseEnter={() => setActive(i)}
             className={`relative flex items-center gap-4 rounded-2xl px-3 py-3 text-left transition-colors ${active === i ? "bg-surface-2" : "hover:bg-surface-2"}`}
