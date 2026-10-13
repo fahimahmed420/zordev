@@ -85,7 +85,7 @@ export default function ServicesPage() {
 function List({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <h3 className="font-semibold">{title}</h3>
+      <h3 className="">{title}</h3>
       <ul className="mt-3 space-y-2">
         {items.map((it) => (
           <li key={it} className="flex gap-3 text-muted">

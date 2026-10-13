@@ -11,7 +11,7 @@ export default function ThankYouPage() {
       <section className="relative overflow-hidden"><div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-orange/[0.07] blur-[120px]" />
         <Container className="relative py-20">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Brief received</p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Thanks, I've got it.</h1>
+          <h1 className="mt-5 text-6xl leading-[0.98] sm:text-8xl">Thanks, I've got it.</h1>
           <p className="mt-5 max-w-xl text-lg text-muted">
             A confirmation is on its way to your inbox. I'll read your brief myself and reply {site.commitments.replySla}.
           </p>
@@ -20,7 +20,7 @@ export default function ThankYouPage() {
       <Section>
         <div className="grid gap-10 md:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-bold">What happens next</h2>
+            <h2 className="text-2xl">What happens next</h2>
             <ol className="mt-5 space-y-4 text-muted">
               <li>
                 <strong className="text-ink">1.</strong> I review your brief and check it against my current schedule.

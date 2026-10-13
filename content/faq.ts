@@ -16,7 +16,7 @@ export const faq: FaqItem[] = [
   {
     id: "timezones",
     q: "Do you work with clients in other countries and time zones?",
-    a: "Yes. I'm based in Dhaka (GMT+6), and I take calls from 10 PM to 4 AM my time. That is the working day across the US and afternoon to evening in the UK and EU. Weekly written updates keep everything moving between calls.",
+    a: "Yes. I'm based in Dhaka (GMT+6), and I take calls from 10 PM to 4 AM my time. That covers the working day across the US, and evenings in the UK and EU. Weekly written updates keep everything moving between calls.",
     tags: ["home"],
   },
   {

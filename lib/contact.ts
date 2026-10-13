@@ -1,17 +1,7 @@
 import { z } from "zod";
+import { budgetOptions, needOptions, timelineOptions } from "./contact-options";
 
-export const needOptions = ["Online store", "Business website", "Web app or MVP", "Redesign", "Not sure yet"] as const;
-
-export const budgetOptions = [
-  { value: "under-900", label: "Under $900", qualified: false },
-  { value: "900-1500", label: "$900 – $1,500", qualified: true },
-  { value: "1500-3000", label: "$1,500 – $3,000", qualified: true },
-  { value: "3000-6000", label: "$3,000 – $6,000", qualified: true },
-  { value: "6000-plus", label: "$6,000+", qualified: true },
-  { value: "not-sure", label: "Not sure yet", qualified: true },
-] as const;
-
-export const timelineOptions = ["As soon as possible", "Within 1 month", "1–3 months", "Just exploring"] as const;
+export { budgetLabel, isQualified, type ContactState } from "./contact-options";
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(100),
@@ -26,14 +16,3 @@ export const contactSchema = z.object({
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
-
-export type ContactState = {
-  status: "idle" | "error" | "success";
-  message?: string;
-  fieldErrors?: Partial<Record<keyof ContactInput, string>>;
-  values?: Partial<Record<string, string>>;
-  qualified?: boolean;
-};
-
-export const isQualified = (budget: string) => budgetOptions.find((b) => b.value === budget)?.qualified ?? true;
-export const budgetLabel = (budget: string) => budgetOptions.find((b) => b.value === budget)?.label ?? budget;

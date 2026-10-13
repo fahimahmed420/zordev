@@ -48,8 +48,8 @@ export const workingStyle = [
   { title: "Updates", text: "A written update and a staging link every week, so you never have to chase progress." },
   {
     title: "Time zones",
-    text: "Based in Dhaka (GMT+6). Calls run 10 PM–4 AM Dhaka time: the US working day, and UK and EU afternoons.",
+    text: "Based in Dhaka (GMT+6). Calls run 10 PM–4 AM Dhaka time: the US working day, and evenings in the UK and EU.",
   },
   { title: "Focus", text: "I take on one project at a time, so yours gets my full attention until it ships." },
-  { title: "Ownership", text: "The code, domain and every account are yours from day one, and handed over in full at the end." },
+  { title: "Ownership", text: "The code, domain and every account are set up in your name from the start, with full access handed over on final payment." },
 ];

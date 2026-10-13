@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef } from "react";
 import { submitContact } from "@/app/contact/actions";
 import { Select } from "./Select";
-import { budgetOptions, needOptions, timelineOptions, type ContactState } from "@/lib/contact";
+import { budgetOptions, needOptions, timelineOptions, type ContactState } from "@/lib/contact-options";
 
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 

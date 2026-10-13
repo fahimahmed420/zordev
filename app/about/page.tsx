@@ -60,7 +60,7 @@ export default function AboutPage() {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {principles.map((p) => (
             <div key={p.title} className="spot rounded-2xl p-6">
-              <h3 className="font-bold">{p.title}</h3>
+              <h3 className="">{p.title}</h3>
               <p className="mt-2 text-muted">{p.text}</p>
             </div>
           ))}

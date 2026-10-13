@@ -10,7 +10,7 @@ export default function TermsPage() {
     <>
       <PageHero eyebrow="Legal" title="Terms of use" intro="Last updated: October 2026" />
       <Section>
-        <div className="max-w-3xl space-y-8 text-muted [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-ink">
+        <div className="max-w-3xl space-y-8 text-muted [&_h2]:text-xl [&_h2]:font-display [&_h2]:text-2xl [&_h2]:text-ink">
           <p>These terms cover your use of zordev.com. By using the site you agree to them.</p>
           <div>
             <h2>The website</h2>

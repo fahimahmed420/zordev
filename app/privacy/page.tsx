@@ -10,7 +10,7 @@ export default function PrivacyPage() {
     <>
       <PageHero eyebrow="Legal" title="Privacy policy" intro="Last updated: October 2026" />
       <Section>
-        <div className="max-w-3xl space-y-8 text-muted [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-ink">
+        <div className="max-w-3xl space-y-8 text-muted [&_h2]:text-xl [&_h2]:font-display [&_h2]:text-2xl [&_h2]:text-ink">
           <p>
             This policy explains what information Zordev ("I", "me"), run by {site.owner.name} in {site.location}, collects through
             zordev.com and how it is used.
@@ -35,8 +35,9 @@ export default function PrivacyPage() {
             <h2>Analytics and cookies</h2>
             <p className="mt-2">
               The site uses Umami, a privacy-friendly analytics tool that does not use cookies or collect personal data. It records
-              anonymous page views and button clicks so I can improve the site. The spam check (Cloudflare Turnstile) and the booking
-              calendar (Cal.com) may set strictly necessary cookies when you use them.
+              anonymous page views and button clicks so I can improve the site. The spam check (Cloudflare Turnstile) may set a strictly
+              necessary cookie when you send a form. Cloudflare, which protects and serves the site, may also collect anonymous
+              performance data. Call bookings are handled on this site and sent to me by email.
             </p>
           </div>
           <div>
@@ -44,8 +45,7 @@ export default function PrivacyPage() {
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>Hosting provider (serves the website)</li>
               <li>Resend (sends form emails)</li>
-              <li>Cloudflare Turnstile (spam protection)</li>
-              <li>Cal.com (call booking)</li>
+              <li>Cloudflare (DNS, security, Turnstile spam protection)</li>
               <li>Umami (cookieless analytics)</li>
               <li>Google Workspace (email and lead records)</li>
             </ul>

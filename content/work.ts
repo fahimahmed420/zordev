@@ -114,7 +114,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     gallery: [
       { src: "/work/aura-goli/desktop.png", alt: "Aura Goli storefront home page", device: "desktop" },
-      { src: "art:aura-goli", alt: "Bilingual chat assistant conversation", device: "mobile" },
+      { src: "art:aura-goli", alt: "Illustration of the admin revenue chart and a bilingual chat assistant conversation", device: "desktop" },
     ],
     featured: true,
     order: 2,

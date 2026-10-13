@@ -35,7 +35,7 @@ export default function PricingPage() {
                   <Badge tone="orange">Most experience</Badge>
                 </div>
               )}
-              <h2 className="text-xl font-bold">{p.name}</h2>
+              <h2 className="text-xl">{p.name}</h2>
               <p className="mt-1 text-sm text-muted">{p.suits}</p>
               <p className="mt-5 text-sm text-muted">From</p>
               <p className="text-4xl font-bold">{usd(p.fromPrice)}</p>
@@ -61,7 +61,7 @@ export default function PricingPage() {
           {addOns.map((a) => (
             <div key={a.name} className="rounded-2xl bg-paper p-6">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Add-on</p>
-              <h3 className="mt-2 text-lg font-bold">
+              <h3 className="mt-2 text-lg">
                 {a.name}: from {usd(a.from)}
               </h3>
               <p className="mt-1 text-muted">
@@ -97,7 +97,7 @@ export default function PricingPage() {
 function Col({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <h2 className="text-xl font-bold">{title}</h2>
+      <h2 className="text-xl">{title}</h2>
       <ul className="mt-4 space-y-3 text-muted">
         {items.map((i) => (
           <li key={i} className="flex gap-3">

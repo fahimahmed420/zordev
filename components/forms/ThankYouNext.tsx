@@ -21,7 +21,7 @@ export function ThankYouNext({ bookingUrl }: { bookingUrl: string }) {
   if (qualified) {
     return (
       <div className="rounded-2xl bg-paper p-7">
-        <h2 className="text-2xl font-bold">Want to talk sooner?</h2>
+        <h2 className="text-2xl">Want to talk sooner?</h2>
         <p className="mt-3 text-muted">Book a free 20-minute call at a time that suits you.</p>
         {bookingUrl ? (
           <a
@@ -29,12 +29,12 @@ export function ThankYouNext({ bookingUrl }: { bookingUrl: string }) {
             target="_blank"
             rel="noopener"
             data-umami-event="booking_open"
-            className="mt-6 inline-flex min-h-11 items-center rounded-full bg-orange px-6 py-3 font-semibold text-navy"
+            className="mt-6 inline-flex min-h-11 items-center rounded-full bg-orange px-6 py-3 font-medium text-[#0c0c0c] hover:bg-ink"
           >
             Book a call
           </a>
         ) : (
-          <Link href="/contact#book" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-orange px-6 py-3 font-semibold text-navy">
+          <Link href="/contact#book" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-orange px-6 py-3 font-medium text-[#0c0c0c] hover:bg-ink">
             Book a call
           </Link>
         )}
@@ -44,7 +44,7 @@ export function ThankYouNext({ bookingUrl }: { bookingUrl: string }) {
 
   return (
     <div className="rounded-2xl bg-paper p-7">
-      <h2 className="text-2xl font-bold">A note on budget</h2>
+      <h2 className="text-2xl">A note on budget</h2>
       <p className="mt-3 text-muted">
         Zordev projects start from $900, so I may not be the best fit for this one. I'll still reply with honest suggestions,
         and the pricing page shows what each package includes.

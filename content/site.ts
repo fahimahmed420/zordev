@@ -21,7 +21,7 @@ export const site = {
   // endHour past 24 means the window runs past midnight (22:00 → 04:00 next day).
   schedule: { days: [1, 2, 3, 4, 5], startHour: 22, endHour: 28, slotMinutes: 30, callMinutes: 20, noticeHours: 12, daysAhead: 14 },
   overlap:
-    "Live calls 10 PM–4 AM Dhaka time: the working day across the US, and afternoon to evening in the UK and EU. Written updates in between.",
+    "Live calls 10 PM–4 AM Dhaka time: the working day across the US, and evenings in the UK and EU. Written updates in between.",
   socials: {
     linkedin: "https://www.linkedin.com/company/zordev/",
     x: "https://x.com/zordevdotcom",

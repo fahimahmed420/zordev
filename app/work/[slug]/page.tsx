@@ -42,7 +42,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
           <div>
             <Link href="/work" className="reveal text-sm text-muted hover:text-ink">← All work</Link>
             <div className="reveal mt-6"><Badge tone={labelTone[c.label]}>{labelText[c.label]}</Badge></div>
-            <h1 className="reveal mt-5 text-5xl font-bold leading-[1.02] sm:text-6xl" style={{ ["--d" as string]: "80ms" }}>{c.title}</h1>
+            <h1 className="reveal mt-5 text-5xl leading-[1.02] sm:text-6xl" style={{ ["--d" as string]: "80ms" }}>{c.title}</h1>
             <p className="reveal mt-5 max-w-xl text-lg text-muted" style={{ ["--d" as string]: "160ms" }}>{c.summary}</p>
           </div>
           <div className="reveal tilt relative aspect-[16/10] overflow-hidden rounded-3xl border border-line shadow-2xl shadow-black/50" style={{ ["--d" as string]: "200ms" }}>
@@ -128,7 +128,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
               </Block>
             )}
             <Block title="Screens">
-              <div className="grid items-start gap-4 sm:grid-cols-[2.6fr_1fr]">
+              <div className={`grid items-start gap-4 ${c.gallery.some((g) => g.device === "mobile") ? "sm:grid-cols-[2.6fr_1fr]" : "sm:grid-cols-2"}`}>
                 {c.gallery.map((g) => (
                   <figure
                     key={g.alt}
@@ -173,7 +173,7 @@ function Row({ k, v }: { k: string; v: string }) {
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="text-2xl font-bold">{title}</h2>
+      <h2 className="text-2xl">{title}</h2>
       <div className="mt-4 text-muted">{children}</div>
     </div>
   );

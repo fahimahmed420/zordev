@@ -19,7 +19,7 @@ export default function ProcessPage() {
             <li key={s.n} className="grid gap-6 spot rounded-2xl p-6 sm:p-8 lg:grid-cols-[14rem_1fr]">
               <div>
                 <span className="font-mono text-sm text-orange">Step 0{s.n}</span>
-                <h2 className="mt-1 text-2xl font-bold">{s.name}</h2>
+                <h2 className="mt-1 text-2xl">{s.name}</h2>
                 <p className="mt-2 font-mono text-xs text-muted">{s.duration}</p>
               </div>
               <dl className="grid gap-5 sm:grid-cols-3">
@@ -45,7 +45,7 @@ export default function ProcessPage() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {workingStyle.map((w) => (
             <div key={w.title} className="spot rounded-2xl p-6">
-              <h3 className="font-bold">{w.title}</h3>
+              <h3 className="">{w.title}</h3>
               <p className="mt-2 text-muted">{w.text}</p>
             </div>
           ))}
