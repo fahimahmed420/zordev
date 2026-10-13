@@ -3,7 +3,8 @@ import { z } from "zod";
 export const needOptions = ["Online store", "Business website", "Web app or MVP", "Redesign", "Not sure yet"] as const;
 
 export const budgetOptions = [
-  { value: "under-1500", label: "Under $1,500", qualified: false },
+  { value: "under-900", label: "Under $900", qualified: false },
+  { value: "900-1500", label: "$900 – $1,500", qualified: true },
   { value: "1500-3000", label: "$1,500 – $3,000", qualified: true },
   { value: "3000-6000", label: "$3,000 – $6,000", qualified: true },
   { value: "6000-plus", label: "$6,000+", qualified: true },

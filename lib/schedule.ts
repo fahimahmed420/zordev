@@ -28,24 +28,24 @@ export function availableDays(now: number): Day[] {
 
 export const isBookable = (t: number, now: number) => availableDays(now).some((d) => d.slots.includes(t));
 
-/** Minimal iCalendar file for the requested call. */
-export function icsFor(start: number, attendee: string) {
+/** Minimal iCalendar file for a *requested* call: published as tentative until the owner confirms. */
+export function icsFor(start: number, attendee: string, now: number) {
   const end = start + site.schedule.callMinutes * 60_000;
   const f = (t: number) => new Date(t).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//Zordev//Discovery call//EN",
-    "METHOD:REQUEST",
+    "METHOD:PUBLISH",
     "BEGIN:VEVENT",
     `UID:${start}-${attendee.replace(/[^a-z0-9]/gi, "")}@zordev.com`,
-    `DTSTAMP:${f(start)}`,
+    `DTSTAMP:${f(now)}`,
     `DTSTART:${f(start)}`,
     `DTEND:${f(end)}`,
-    "SUMMARY:Zordev discovery call (requested)",
+    "STATUS:TENTATIVE",
+    "SUMMARY:Zordev discovery call (requested, awaiting confirmation)",
     `DESCRIPTION:20-minute call with ${site.owner.name}. A meeting link is sent with the confirmation.`,
     `ORGANIZER;CN=${site.owner.name}:mailto:${site.email}`,
-    `ATTENDEE;RSVP=TRUE:mailto:${attendee}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

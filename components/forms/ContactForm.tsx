@@ -1,6 +1,6 @@
 "use client";
 
-import { Turnstile } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef } from "react";
 import { submitContact } from "@/app/contact/actions";
@@ -22,16 +22,19 @@ export function ContactForm() {
   const router = useRouter();
   const utmRef = useRef<HTMLInputElement>(null);
   const started = useRef(false);
+  const turnstile = useRef<TurnstileInstance>(null);
 
   useEffect(() => {
     if (state.status === "success") {
       try {
         sessionStorage.setItem("zd_qualified", state.qualified ? "1" : "0");
       } catch {}
-      track("contact_form_submit", { qualified: !!state.qualified });
+      track("contact_form_submit", { qualified: !!state.qualified, need: state.values?.need, budget: state.values?.budget });
       router.push("/thank-you");
-    } else if (state.status === "error" && state.fieldErrors) {
-      Object.keys(state.fieldErrors).forEach((field) => track("contact_form_error", { field }));
+    } else if (state.status === "error") {
+      turnstile.current?.reset(); // spam-check tokens are single-use
+      if (state.fieldErrors) Object.keys(state.fieldErrors).forEach((field) => track("contact_form_error", { field }));
+      else track("contact_form_error", { field: "server", message: state.message });
     }
   }, [state, router]);
 
@@ -68,8 +71,8 @@ export function ContactForm() {
           <input id="email" name="email" type="email" autoComplete="email" required defaultValue={v.email} className={input} aria-invalid={!!err.email} aria-describedby={err.email ? "email-error" : undefined} />
         </Field>
       </div>
-      <Field label="Company" name="company" optional>
-        <input id="company" name="company" autoComplete="organization" defaultValue={v.company} className={input} />
+      <Field label="Company" name="company" optional error={err.company}>
+        <input id="company" name="company" autoComplete="organization" defaultValue={v.company} className={input} aria-invalid={!!err.company} aria-describedby={err.company ? "company-error" : undefined} />
       </Field>
       <div className="grid gap-5 sm:grid-cols-3">
         <Field label="What do you need?" name="need" error={err.need}>
@@ -116,8 +119,8 @@ export function ContactForm() {
           aria-describedby={err.details ? "details-error" : undefined}
         />
       </Field>
-      <Field label="How did you hear about Zordev?" name="source" optional>
-        <input id="source" name="source" defaultValue={v.source} className={input} />
+      <Field label="How did you hear about Zordev?" name="source" optional error={err.source}>
+        <input id="source" name="source" defaultValue={v.source} className={input} aria-invalid={!!err.source} aria-describedby={err.source ? "source-error" : undefined} />
       </Field>
 
       <input type="hidden" name="utm" ref={utmRef} />
@@ -129,7 +132,7 @@ export function ContactForm() {
         </label>
       </div>
 
-      {siteKey && <Turnstile siteKey={siteKey} options={{ theme: "light", size: "flexible" }} />}
+      {siteKey && <Turnstile ref={turnstile} siteKey={siteKey} options={{ theme: "dark", size: "flexible" }} />}
 
       <button
         type="submit"
@@ -143,7 +146,7 @@ export function ContactForm() {
 }
 
 const input =
-  "mt-1.5 block w-full rounded-xl border border-line-strong bg-[#0f0f0f] px-4 py-3 text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30 aria-[invalid=true]:border-red-400";
+  "mt-1.5 block w-full rounded-xl border border-[#706a62] bg-[#0f0f0f] px-4 py-3 text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30 aria-[invalid=true]:border-red-400";
 
 function Field({
   label,

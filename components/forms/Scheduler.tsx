@@ -1,10 +1,13 @@
 "use client";
 
-import { useActionState, useMemo, useState, useSyncExternalStore } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { useActionState, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { requestCall, type CallState } from "@/app/contact/actions";
 import { site } from "@/content/site";
 import { availableDays } from "@/lib/schedule";
 
+const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+const track = (event: string, data?: Record<string, unknown>) => window.umami?.track(event, data);
 const noop = () => () => {};
 const clientNow = () => Math.floor(Date.now() / 60_000) * 60_000; // stable within a minute
 const serverNow = () => 0;
@@ -27,6 +30,15 @@ export function Scheduler() {
   const [dayIdx, setDayIdx] = useState(0);
   const [slot, setSlot] = useState<number | null>(null);
   const [state, action, pending] = useActionState<CallState, FormData>(requestCall, { status: "idle" });
+  const turnstile = useRef<TurnstileInstance>(null);
+
+  useEffect(() => {
+    if (state.status === "success") track("call_requested");
+    if (state.status === "error") {
+      track("call_request_error", { message: state.message });
+      turnstile.current?.reset(); // tokens are single-use
+    }
+  }, [state]);
 
   const fmtDay = (key: string) => {
     const d = new Date(`${key}T12:00:00Z`);
@@ -42,11 +54,11 @@ export function Scheduler() {
 
   if (state.status === "success" && state.slot) {
     return (
-      <div className="spot reveal rounded-2xl p-8">
+      <div className="spot reveal rounded-2xl p-8" role="status">
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-orange">Request sent</p>
         <p className="mt-4 font-display text-4xl leading-tight text-ink">{fmtFull(state.slot)}</p>
         <p className="mt-3 text-muted">
-          A calendar invite is in your inbox. I&apos;ll confirm {site.commitments.replySla} and send a meeting link.
+          It&apos;s pencilled in, not confirmed yet. I&apos;ll confirm by email {site.commitments.replySla} with a meeting link, and a tentative calendar entry is attached to your confirmation email.
         </p>
       </div>
     );
@@ -57,7 +69,7 @@ export function Scheduler() {
   const day = days[dayIdx];
 
   return (
-    <form action={action} className="spot overflow-hidden rounded-2xl">
+    <form action={action} className="spot overflow-hidden rounded-2xl" onSubmit={() => track("call_request_submit")}>
       <div className="flex items-center justify-between border-b border-line px-6 py-4">
         <p className="font-medium text-ink">20-minute discovery call</p>
         <p className="font-mono text-xs text-muted">Times in {tz.replace(/_/g, " ")}</p>
@@ -74,6 +86,7 @@ export function Scheduler() {
               onClick={() => {
                 setDayIdx(i);
                 setSlot(null);
+                track("booking_day_select");
               }}
               aria-pressed={on}
               className={`flex min-w-[4.25rem] shrink-0 flex-col items-center rounded-xl border px-3 py-2.5 transition-colors ${
@@ -93,7 +106,10 @@ export function Scheduler() {
           <button
             key={t}
             type="button"
-            onClick={() => setSlot(t)}
+            onClick={() => {
+              setSlot(t);
+              track("booking_slot_select");
+            }}
             aria-pressed={slot === t}
             className={`rounded-lg border px-2 py-2 text-sm transition-colors ${
               slot === t ? "border-orange bg-orange text-[#0c0c0c]" : "border-line-strong text-ink hover:border-orange hover:text-orange"
@@ -105,19 +121,29 @@ export function Scheduler() {
       </div>
 
       <div className={`grid transition-[grid-template-rows] duration-500 ease-out ${slot ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-        <div className="overflow-hidden">
+        <div className="overflow-hidden" inert={!slot}>
           <div className="space-y-4 border-t border-line px-6 py-5">
             {slot && <p className="text-sm text-ink">{fmtFull(slot)}</p>}
             <div className="grid gap-3 sm:grid-cols-2">
-              <input name="name" required placeholder="Your name" autoComplete="name" className={input} />
-              <input name="email" type="email" required placeholder="Email" autoComplete="email" className={input} />
+              <label className="text-sm font-medium text-ink">
+                Your name
+                <input key={`n-${state.values?.name}`} name="name" required autoComplete="name" defaultValue={state.values?.name} className={input} />
+              </label>
+              <label className="text-sm font-medium text-ink">
+                Email
+                <input key={`e-${state.values?.email}`} name="email" type="email" required autoComplete="email" defaultValue={state.values?.email} className={input} />
+              </label>
             </div>
-            <input name="note" placeholder="What would you like to talk about? (optional)" className={input} />
+            <label className="block text-sm font-medium text-ink">
+              What would you like to talk about? <span className="font-normal text-muted">(optional)</span>
+              <input key={`m-${state.values?.note}`} name="note" defaultValue={state.values?.note} className={input} />
+            </label>
             <input type="hidden" name="slot" value={slot ?? ""} />
             <input type="hidden" name="tz" value={tz} />
             <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
               <input name="website" tabIndex={-1} autoComplete="off" />
             </div>
+            {siteKey && <Turnstile ref={turnstile} siteKey={siteKey} options={{ theme: "dark", size: "flexible" }} />}
             {state.status === "error" && (
               <p role="alert" className="text-sm text-red-300">
                 {state.message}
@@ -138,4 +164,4 @@ export function Scheduler() {
 }
 
 const input =
-  "block w-full rounded-xl border border-line-strong bg-[#0f0f0f] px-4 py-3 text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30";
+  "mt-1.5 block w-full rounded-xl border border-[#706a62] bg-[#0f0f0f] px-4 py-3 font-normal text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30";
