@@ -8,7 +8,7 @@ import { getCaseStudy } from "@/content/work";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
-  "Services: custom online stores, business websites, web apps",
+  "Custom Next.js online stores, websites & MVPs",
   "Custom Next.js online stores, fast business websites, and web apps or MVPs built on a fixed scope. Starting prices and timelines included.",
   "/services",
 );

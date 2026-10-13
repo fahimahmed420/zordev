@@ -42,8 +42,6 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
             </h3>
             <div
               id={panelId}
-              role="region"
-              aria-labelledby={btnId}
               className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
                 isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
               }`}

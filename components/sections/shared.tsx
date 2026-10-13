@@ -159,7 +159,7 @@ export function CaseStudyCard({ c, wide = false, index, priority = false }: { c:
       <div className="flex flex-1 flex-col">
         <div className="flex items-center justify-between border-b border-line pb-3 font-mono text-xs text-muted">
           <span>
-            {index !== undefined && <span className="mr-3 text-orange">{String(index + 1).padStart(2, "0")}</span>}
+            {index !== undefined && <span aria-hidden="true" className="mr-3 text-orange">{String(index + 1).padStart(2, "0")}</span>}
             {c.client.split(" (")[0]}
           </span>
           <span>{c.year}</span>
@@ -168,7 +168,7 @@ export function CaseStudyCard({ c, wide = false, index, priority = false }: { c:
         <p className={`mt-4 leading-relaxed text-muted ${wide ? "text-lg" : ""}`}>{c.summary}</p>
         <div className="mt-6 flex items-center justify-between gap-4">
           <p className="font-mono text-xs text-muted">{c.stack.slice(0, wide ? 4 : 3).join(" · ")}</p>
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-all duration-300 group-hover:-rotate-45 group-hover:border-orange group-hover:bg-orange group-hover:text-[#0c0c0c]">
+          <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-all duration-300 group-hover:-rotate-45 group-hover:border-orange group-hover:bg-orange group-hover:text-[#0c0c0c]">
             →
           </span>
         </div>

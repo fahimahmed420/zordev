@@ -163,7 +163,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="text-sm font-semibold">
+      <label id={`${name}-label`} htmlFor={name} className="text-sm font-semibold">
         {label} {optional && <span className="font-normal text-muted">(optional)</span>}
       </label>
       {children}

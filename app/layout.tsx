@@ -15,7 +15,7 @@ const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrai
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: "Zordev, web development studio", template: "%s | Zordev, web development studio" },
+  title: { default: "Zordev, web development studio", template: "%s | Zordev" },
   description: site.description,
   applicationName: "Zordev",
   openGraph: { siteName: "Zordev", type: "website", locale: "en_US" },

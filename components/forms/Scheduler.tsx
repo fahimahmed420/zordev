@@ -9,12 +9,16 @@ import { availableDays } from "@/lib/schedule";
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const track = (event: string, data?: Record<string, unknown>) => window.umami?.track(event, data);
 const noop = () => () => {};
+const everyMinute = (cb: () => void) => {
+  const id = setInterval(cb, 60_000);
+  return () => clearInterval(id);
+};
 const clientNow = () => Math.floor(Date.now() / 60_000) * 60_000; // stable within a minute
 const serverNow = () => 0;
 
 /** Built-in scheduler: slots come from the owner's Dhaka hours and are shown in the visitor's time zone. */
 export function Scheduler() {
-  const now = useSyncExternalStore(noop, clientNow, serverNow);
+  const now = useSyncExternalStore(everyMinute, clientNow, serverNow);
   const tz = useSyncExternalStore(noop, () => Intl.DateTimeFormat().resolvedOptions().timeZone, () => "UTC");
   // Slots come from Dhaka windows (which can cross midnight); group them by the visitor's own calendar day.
   const days = useMemo(() => {
@@ -64,9 +68,24 @@ export function Scheduler() {
     );
   }
 
-  if (!now) return <div className="spot h-[420px] rounded-2xl" />;
+  // Same height as the collapsed scheduler, so in-page anchors below it don't shift after hydration.
+  if (!now) return <div className="spot h-[319px] rounded-2xl sm:h-[249px]" aria-hidden="true" />;
 
-  const day = days[dayIdx];
+  // Keep the selection valid as time passes (expired days/slots drop out of the list).
+  const idx = Math.min(dayIdx, Math.max(0, days.length - 1));
+  const day = days[idx];
+  const chosen = slot !== null && day?.slots.includes(slot) ? slot : null;
+
+  if (!day) {
+    return (
+      <div className="spot rounded-2xl p-8">
+        <p className="text-lg text-ink">No call slots are open in the next two weeks.</p>
+        <p className="mt-2 text-muted">
+          Email <a className="text-orange underline underline-offset-4" href={`mailto:${site.email}`}>{site.email}</a> and I'll find a time.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form action={action} className="spot overflow-hidden rounded-2xl" onSubmit={() => track("call_request_submit")}>
@@ -78,7 +97,7 @@ export function Scheduler() {
       <div className="flex gap-2 overflow-x-auto border-b border-line px-6 py-4 [scrollbar-width:thin]">
         {days.map((d, i) => {
           const f = fmtDay(d.key);
-          const on = i === dayIdx;
+          const on = i === idx;
           return (
             <button
               key={d.key}
@@ -110,9 +129,9 @@ export function Scheduler() {
               setSlot(t);
               track("booking_slot_select");
             }}
-            aria-pressed={slot === t}
+            aria-pressed={chosen === t}
             className={`rounded-lg border px-2 py-2 text-sm transition-colors ${
-              slot === t ? "border-orange bg-orange text-[#0c0c0c]" : "border-line-strong text-ink hover:border-orange hover:text-orange"
+              chosen === t ? "border-orange bg-orange text-[#0c0c0c]" : "border-line-strong text-ink hover:border-orange hover:text-orange"
             }`}
           >
             {fmtTime(t)}
@@ -120,10 +139,10 @@ export function Scheduler() {
         ))}
       </div>
 
-      <div className={`grid transition-[grid-template-rows] duration-500 ease-out ${slot ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-        <div className="overflow-hidden" inert={!slot}>
+      <div className={`grid transition-[grid-template-rows] duration-500 ease-out ${chosen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+        <div className="overflow-hidden" inert={!chosen}>
           <div className="space-y-4 border-t border-line px-6 py-5">
-            {slot && <p className="text-sm text-ink">{fmtFull(slot)}</p>}
+            {chosen && <p className="text-sm text-ink">{fmtFull(chosen)}</p>}
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="text-sm font-medium text-ink">
                 Your name
@@ -138,7 +157,7 @@ export function Scheduler() {
               What would you like to talk about? <span className="font-normal text-muted">(optional)</span>
               <input key={`m-${state.values?.note}`} name="note" defaultValue={state.values?.note} className={input} />
             </label>
-            <input type="hidden" name="slot" value={slot ?? ""} />
+            <input type="hidden" name="slot" value={chosen ?? ""} />
             <input type="hidden" name="tz" value={tz} />
             <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
               <input name="website" tabIndex={-1} autoComplete="off" />
@@ -151,7 +170,7 @@ export function Scheduler() {
             )}
             <button
               type="submit"
-              disabled={pending || !slot}
+              disabled={pending || !chosen}
               className="inline-flex min-h-12 items-center rounded-full bg-orange px-6 font-medium text-[#0c0c0c] transition-colors hover:bg-ink disabled:opacity-60"
             >
               {pending ? "Sending…" : "Request this time →"}

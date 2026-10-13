@@ -58,7 +58,20 @@ export function Select({
     else if (e.key === "Home") setActive(0);
     else if (e.key === "End") setActive(options.length - 1);
     else if (e.key === "Enter" || e.key === " ") choose(active);
-    else if (e.key === "Escape" || e.key === "Tab") return setOpen(false);
+    else if (e.key === "Escape") return setOpen(false);
+    else if (e.key === "Tab") return choose(active); // keep the highlighted option when tabbing away
+    else if (e.key.length === 1 && /\S/.test(e.key)) {
+      // Typeahead: jump to the next option starting with the typed letter.
+      const k = e.key.toLowerCase();
+      const n = options.length;
+      for (let step = 1; step <= n; step++) {
+        const i = (active + step) % n;
+        if (options[i].label.toLowerCase().startsWith(k)) {
+          setActive(i);
+          break;
+        }
+      }
+    }
     else return;
     e.preventDefault();
   };
@@ -75,6 +88,7 @@ export function Select({
         aria-controls={listId}
         aria-activedescendant={open ? `${listId}-${active}` : undefined}
         aria-invalid={invalid}
+        aria-required="true"
         aria-describedby={describedBy}
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={onKey}
@@ -91,6 +105,7 @@ export function Select({
       <ul
         id={listId}
         role="listbox"
+        aria-labelledby={name + "-label"}
         className={`absolute left-0 right-0 z-30 mt-2 origin-top overflow-hidden rounded-xl border border-line-strong bg-[#141414] p-1.5 shadow-2xl shadow-black/60 transition-all duration-200 ${
           open ? "visible translate-y-0 scale-100 opacity-100" : "invisible -translate-y-1 scale-[0.98] opacity-0"
         }`}

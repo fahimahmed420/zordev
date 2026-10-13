@@ -68,6 +68,12 @@ export const faq: FaqItem[] = [
     tags: ["services:websites"],
   },
   {
+    id: "edit-site",
+    q: "Will I be able to update the site myself?",
+    a: "Yes. Growth sites come with a CMS so you can edit pages, posts and images without touching code, and every site comes with a short editing guide. For Launch sites I can make small text changes for you, or add a CMS later.",
+    tags: ["services:websites"],
+  },
+  {
     id: "migrate-store",
     q: "Can you move my store off a marketplace or theme?",
     a: "Yes. Products, customers and order history can usually be migrated, and redirects keep existing links working.",
