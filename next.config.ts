@@ -40,13 +40,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async redirects() {
-    // Old paths from previous owners of the domain (plan §12): send them home.
-    return [
-      { source: "/public/:path*", destination: "/", permanent: true },
-      { source: "/feed/:path*", destination: "/", permanent: true },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -14,20 +14,24 @@ export default function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#050912",
-          color: "white",
+          background: "radial-gradient(circle at 80% 0%, #2a1a12 0%, #0c0c0c 55%)",
+          color: "#f2eee8",
           padding: 80,
-          fontFamily: "sans-serif",
+          fontFamily: "serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 44, fontWeight: 800, letterSpacing: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", fontFamily: "sans-serif", fontSize: 40, fontWeight: 800, letterSpacing: 10 }}>
           <span>ZOR</span>
-          <span style={{ color: "#F37842" }}>DEV</span>
+          <span style={{ color: "#f37842" }}>DEV</span>
         </div>
-        <div style={{ display: "flex", fontSize: 64, fontWeight: 700, lineHeight: 1.15, maxWidth: 1000 }}>
-          Websites, online stores and web apps, built properly and shipped on a fixed scope.
+        <div style={{ display: "flex", flexDirection: "column", fontSize: 76, lineHeight: 1.05, maxWidth: 1000 }}>
+          <span>Websites, online stores and web apps,</span>
+          <span style={{ color: "#f37842", fontStyle: "italic" }}>built properly.</span>
         </div>
-        <div style={{ display: "flex", fontSize: 28, color: "#10A0FF" }}>zordev.com · Web development studio</div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "sans-serif", fontSize: 26, color: "#b3ada4" }}>
+          <span>zordev.com</span>
+          <span>Web development studio · Dhaka → worldwide</span>
+        </div>
       </div>
     ),
     size,

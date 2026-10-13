@@ -6,7 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { Interactions } from "@/components/layout/Interactions";
 import { UtmCapture } from "@/components/layout/UtmCapture";
 import { site } from "@/content/site";
-import { JsonLd, organizationLd } from "@/lib/seo";
+import { JsonLd, organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -38,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <UtmCapture />
         <JsonLd data={organizationLd} />
+        <JsonLd data={websiteLd} />
         {umamiId && (
           <Script src="https://cloud.umami.is/script.js" data-website-id={umamiId} strategy="afterInteractive" />
         )}

@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 
+const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Zordev, web development studio" };
+
 export function pageMeta(title: string, description: string, path: string): Metadata {
   return {
     title,
     description,
     alternates: { canonical: path },
-    openGraph: { title: `${title} | Zordev`, description, url: path, siteName: "Zordev", type: "website" },
-    twitter: { card: "summary_large_image", title: `${title} | Zordev`, description },
+    // Child metadata replaces the layout's openGraph object, so the share image and locale must be repeated here.
+    openGraph: { title: `${title} | Zordev`, description, url: path, siteName: "Zordev", type: "website", locale: "en_US", images: [OG_IMAGE] },
+    twitter: { card: "summary_large_image", title: `${title} | Zordev`, description, images: [OG_IMAGE.url] },
   };
 }
 
@@ -33,6 +36,14 @@ export const organizationLd = {
   address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
   areaServed: "Worldwide",
   sameAs: [site.socials.linkedin, site.socials.x, site.socials.github],
+};
+
+export const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Zordev",
+  url: site.url,
+  publisher: { "@type": "Organization", name: "Zordev", url: site.url },
 };
 
 export const breadcrumbLd = (items: { name: string; path: string }[]) => ({
