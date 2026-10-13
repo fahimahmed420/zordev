@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ButtonLink } from "@/components/ui";
 import { useState } from "react";
 import type { Package } from "@/content/pricing";
 
@@ -74,17 +74,12 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
             <p className="mt-4 text-sm text-muted">{p.suits}. Final price is fixed after a short call, for an agreed scope.</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link
-              href="/contact#book"
-              data-umami-event="cta_click"
-              data-umami-event-location="estimator"
-              className="magnetic inline-flex min-h-12 items-center rounded-full bg-orange px-6 font-medium text-[#0c0c0c] hover:bg-ink"
-            >
-              Book a call →
-            </Link>
-            <Link href="/pricing" className="inline-flex min-h-12 items-center rounded-full border border-line-strong px-6 font-medium text-ink hover:border-ink">
+            <ButtonLink href="/contact#book" location="estimator">
+              Book a call
+            </ButtonLink>
+            <ButtonLink href="/pricing" variant="ghost">
               Full pricing
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </div>

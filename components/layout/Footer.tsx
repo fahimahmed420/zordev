@@ -2,7 +2,7 @@ import Link from "next/link";
 import { services } from "@/content/services";
 import { cta, site } from "@/content/site";
 import { sortedCaseStudies } from "@/content/work";
-import { Container } from "@/components/ui";
+import { ButtonLink, Container } from "@/components/ui";
 import { Marquee } from "@/components/ui/Marquee";
 import { DhakaClock } from "./DhakaClock";
 import { Logo } from "./Logo";
@@ -41,15 +41,10 @@ export function Footer() {
           <div className="mt-8 rounded-2xl border border-line bg-surface p-5">
             <DhakaClock />
             <div className="mt-5 flex flex-wrap gap-2 border-t border-line pt-5">
-              <Link
-                href={cta.primary.href}
-                data-umami-event="cta_click"
-                data-umami-event-location="footer"
-                className="magnetic inline-flex items-center rounded-full bg-orange px-4 py-2 text-sm font-medium text-[#0c0c0c] hover:bg-ink"
-              >
-                {cta.primary.label} →
-              </Link>
-              <a href={`mailto:${site.email}`} className="inline-flex items-center rounded-full border border-line-strong px-4 py-2 text-sm text-ink transition-colors hover:border-orange hover:text-orange">
+              <ButtonLink href={cta.primary.href} location="footer">
+                {cta.primary.label}
+              </ButtonLink>
+              <a href={`mailto:${site.email}`} className="inline-flex min-h-12 items-center rounded-full border border-line-strong px-5 text-sm text-ink transition-colors hover:border-orange hover:text-orange">
                 {site.email}
               </a>
             </div>

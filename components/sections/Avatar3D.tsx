@@ -40,7 +40,7 @@ export function Avatar3D() {
         style={{ transform: `translate(calc(-50% + ${look.x * 18}px), calc(-50% + ${look.y * 14}px))` }}
       />
       {/* Ground shadow */}
-      <div className="absolute bottom-[13%] left-1/2 h-5 w-40 -translate-x-1/2 rounded-[50%] bg-black/70 blur-md" />
+      <div className="absolute bottom-[24%] left-1/2 h-4 w-28 -translate-x-1/2 rounded-[50%] bg-black/70 blur-md" />
 
       <div className="absolute inset-0 flex items-center justify-center [perspective:900px]">
         <div className="animate-float">
@@ -54,7 +54,7 @@ export function Avatar3D() {
               width={256}
               height={256}
               priority
-              className="h-auto w-[220px] select-none drop-shadow-[0_24px_30px_rgba(0,0,0,0.55)] sm:w-[256px]"
+              className="h-auto w-[160px] select-none drop-shadow-[0_24px_30px_rgba(0,0,0,0.55)]"
             />
           </div>
         </div>

@@ -28,17 +28,17 @@ export default function PricingPage() {
           {packages.map((p) => (
             <div
               key={p.id}
-              className={`flex flex-col rounded-2xl border p-7 ${p.highlighted ? "border-orange shadow-lg ring-1 ring-orange" : "border-line"}`}
+              className={`relative flex flex-col rounded-2xl border p-7 ${p.highlighted ? "border-orange shadow-lg ring-1 ring-orange" : "border-line"}`}
             >
               {p.highlighted && (
-                <div className="mb-3">
-                  <Badge tone="orange">Most experience</Badge>
+                <div className="absolute -top-3 left-7">
+                  <Badge tone="orange">Most built</Badge>
                 </div>
               )}
-              <h2 className="text-xl">{p.name}</h2>
-              <p className="mt-1 text-sm text-muted">{p.suits}</p>
+              <h2 className="text-3xl">{p.name}</h2>
+              <p className="mt-1 min-h-[2lh] text-sm text-muted">{p.suits}</p>
               <p className="mt-5 text-sm text-muted">From</p>
-              <p className="text-4xl font-bold">{usd(p.fromPrice)}</p>
+              <p className="font-display text-5xl">{usd(p.fromPrice)}</p>
               <p className="mt-1 font-mono text-xs text-muted">{p.timeline}</p>
               <ul className="mt-6 space-y-2 text-sm">
                 {p.includes.map((i) => (

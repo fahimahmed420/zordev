@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ThankYouNext } from "@/components/forms/ThankYouNext";
-import { Container, Section } from "@/components/ui";
+import { PageHero, Section } from "@/components/ui";
 import { site } from "@/content/site";
 
 export const metadata = { title: "Thanks for your brief", robots: { index: false, follow: false } };
@@ -8,15 +8,15 @@ export const metadata = { title: "Thanks for your brief", robots: { index: false
 export default function ThankYouPage() {
   return (
     <>
-      <section className="relative overflow-hidden"><div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-orange/[0.07] blur-[120px]" />
-        <Container className="relative py-20">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Brief received</p>
-          <h1 className="mt-5 text-6xl leading-[0.98] sm:text-8xl">Thanks, I've got it.</h1>
-          <p className="mt-5 max-w-xl text-lg text-muted">
-            A confirmation is on its way to your inbox. I'll read your brief myself and reply {site.commitments.replySla}.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Brief received"
+        title={
+          <>
+            Thanks, I&apos;ve <em className="text-orange">got it.</em>
+          </>
+        }
+        intro={`A confirmation is on its way to your inbox. I'll read your brief myself and reply ${site.commitments.replySla}.`}
+      />
       <Section>
         <div className="grid gap-10 md:grid-cols-2">
           <div>

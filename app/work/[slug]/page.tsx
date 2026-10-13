@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">) {
   const { slug } = await params;
   const c = getCaseStudy(slug);
   if (!c) return {};
-  return pageMeta(`${c.title} (${c.client.split(" (")[0]})`, c.summary, `/work/${c.slug}`);
+  return pageMeta(`${c.client.split(" (")[0]}: ${c.title} (case study)`, c.summary, `/work/${c.slug}`);
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
@@ -35,7 +35,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
           { name: c.title, path: `/work/${c.slug}` },
         ])}
       />
-      <section className="relative overflow-hidden border-b border-line">
+      <section className="relative overflow-x-clip border-b border-line">
         
         <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-orange/[0.07] blur-[120px]" />
         <Container className="relative grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.1fr_1fr]">

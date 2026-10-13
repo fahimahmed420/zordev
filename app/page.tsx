@@ -81,7 +81,7 @@ export default function Home() {
             <span className="hidden sm:inline">Web development studio · </span>Dhaka → worldwide
           </p>
           <h1 className="reveal mx-auto mt-6 max-w-5xl text-6xl leading-[0.95] sm:text-8xl lg:text-[6.5rem]" style={{ ["--d" as string]: "80ms" }}>
-            Websites, online stores and web apps, <span className="text-gradient">built properly.</span>
+            Websites, online stores and web apps, <span className="text-gradient whitespace-nowrap">built properly.</span>
           </h1>
           <p className="reveal mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-muted" style={{ ["--d" as string]: "160ms" }}>
             Zordev is a small studio run by {site.owner.name}. Shipped on a fixed scope, and you work directly with the developer who builds it.
@@ -167,15 +167,15 @@ export default function Home() {
               className="group relative flex min-h-[26rem] flex-col bg-surface p-8 transition-colors duration-300 hover:bg-surface-2 focus-visible:outline-offset-[-4px]"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-orange">0{i + 1}</span>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line-strong text-ink transition-all duration-300 group-hover:-rotate-45 group-hover:border-orange group-hover:bg-orange group-hover:text-[#0c0c0c]">
+                <span aria-hidden="true" className="font-mono text-xs text-orange">0{i + 1}</span>
+                <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-full border border-line-strong text-ink transition-all duration-300 group-hover:-rotate-45 group-hover:border-orange group-hover:bg-orange group-hover:text-[#0c0c0c]">
                   →
                 </span>
               </div>
-              <div className="mt-10 flex h-28 items-end transition-transform duration-500 group-hover:-translate-y-1">{serviceArt[s.slug]}</div>
+              <div aria-hidden="true" className="mt-10 flex h-28 items-end transition-transform duration-500 group-hover:-translate-y-1">{serviceArt[s.slug]}</div>
               <h3 className="mt-10 text-4xl leading-none text-ink">{s.title}</h3>
-              <p className="mt-4 leading-relaxed text-muted">{s.short}</p>
-              <p className="mt-auto flex items-center justify-between border-t border-line pt-5 font-mono text-xs text-muted">
+              <p className="mb-8 mt-4 leading-relaxed text-muted">{s.short}</p>
+              <p className="mt-auto flex items-center justify-between gap-3 whitespace-nowrap border-t border-line pt-5 font-mono text-xs text-muted">
                 <span>
                   from <span className="text-ink">{usd(s.fromPrice)}</span>
                 </span>

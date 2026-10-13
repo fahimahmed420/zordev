@@ -1,6 +1,6 @@
 import { Booking } from "@/components/forms/Booking";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { Heading, Section, T, PageHero } from "@/components/ui";
+import { ButtonLink, Heading, Section, T, PageHero } from "@/components/ui";
 import { site } from "@/content/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -15,8 +15,12 @@ export default function ContactPage() {
     <>
       <PageHero eyebrow="Contact" title={<>Let&apos;s build <span className="text-gradient">something good.</span></>} intro={`Two ways to start. Either way, you will hear back from me ${site.commitments.replySla}.`}>
         <div className="flex flex-wrap gap-3">
-          <a href="#book" data-umami-event="cta_click" data-umami-event-location="contact_hero_book" className="magnetic rounded-full bg-orange px-5 py-3 text-sm font-semibold text-[#0c0c0c]">Book a 20-minute call</a>
-          <a href="#brief" data-umami-event="cta_click" data-umami-event-location="contact_hero_brief" className="rounded-full border border-line-strong px-5 py-3 text-sm font-semibold hover:border-ink">Send a project brief</a>
+          <ButtonLink href="#book" location="contact_hero_book">
+            Book a 20-minute call
+          </ButtonLink>
+          <ButtonLink href="#brief" variant="ghost" location="contact_hero_brief">
+            Send a project brief
+          </ButtonLink>
         </div>
       </PageHero>
 

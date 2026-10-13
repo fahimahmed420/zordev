@@ -81,6 +81,10 @@ body::before {
     font-weight: 400;
     letter-spacing: -0.015em;
     font-synthesis: none;
+    text-wrap: balance; /* no one-word widows on big serif headings */
+  }
+  p {
+    text-wrap: pretty;
   }
   h1 em,
   h2 em,

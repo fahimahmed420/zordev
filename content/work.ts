@@ -113,7 +113,7 @@ export const caseStudies: CaseStudy[] = [
       "Bilingual AI customer support with human handover",
     ],
     gallery: [
-      { src: "/work/aura-goli/desktop.png", alt: "Aura Goli storefront home page", device: "desktop" },
+      { src: "/work/aura-goli/desktop.png", alt: "Aura Goli shop page with category, size, colour and price filters and a product grid", device: "desktop" },
       { src: "art:aura-goli", alt: "Illustration of the admin revenue chart and a bilingual chat assistant conversation", device: "desktop" },
     ],
     featured: true,

@@ -66,8 +66,8 @@ export function Heading({
 /** Inner-page header: oversized serif title with intro set in a side column. */
 export function PageHero({ eyebrow, title, intro, children }: { eyebrow: string; title: ReactNode; intro?: string; children?: ReactNode }) {
   return (
-    <section className="relative overflow-hidden">
-      
+    // overflow-x-clip (not overflow-hidden) lets the glow bleed upward instead of ending in a hard edge.
+    <section className="relative overflow-x-clip">
       <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-[10%] h-[26rem] w-[26rem] rounded-full bg-orange/[0.07] blur-[120px]" />
       <Container className="relative pb-16 pt-16 sm:pb-24 sm:pt-24">
         <div className="reveal">
