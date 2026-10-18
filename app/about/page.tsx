@@ -1,56 +1,58 @@
+import { Avatar } from "@/components/sections/Avatar";
 import { CtaBand } from "@/components/sections/shared";
-import { Avatar3D } from "@/components/sections/Avatar3D";
-import { Heading, Section, PageHero } from "@/components/ui";
+import { Heading, PageHero, Section } from "@/components/ui";
 import { site } from "@/content/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
   "About",
-  "Zordev is a small web development studio run by Fahim Ahmed in Dhaka, Bangladesh, building websites, online stores and web apps for clients worldwide.",
+  "Zordev is Fahim Ahmed's studio in Dhaka, Bangladesh. I make apps built with AI tools safe for real users, with calls during the US working day.",
   "/about",
 );
 
 const principles = [
-  { title: "Say what's true", text: "No fake logos, no invented numbers. If something isn't ready yet, I say so." },
-  { title: "Small scope, shipped", text: "A clear scope delivered on time beats a big plan that never launches." },
-  { title: "Leave it better than I found it", text: "Clean code, documentation and a proper handover, so you're never locked in." },
+  { title: "Say what's true", text: "No fake logos, no invented numbers. Studio tests and demos are labelled as exactly that. If your app is fine, I'll say so." },
+  { title: "Prove it's fixed", text: "Every fix is retested and written up. You get evidence, not a promise." },
+  { title: "Leave you in control", text: "Code, hosting and database accounts in your name, with a handover document any developer can follow." },
 ];
 
-const tools = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "Prisma", "PostgreSQL", "MongoDB", "Firebase", "Vercel"];
+const tools = ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma", "MongoDB", "Firebase Auth", "Vercel", "Claude", "ChatGPT"];
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About" title="A small studio, on purpose" />
+      <PageHero
+        eyebrow="About"
+        title={
+          <>
+            You talk to me, and I write the <em>code</em>
+          </>
+        }
+      />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr]">
           <div>
-            <Avatar3D />
+            <Avatar />
             <p className="mt-5 font-display text-3xl text-ink">{site.owner.name}</p>
             <p className="text-muted">{site.owner.role}</p>
           </div>
           <div className="space-y-5 text-lg text-muted">
             <p>
-              I'm {site.owner.name}, a full-stack developer based in {site.locationDetail}. Zordev is how I take on client projects:
-              websites, online stores and web apps for founders and small businesses.
+              I&apos;m {site.owner.name}, a Next.js and TypeScript developer based in {site.locationDetail}. Zordev is my studio. I make apps built
+              with AI tools like Lovable, Bolt, v0 and Replit safe for real users and real money.
             </p>
             <p>
-              I started Zordev because hiring a developer is often a gamble. Freelancers vanish, agencies send account managers instead of
-              answers, and quotes keep growing. I wanted a studio where you talk to the person writing the code, agree a clear scope, and get
-              weekly updates you never have to chase.
+              AI builders are brilliant at getting an idea working. They&apos;re less careful about the parts nobody sees in a demo: who can read
+              which rows in the database, where the keys live, whether a payment event is real. That&apos;s the work I do: find those gaps, fix
+              them in your code, and prove they&apos;re closed.
             </p>
             <p>
-              I've built a production online store that ships across Bangladesh with courier booking automated, a full commerce stack with a
-              bilingual AI assistant, and interactive brand sites. When a project needs specialist design or copywriting, I'll recommend
-              people and tell you upfront.
+              Before this I built, and still run, a live import store that ships across Bangladesh, with courier booking automated for trusted
+              repeat customers, PDF invoices and a test suite on the checkout. I&apos;ve also built a full commerce stack with server-side payment
+              confirmation and a bilingual AI support assistant. Both taught me what breaks when real customers and real money arrive.
             </p>
             <p>
               I work from Dhaka ({site.timezoneLabel}). {site.overlap}
-            </p>
-            <p>
-              <a href={site.owner.portfolio} className="font-semibold text-orange underline underline-offset-4" data-umami-event="outbound_click" data-umami-event-target="portfolio">
-                See my personal portfolio →
-              </a>
             </p>
           </div>
         </div>
@@ -60,7 +62,7 @@ export default function AboutPage() {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {principles.map((p) => (
             <div key={p.title} className="spot rounded-2xl p-6">
-              <h3 className="">{p.title}</h3>
+              <h3>{p.title}</h3>
               <p className="mt-2 text-muted">{p.text}</p>
             </div>
           ))}
