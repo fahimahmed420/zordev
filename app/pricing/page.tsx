@@ -1,13 +1,13 @@
-import { CtaBand, FaqList } from "@/components/sections/shared";
-import { Badge, ButtonLink, Heading, Section, usd, PageHero } from "@/components/ui";
+import { CarePlans, OfferLadder, OtherBuildsLine } from "@/components/sections/offer";
+import { CtaBand, FaqJsonLd, FaqList } from "@/components/sections/shared";
+import { Heading, PageHero, Section } from "@/components/ui";
 import { faqFor } from "@/content/faq";
-import { addOns, carePlan, notIncluded, packages, paymentTerms, priceFactors } from "@/content/pricing";
-import { cta, site } from "@/content/site";
-import { JsonLd, pageMeta } from "@/lib/seo";
+import { auditCredit, foundingRate, guarantees, notIncluded, paymentTerms, sprintScope } from "@/content/pricing";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
   "Pricing",
-  "Transparent starting prices for business websites, custom online stores and MVP sprints. Fixed price for an agreed scope, with clear payment terms.",
+  "Audit $500, Hardening Sprint $2,500, Production Launch $4,500, and care plans from $149/month. Fixed prices for apps built with Lovable, Bolt, v0 and Replit.",
   "/pricing",
 );
 
@@ -15,75 +15,59 @@ export default function PricingPage() {
   const faqs = faqFor("pricing");
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }}
+      <FaqJsonLd items={faqs} />
+      <PageHero
+        eyebrow="Pricing · from October 2026"
+        title={
+          <>
+            Fixed prices, printed <em>in full</em>
+          </>
+        }
+        intro={auditCredit}
       />
-      <PageHero eyebrow="Pricing" title="Clear starting prices" intro={`Every project gets a fixed price for an agreed scope. The minimum project size is ${usd(site.minProjectSize)}, except the Launch site package.`} />
 
       <Section>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {packages.map((p) => (
-            <div
-              key={p.id}
-              className={`relative flex flex-col rounded-2xl border p-7 ${p.highlighted ? "border-orange shadow-lg ring-1 ring-orange" : "border-line"}`}
-            >
-              {p.highlighted && (
-                <div className="absolute -top-3 left-7">
-                  <Badge tone="orange">Most built</Badge>
-                </div>
-              )}
-              <h2 className="text-3xl">{p.name}</h2>
-              <p className="mt-1 min-h-[2lh] text-sm text-muted">{p.suits}</p>
-              <p className="mt-5 text-sm text-muted">From</p>
-              <p className="font-display text-5xl">{usd(p.fromPrice)}</p>
-              <p className="mt-1 font-mono text-xs text-muted">{p.timeline}</p>
-              <ul className="mt-6 space-y-2 text-sm">
-                {p.includes.map((i) => (
-                  <li key={i} className="flex gap-2">
-                    <span aria-hidden="true" className="text-orange">✓</span>
-                    {i}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto pt-7">
-                <ButtonLink href={cta.primary.href} location={`pricing_${p.id}`} variant={p.highlighted ? "primary" : "ghost"}>
-                  {cta.primary.label}
-                </ButtonLink>
-              </div>
-            </div>
-          ))}
+        <OfferLadder location="pricing" />
+        <p className="mt-8 max-w-3xl text-sm text-muted">{sprintScope}</p>
+        <div className="mt-8 max-w-3xl rounded-2xl border border-orange/50 bg-surface p-6">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-orange">Founding rate</p>
+          <p className="mt-3 text-ink">{foundingRate.text}</p>
         </div>
+        <OtherBuildsLine />
+      </Section>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {addOns.map((a) => (
-            <div key={a.name} className="rounded-2xl bg-paper p-6">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Add-on</p>
-              <h3 className="mt-2 text-lg">
-                {a.name}: from {usd(a.from)}
-              </h3>
-              <p className="mt-1 text-muted">
-                {a.detail} {a.note && <span className="text-sm">({a.note})</span>}
-              </p>
-            </div>
-          ))}
+      <Section dark>
+        <Heading
+          eyebrow="After launch"
+          title={
+            <>
+              Care <em>plans</em>
+            </>
+          }
+          intro="Apps need updates. Packages get security fixes, and new features change your database. Pick the level of cover you need."
+        />
+        <div className="mt-14">
+          <CarePlans location="pricing_care" />
         </div>
       </Section>
 
-      <Section className="bg-paper">
-        <div className="grid gap-10 md:grid-cols-3">
-          <Col title="What affects the price" items={priceFactors} />
+      <Section>
+        <Heading eyebrow="Guarantees" title="What I promise, every time" />
+        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {guarantees.map((g) => (
+            <div key={g.title} className="bg-surface p-7">
+              <h3 className="text-2xl text-ink">{g.title}</h3>
+              <p className="mt-3 text-muted">{g.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-16 grid gap-10 md:grid-cols-2">
           <Col title="Payment terms" items={paymentTerms} />
           <Col title="Not included" items={notIncluded} />
         </div>
-        <p className="mt-10 max-w-2xl spot rounded-2xl p-6 text-muted">
-          <strong className="text-ink">Care plan.</strong> {carePlan}
-        </p>
       </Section>
 
-      <Section>
+      <Section dark>
         <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
           <Heading eyebrow="FAQ" title="Pricing questions" />
           <FaqList items={faqs} />
@@ -97,8 +81,8 @@ export default function PricingPage() {
 function Col({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <h2 className="text-xl">{title}</h2>
-      <ul className="mt-4 space-y-3 text-muted">
+      <h2 className="text-3xl">{title}</h2>
+      <ul className="mt-5 space-y-3 text-muted">
         {items.map((i) => (
           <li key={i} className="flex gap-3">
             <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange" />

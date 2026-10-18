@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      { source: "/services", destination: "/pricing", permanent: true },
+      { source: "/process", destination: "/#process", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

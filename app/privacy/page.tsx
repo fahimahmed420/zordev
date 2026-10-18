@@ -18,8 +18,10 @@ export default function PrivacyPage() {
           <div>
             <h2>What I collect</h2>
             <p className="mt-2">
-              When you send a project brief: your name, email, company (optional), project type, budget range, timeline, project details,
-              how you heard about Zordev, and the page or campaign that brought you here. When you book a call: the details you enter in
+              When you send a brief: your name, email, company and app link (both optional), project type, budget range, timeline, project
+              details, how you heard about Zordev, and the page or campaign that brought you here. When you ask for a free 3-risk check: your
+              name, email, app URL, the tool you built it with, its stage, anything you're worried about, and your permission for a read-only
+              review. When you book a call: the details you enter in
               the booking tool.
             </p>
           </div>
