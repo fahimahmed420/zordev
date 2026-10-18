@@ -4,7 +4,8 @@ import { headers } from "next/headers";
 import { Resend } from "resend";
 import { z } from "zod";
 import { site } from "@/content/site";
-import { budgetLabel, contactSchema, isQualified, type ContactState } from "@/lib/contact";
+import { budgetLabel, checkSchema, contactSchema, isQualified, type ContactState } from "@/lib/contact";
+import type { CheckState } from "@/lib/contact-options";
 import { clientIp, rateLimit } from "@/lib/ratelimit";
 import { icsFor, isBookable } from "@/lib/schedule";
 import { verifyTurnstile } from "@/lib/turnstile";
@@ -54,7 +55,7 @@ function firstName(name: string) {
 
 export async function submitContact(_prev: ContactState, formData: FormData): Promise<ContactState> {
   const raw = Object.fromEntries(
-    ["name", "email", "company", "need", "budget", "timeline", "details", "source", "utm"].map((k) => [k, String(formData.get(k) ?? "")]),
+    ["name", "email", "company", "appUrl", "need", "budget", "timeline", "details", "source", "utm"].map((k) => [k, String(formData.get(k) ?? "")]),
   );
   raw.utm = raw.utm.slice(0, 500); // hidden field: never block a lead on it
 
@@ -115,7 +116,7 @@ function autoReply(name: string, qualified: boolean) {
   return [
     `Hi ${firstName(name)},`,
     "",
-    `Thanks for sending your project brief to Zordev. I read every inquiry myself and will reply ${site.commitments.replySla} (I'm in Dhaka, ${site.timezoneLabel}).`,
+    `Thanks for sending your brief to Zordev. I read every inquiry myself and will reply ${site.commitments.replySla} (I'm in Dhaka, ${site.timezoneLabel}).`,
     "",
     qualified
       ? `If you'd like to talk sooner, you can pick a time for a free 20-minute call here: ${site.url}/contact#book`
@@ -124,9 +125,85 @@ function autoReply(name: string, qualified: boolean) {
     `In the meantime, you can see recent work at ${site.url}/work`,
     "",
     site.owner.name,
-    "Zordev, web development studio",
+    "Zordev",
     site.email,
   ].join("\n");
+}
+
+/* ── Free 3-risk check ─────────────────────────────────────────────────── */
+
+export async function requestCheck(_prev: CheckState, formData: FormData): Promise<CheckState> {
+  const raw = Object.fromEntries(
+    ["name", "email", "appUrl", "builtWith", "stage", "worries", "consent", "utm"].map((k) => [k, String(formData.get(k) ?? "")]),
+  );
+  raw.utm = raw.utm.slice(0, 500);
+  if (String(formData.get("website") ?? "") !== "") return { status: "success" };
+
+  const parsed = checkSchema.safeParse(raw);
+  if (!parsed.success) {
+    const fieldErrors: CheckState["fieldErrors"] = {};
+    for (const issue of parsed.error.issues) {
+      const key = issue.path[0] as keyof NonNullable<CheckState["fieldErrors"]>;
+      if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+    }
+    return { status: "error", message: "Please fix the highlighted fields.", fieldErrors, values: raw };
+  }
+
+  const ip = clientIp(await headers());
+  if (!(await rateLimit(`check:${ip}`, 3, 60))) {
+    return { status: "error", message: `Too many requests. Please try again later, or email ${site.email}.`, values: raw };
+  }
+  if (!(await verifyTurnstile(String(formData.get("cf-turnstile-response") ?? ""), ip))) {
+    return { status: "error", message: "The spam check failed. Please try again.", values: raw };
+  }
+
+  const d = parsed.data;
+  const lead = { date: new Date().toISOString(), type: "3-risk check", ...d, consent: "read-only review permitted", status: "New" };
+  const { resend, to, from } = mailer();
+
+  if (!resend) {
+    await pushWebhook(lead, "check");
+    if (process.env.NODE_ENV === "production") {
+      console.error("[check] RESEND_API_KEY is not set; lead:", lead);
+      return { status: "error", message: FAIL, values: raw };
+    }
+    console.info("[check] Email not configured. Lead:", lead);
+    return { status: "success", stage: d.stage };
+  }
+
+  const summary = Object.entries(lead)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join("\n");
+  const ownerOk = await sendMail(resend, { from, to, replyTo: d.email, subject: `Free check: ${d.appUrl} · ${d.builtWith} · ${d.stage}`, text: summary }, "check");
+  await pushWebhook({ ...lead, emailed: ownerOk }, "check");
+  if (!ownerOk) return { status: "error", message: FAIL, values: raw };
+
+  // Fixed wording only (no visitor-written text), at most 2 per address per day.
+  if (await rateLimit(`reply:${d.email.toLowerCase()}`, 2, 24 * 60)) {
+    await sendMail(
+      resend,
+      {
+        from,
+        to: d.email,
+        replyTo: to,
+        subject: "Your free 3-risk check",
+        text: [
+          `Hi ${firstName(d.name)},`,
+          "",
+          `Thanks for asking for a free 3-risk check. I'll email you ${site.commitments.replySla} with how to share read-only access.`,
+          "Checks are capped at 3 a week, so if this week is full, I'll give you a date.",
+          "",
+          `While you wait, here's what a full audit looks like: ${site.url}/sample-report`,
+          "",
+          site.owner.name,
+          "Zordev",
+          site.email,
+        ].join("\n"),
+      },
+      "check",
+    );
+  }
+  return { status: "success", stage: d.stage };
 }
 
 /* ── Call requests from the built-in scheduler ─────────────────────────── */
@@ -222,7 +299,7 @@ export async function requestCall(_prev: CallState, formData: FormData): Promise
           "If that time stops working for you, just reply to this email.",
           "",
           site.owner.name,
-          "Zordev, web development studio",
+          "Zordev",
           site.email,
         ].join("\n"),
         attachments: [{ filename: "zordev-call.ics", content: ics }],

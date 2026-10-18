@@ -2,13 +2,14 @@ import type { Text } from "@/lib/placeholder";
 
 export const site = {
   name: "Zordev",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://zordev.com",
-  promise: "Websites, online stores and web apps, built properly and shipped on a fixed scope.",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.zordev.com",
+  promise: "I make apps built with AI tools safe for real users.",
   description:
-    "Zordev is a web development studio run by Fahim Ahmed. Custom online stores, business websites and web apps for founders and small businesses.",
+    "I audit and fix apps built with Lovable, Bolt, v0 and Replit, covering database security, login, secrets and payments. Fixed price, code in your name, US-hours calls.",
   owner: {
     name: "Fahim Ahmed",
     role: "Founder and developer",
+    // Personal portfolio stays unlinked until it matches the studio.
     portfolio: "https://fahim-cloud.vercel.app/?mode=pro",
   },
   email: "fahim@zordev.com",
@@ -42,14 +43,16 @@ export const site = {
 } as const;
 
 export const nav = [
-  { href: "/services", label: "Services" },
   { href: "/work", label: "Work" },
-  { href: "/process", label: "Process" },
+  { href: "/audit", label: "Audit" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/agencies", label: "Agencies" },
   { href: "/about", label: "About" },
 ] as const;
 
 export const cta = {
   primary: { label: "Book a call", href: "/contact#book" },
-  secondary: { label: "Send a brief", href: "/contact#brief" },
+  check: { label: "Get a free 3-risk check", href: "/audit#check" },
+  call: { label: "Book a 20-minute call", href: "/contact#book" },
+  report: { label: "See a sample report", href: "/sample-report" },
 } as const;

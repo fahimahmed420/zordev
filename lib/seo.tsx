@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 
-const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Zordev, web development studio" };
+const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Zordev: production fixes for apps built with AI tools" };
 
 export function pageMeta(title: string, description: string, path: string): Metadata {
   return {

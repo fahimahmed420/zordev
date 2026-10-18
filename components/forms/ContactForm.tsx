@@ -71,9 +71,14 @@ export function ContactForm() {
           <input id="email" name="email" type="email" autoComplete="email" required defaultValue={v.email} className={input} aria-invalid={!!err.email} aria-describedby={err.email ? "email-error" : undefined} />
         </Field>
       </div>
-      <Field label="Company" name="company" optional error={err.company}>
-        <input id="company" name="company" autoComplete="organization" defaultValue={v.company} className={input} aria-invalid={!!err.company} aria-describedby={err.company ? "company-error" : undefined} />
-      </Field>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field label="Company" name="company" optional error={err.company}>
+          <input id="company" name="company" autoComplete="organization" defaultValue={v.company} className={input} aria-invalid={!!err.company} aria-describedby={err.company ? "company-error" : undefined} />
+        </Field>
+        <Field label="Link to your app or repo" name="appUrl" optional error={err.appUrl}>
+          <input id="appUrl" name="appUrl" inputMode="url" defaultValue={v.appUrl} className={input} aria-invalid={!!err.appUrl} aria-describedby={err.appUrl ? "appUrl-error" : undefined} />
+        </Field>
+      </div>
       <div className="grid gap-5 sm:grid-cols-3">
         <Field label="What do you need?" name="need" error={err.need}>
           <Select
@@ -113,7 +118,7 @@ export function ContactForm() {
           rows={6}
           required
           defaultValue={v.details}
-          placeholder="What are you building, who is it for, and what does success look like?"
+          placeholder="What is the app, who uses it, and what are you worried about or trying to ship?"
           className={input}
           aria-invalid={!!err.details}
           aria-describedby={err.details ? "details-error" : undefined}
@@ -145,10 +150,10 @@ export function ContactForm() {
   );
 }
 
-const input =
+export const input =
   "mt-1.5 block w-full rounded-xl border border-[#706a62] bg-[#0f0f0f] px-4 py-3 text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30 aria-[invalid=true]:border-red-400";
 
-function Field({
+export function Field({
   label,
   name,
   error,
