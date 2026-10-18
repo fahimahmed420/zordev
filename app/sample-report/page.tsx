@@ -1,7 +1,7 @@
-import { SeverityChip } from "@/components/sections/offer";
+import { ReportComingSoon, SeverityChip } from "@/components/sections/offer";
 import { CtaBand } from "@/components/sections/shared";
 import { ButtonLink, Heading, PageHero, Section, T } from "@/components/ui";
-import { sampleReport as r } from "@/content/sample-report";
+import { reportReady, sampleReport as r } from "@/content/sample-report";
 import { cta } from "@/content/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -12,6 +12,21 @@ export const metadata = pageMeta(
 );
 
 export default function SampleReportPage() {
+  if (!reportReady)
+    return (
+      <>
+        <PageHero eyebrow={r.label} title={<>A sample audit, <em>coming soon</em></>} intro="I built a small app in Lovable with login, a database and a test checkout, and I'm auditing it the same way I audit client apps. The full, unedited report goes here once the fixes are retested." />
+        <Section>
+          <ReportComingSoon />
+          <div className="mt-8">
+            <ButtonLink href={cta.check.href} location="report_soon_check">
+              {cta.check.label}
+            </ButtonLink>
+          </div>
+        </Section>
+        <CtaBand location="report_band" />
+      </>
+    );
   return (
     <>
       <PageHero

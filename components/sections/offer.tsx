@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Badge, ButtonLink, T, usd } from "@/components/ui";
 import { carePlans, careSmallPrint, offers, type Offer } from "@/content/pricing";
 import { cta } from "@/content/site";
-import { severityTone, type Finding } from "@/content/sample-report";
+import { reportReady, severityTone, type Finding } from "@/content/sample-report";
 
 /** Audit → Sprint → Launch cards. */
 export function OfferLadder({ location }: { location: string }) {
@@ -104,6 +104,7 @@ export function SeverityChip({ s }: { s: Finding["severity"] }) {
 
 /** Severity · finding · what it means. */
 export function FindingsTable({ findings }: { findings: Finding[] }) {
+  if (!reportReady) return <ReportComingSoon />;
   return (
     <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
       <table className="w-full min-w-[36rem] text-left text-sm">
@@ -148,5 +149,18 @@ export function OtherBuildsLine() {
         Other builds →
       </Link>
     </p>
+  );
+}
+
+/** Shown until the sample audit is filled in with real findings. */
+export function ReportComingSoon() {
+  return (
+    <div className="rounded-2xl border border-dashed border-line-strong bg-surface p-8">
+      <p className="font-mono text-xs uppercase tracking-[0.18em] text-orange">Being written up</p>
+      <p className="mt-3 max-w-2xl text-lg text-muted">
+        The sample report is being written up from a real audit of my test app. Until it&apos;s published, a free 3-risk check shows you the
+        same kind of findings on your own app.
+      </p>
+    </div>
   );
 }
