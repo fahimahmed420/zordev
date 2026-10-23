@@ -9,7 +9,7 @@ import { Badge, ButtonLink, Container, Heading, Section } from "@/components/ui"
 import { JsonLd } from "@/lib/seo";
 
 /** Editorial closing band: oversized serif line, email, and the two CTAs. */
-export function CtaBand({ title = "Find out what breaks before your users do", location }: { title?: string; location: string }) {
+export function CtaBand({ title = "Have a project in mind?", location }: { title?: string; location: string }) {
   const words = title.split(" ");
   const last = words.pop();
   return (
@@ -34,16 +34,15 @@ export function CtaBand({ title = "Find out what breaks before your users do", l
               {site.email}
             </a>
             <p className="mt-3 max-w-xl text-muted">
-              A free 3-risk check takes me 90 minutes and costs you nothing. If your app is fine, I&apos;ll tell you. I reply {site.commitments.replySla}. Live
-              calls 10 PM to 4 AM Dhaka time, which is the US working day.
+              A free 20-minute call or a written brief. I reply {site.commitments.replySla}. {site.overlap}
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={cta.check.href} location={location}>
-              {cta.check.label}
+            <ButtonLink href={cta.primary.href} location={location}>
+              {cta.primary.label}
             </ButtonLink>
-            <ButtonLink href={cta.call.href} variant="ghost" location={`${location}_call`}>
-              {cta.call.label}
+            <ButtonLink href={cta.secondary.href} variant="ghost" location={`${location}_brief`}>
+              {cta.secondary.label}
             </ButtonLink>
           </div>
         </div>
@@ -70,7 +69,7 @@ export function FaqList({ items }: { items: FaqItem[] }) {
 
 export function FaqSection({
   items,
-  title = "Questions founders ask before they book",
+  title = "Questions, answered honestly",
   n,
   schema = false,
 }: {
@@ -85,7 +84,7 @@ export function FaqSection({
       {schema && <FaqJsonLd items={items} />}
       <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr]">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <Heading eyebrow="FAQ" n={n} title={title} intro={`Anything else? Ask on the call or email ${site.email}.`} />
+          <Heading eyebrow="FAQ" n={n} title={title} intro="Anything else? Ask on the call or by email." />
         </div>
         <FaqList items={items} />
       </div>
@@ -191,9 +190,9 @@ export function CaseStudyCard({ c, wide = false, index, priority = false }: { c:
           <span>{c.year}</span>
         </div>
         <h3 className={`mt-5 leading-[1.05] text-ink transition-colors group-hover:text-orange ${wide ? "text-4xl sm:text-5xl" : "text-3xl"}`}>{c.title}</h3>
-        <p className={`mt-4 leading-relaxed text-muted ${wide ? "text-lg" : ""}`}>{c.outcome}</p>
+        <p className={`mt-4 leading-relaxed text-muted ${wide ? "text-lg" : ""}`}>{c.summary}</p>
         <div className="mt-6 flex items-center justify-between gap-4">
-          <p className="font-mono text-xs text-muted">{c.facts.join(" · ")}</p>
+          <p className="font-mono text-xs text-muted">{c.stack.slice(0, wide ? 4 : 3).join(" · ")}</p>
           <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-all duration-300 group-hover:-rotate-45 group-hover:border-orange group-hover:bg-orange group-hover:text-[#0c0c0c]">
             →
           </span>

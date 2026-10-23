@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Zordev: production fixes for apps built with AI tools";
+export const alt = "Zordev, web development studio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -25,12 +25,12 @@ export default function OgImage() {
           <span style={{ color: "#f37842" }}>DEV</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 76, lineHeight: 1.05, maxWidth: 1000 }}>
-          <span>Your app works in the demo.</span>
-          <span style={{ color: "#f37842", fontStyle: "italic" }}>I make it safe for real users.</span>
+          <span>Websites, online stores and web apps,</span>
+          <span style={{ color: "#f37842", fontStyle: "italic" }}>built properly.</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "sans-serif", fontSize: 26, color: "#b3ada4" }}>
           <span>zordev.com</span>
-          <span>Audits and fixes for Lovable, Bolt, v0 and Replit apps</span>
+          <span>Web development studio · Dhaka → worldwide</span>
         </div>
       </div>
     ),

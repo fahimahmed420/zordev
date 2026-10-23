@@ -4,10 +4,6 @@ export type CaseStudy = {
   slug: string;
   title: string;
   summary: string;
-  /** One outcome sentence for cards. */
-  outcome: string;
-  /** Two short facts for cards. */
-  facts: string[];
   label: "client" | "own" | "concept";
   clientPermission: "named" | "anonymised" | "pending" | "n/a";
   client: string;
@@ -40,8 +36,6 @@ export const caseStudies: CaseStudy[] = [
     title: "A store that books its own couriers",
     summary:
       "An import e-commerce store that ships across Bangladesh, with courier booking automated for trusted repeat customers.",
-    outcome: "A live import store shipping across Bangladesh, with courier booking automated for repeat customers.",
-    facts: ["Next.js · MongoDB", "Live since 2026"],
     label: "client",
     clientPermission: "named",
     client: "Family Fashion Hub China",
@@ -49,7 +43,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["Custom online store", "Ongoing care"],
     year: "2026",
     duration: "About 4 months",
-    liveUrl: "https://ffhchina.com",
+    // liveUrl is added once the public stats band on ffhchina.com is fixed (plan §3a).
     stack: ["Next.js 16", "React 19", "MongoDB", "Firebase Auth", "Steadfast courier API"],
     problem:
       "Orders arrived from all over the country, mostly cash on delivery. Every order meant copying an address into the courier dashboard and sending an invoice by hand.",
@@ -69,12 +63,11 @@ export const caseStudies: CaseStudy[] = [
         why: "Product pages load and get indexed without waiting for login code, which matters on slower mobile connections.",
       },
     ],
-    results: [],
-    demonstrates: [
-      "Courier booking automated for trusted repeat customers",
-      "A PDF invoice emailed with every order",
-      "Automated tests on the checkout money path",
+    results: [
+      { label: "Products live", value: "74", source: "ffhchina.com, Oct 2026" },
+      { label: "Automated test files", value: "14", source: "project repository" },
     ],
+    demonstrates: [],
     gallery: [
       { src: "/work/family-fashion-hub-china/desktop.png", alt: "Family Fashion Hub China storefront on desktop", device: "desktop" },
       { src: "/work/family-fashion-hub-china/mobile.png", alt: "Family Fashion Hub China storefront on mobile", device: "mobile" },
@@ -87,8 +80,6 @@ export const caseStudies: CaseStudy[] = [
     title: "A complete commerce stack, with a bilingual chat assistant",
     summary:
       "A demo fashion store with a full admin console, local payments, and a Bangla/English Messenger and WhatsApp assistant with human takeover.",
-    outcome: "Admin console, local payments and a Bangla/English chat assistant with human takeover.",
-    facts: ["Next.js · Prisma", "Payments confirmed server-side"],
     label: "own",
     clientPermission: "n/a",
     client: "Aura Goli (demo store, not a real brand)",
@@ -96,7 +87,6 @@ export const caseStudies: CaseStudy[] = [
     services: ["Web app", "Online store", "AI chat assistant"],
     year: "2026",
     duration: "About 7 weeks",
-    liveUrl: "https://aura-goli.vercel.app",
     stack: ["Next.js 16", "TypeScript", "Prisma 7", "PostgreSQL", "Tailwind 4", "Groq · Llama 3.3 70B", "Meta webhooks"],
     problem:
       "Small fashion brands need more than a storefront: an admin they can run alone, local payment methods, and a way to answer customer messages at any hour.",
@@ -133,8 +123,6 @@ export const caseStudies: CaseStudy[] = [
     slug: "ember-and-oak",
     title: "A brand story you can play with",
     summary: "A scroll-driven site for a fictional candle brand: interactive, light and accessible.",
-    outcome: "A scroll-driven brand site that stays light and keeps a full reduced-motion version.",
-    facts: ["Vite · GSAP", "About 62 KB of JavaScript"],
     label: "concept",
     clientPermission: "n/a",
     client: "Ember & Oak (fictional brand)",

@@ -22,7 +22,7 @@ export default function TermsPage() {
           <div>
             <h2>Client projects</h2>
             <p className="mt-2">
-              Project work is governed by a separate written proposal or agreement, which takes priority over anything on this site.
+              Project work is governed by a separate written proposal or agreement, which takes priority over anything on this site. The standard terms for projects are on the project terms page (/project-terms).
             </p>
           </div>
           <div>

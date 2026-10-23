@@ -6,30 +6,27 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
   "Contact: book a call or send a brief",
-  "Book a free 20-minute call, ask for a free 3-risk check, or send a brief. Replies within one business day.",
+  "Book a free 20-minute discovery call or send a project brief. Replies within one business day.",
   "/contact",
 );
 
 export default function ContactPage() {
   return (
     <>
-      <PageHero eyebrow="Contact" title={<>Let&apos;s make it <span className="text-gradient">safe to launch.</span></>} intro={`Book a call or send a brief. Not ready to talk? Ask for a free 3-risk check instead. Either way, you'll hear back from me ${site.commitments.replySla}.`}>
+      <PageHero eyebrow="Contact" title={<>Let&apos;s build <span className="text-gradient">something good.</span></>} intro={`Two ways to start. Either way, you will hear back from me ${site.commitments.replySla}.`}>
         <div className="flex flex-wrap gap-3">
           <ButtonLink href="#book" location="contact_hero_book">
             Book a 20-minute call
           </ButtonLink>
           <ButtonLink href="#brief" variant="ghost" location="contact_hero_brief">
-            Send a brief
-          </ButtonLink>
-          <ButtonLink href="/audit#check" variant="ghost" location="contact_hero_check">
-            Free 3-risk check
+            Send a project brief
           </ButtonLink>
         </div>
       </PageHero>
 
       <Section id="book">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
-          <Heading eyebrow="Option 1" title="Book a call" intro="Tell me about your app and what's worrying you. I'll be honest about whether you need me, and what it would cost." />
+          <Heading eyebrow="Option 1" title="Book a call" intro="Tell me what you're planning and I'll be honest about whether I'm the right fit, plus a rough budget and timeline." />
           <Booking url={site.bookingUrl} />
         </div>
       </Section>
@@ -37,7 +34,7 @@ export default function ContactPage() {
       <Section id="brief" className="bg-paper">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
           <div>
-            <Heading eyebrow="Option 2" title="Send a brief" intro="Prefer writing? Share the details and I'll reply with questions or a next step." />
+            <Heading eyebrow="Option 2" title="Send a project brief" intro="Prefer writing? Share the details and I'll reply with questions or a next step." />
             <dl className="mt-10 space-y-5 text-sm">
               <div>
                 <dt className="text-muted">Email</dt>

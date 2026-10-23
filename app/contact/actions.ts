@@ -82,7 +82,7 @@ export async function submitContact(_prev: ContactState, formData: FormData): Pr
   }
 
   const d = parsed.data;
-  const qualified = isQualified(d.budget);
+  const qualified = isQualified(d.budget) || d.need === "Fix an AI-built app"; // the $500 audit fits small budgets
   const lead = { date: new Date().toISOString(), type: "brief", ...d, budget: budgetLabel(d.budget), qualified, status: "New" };
   const { resend, to, from } = mailer();
 
@@ -125,7 +125,7 @@ function autoReply(name: string, qualified: boolean) {
     `In the meantime, you can see recent work at ${site.url}/work`,
     "",
     site.owner.name,
-    "Zordev",
+    "Zordev, web development studio",
     site.email,
   ].join("\n");
 }
@@ -193,10 +193,10 @@ export async function requestCheck(_prev: CheckState, formData: FormData): Promi
           `Thanks for asking for a free 3-risk check. I'll email you ${site.commitments.replySla} with how to share read-only access.`,
           "Checks are capped at 3 a week, so if this week is full, I'll give you a date.",
           "",
-          `While you wait, here's what a full audit looks like: ${site.url}/sample-report`,
+          `While you wait, you can see recent work at ${site.url}/work`,
           "",
           site.owner.name,
-          "Zordev",
+          "Zordev, web development studio",
           site.email,
         ].join("\n"),
       },
@@ -299,7 +299,7 @@ export async function requestCall(_prev: CallState, formData: FormData): Promise
           "If that time stops working for you, just reply to this email.",
           "",
           site.owner.name,
-          "Zordev",
+          "Zordev, web development studio",
           site.email,
         ].join("\n"),
         attachments: [{ filename: "zordev-call.ics", content: ics }],

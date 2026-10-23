@@ -104,7 +104,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
                 ))}
               </div>
             </Block>
-            {c.results.length > 0 ? (
+            {c.label === "client" ? (
               <Block title="Results">
                 <dl className="grid gap-4 sm:grid-cols-2">
                   {c.results.map((r) => (
@@ -156,7 +156,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
           </div>
         </div>
       </Section>
-      <CtaBand location={`case_study_${c.slug}`} />
+      <CtaBand title="Want something like this?" location={`case_study_${c.slug}`} />
     </>
   );
 }

@@ -118,7 +118,7 @@ export function ContactForm() {
           rows={6}
           required
           defaultValue={v.details}
-          placeholder="What is the app, who uses it, and what are you worried about or trying to ship?"
+          placeholder="What are you building, who is it for, and what does success look like?"
           className={input}
           aria-invalid={!!err.details}
           aria-describedby={err.details ? "details-error" : undefined}

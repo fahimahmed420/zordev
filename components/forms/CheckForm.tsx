@@ -42,8 +42,8 @@ export function CheckForm() {
             Since you&apos;re still building, I&apos;ll also send the checklist I use, so you can avoid the common problems before launch.
           </p>
         )}
-        <Link href="/sample-report" className="link-u mt-6 inline-block text-ink">
-          While you wait: read the sample report →
+        <Link href="/work" className="link-u mt-6 inline-block text-ink">
+          While you wait: see recent work →
         </Link>
       </div>
     );

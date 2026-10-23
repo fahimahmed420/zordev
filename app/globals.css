@@ -290,10 +290,3 @@ body::before {
   border-radius: 4px;
 }
 
-
-/* Keep the footer clear of the homepage's mobile sticky CTA. */
-@media (width < 48rem) {
-  body:has(#mobile-cta) footer {
-    padding-bottom: 72px;
-  }
-}

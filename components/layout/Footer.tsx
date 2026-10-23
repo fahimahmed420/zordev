@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { offers } from "@/content/pricing";
+import { services } from "@/content/services";
 import { cta, site } from "@/content/site";
 import { sortedCaseStudies } from "@/content/work";
 import { ButtonLink, Container } from "@/components/ui";
@@ -7,7 +7,7 @@ import { Marquee } from "@/components/ui/Marquee";
 import { DhakaClock } from "./DhakaClock";
 import { Logo } from "./Logo";
 
-const marquee = ["Audit", "Hardening Sprint", "Production Launch", "Fixed price", "Code in your name"];
+const marquee = ["Online stores", "Business websites", "Web apps & MVPs", "AI-built app fixes", "Built properly", "Shipped on scope"];
 
 export function Footer() {
   const socials = [
@@ -37,7 +37,7 @@ export function Footer() {
           <Link href="/" aria-label="Zordev home" className="inline-block">
             <Logo dark />
           </Link>
-          <p className="mt-5 max-w-xs text-sm leading-relaxed">Zordev is {site.owner.name}&apos;s studio. I make apps built with AI tools safe for real users.</p>
+          <p className="mt-5 max-w-xs text-sm leading-relaxed">A web development studio run by {site.owner.name}. Websites, online stores and web apps, built properly.</p>
           <div className="mt-8 rounded-2xl border border-line bg-surface p-5">
             <DhakaClock />
             <div className="mt-5 flex flex-wrap gap-2 border-t border-line pt-5">
@@ -51,21 +51,14 @@ export function Footer() {
           </div>
         </div>
 
-        <FooterCol
-          title="Services"
-          links={[
-            ...offers.map((o) => ({ href: o.id === "audit" ? "/audit" : `/pricing#${o.id}`, label: o.name })),
-            { href: "/sample-report", label: "Sample report" },
-            { href: "/builds", label: "Other builds" },
-          ]}
-        />
+        <FooterCol title="Services" links={services.map((s) => ({ href: `/services#${s.slug}`, label: s.title }))} />
         <FooterCol title="Work" links={sortedCaseStudies.map((c) => ({ href: `/work/${c.slug}`, label: c.client.split(" (")[0] }))} />
         <div>
           <FooterCol
             title="Studio"
             links={[
               { href: "/about", label: "About" },
-              { href: "/agencies", label: "Agencies" },
+              { href: "/process", label: "Process" },
               { href: "/pricing", label: "Pricing" },
               { href: "/contact", label: "Contact" },
             ]}
@@ -89,6 +82,19 @@ export function Footer() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href={site.owner.portfolio}
+                data-umami-event="outbound_click"
+                data-umami-event-target="portfolio"
+                className="group/s inline-flex items-center gap-1.5 rounded-full border border-line-strong px-3.5 py-1.5 text-sm text-ink transition-all duration-300 hover:border-orange hover:bg-orange hover:text-[#0c0c0c]"
+              >
+                Meet the developer
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover/s:-translate-y-0.5 group-hover/s:translate-x-0.5">
+                  ↗
+                </span>
+              </a>
+            </li>
           </ul>
         </div>
       </Container>
