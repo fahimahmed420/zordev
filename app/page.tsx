@@ -83,7 +83,7 @@ export default function Home() {
   return (
     <>
       {/* 1. Hero: live code that becomes a website (layout unchanged; owner will edit later) */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-x-clip">
         
         <div aria-hidden="true" className="pointer-events-none absolute -top-48 left-1/4 h-[36rem] w-[36rem] rounded-full bg-orange/[0.08] blur-[140px]" />
         <Container className="relative pb-16 pt-14 text-center sm:pb-24 sm:pt-20">
