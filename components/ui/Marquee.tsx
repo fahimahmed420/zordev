@@ -23,7 +23,7 @@ export function Marquee({ children, label, className = "", trackClassName = "" }
         onClick={() => setPaused((p) => !p)}
         aria-pressed={paused}
         aria-label={`${paused ? "Play" : "Pause"} ${label}`}
-        className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-line-strong bg-[#0c0c0c]/90 text-[10px] text-ink transition-colors hover:border-orange hover:text-orange"
+        className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line-strong bg-[#0c0c0c]/90 text-[11px] text-ink transition-colors hover:border-orange hover:text-orange"
       >
         <span aria-hidden="true">{paused ? "▶" : "❚❚"}</span>
       </button>

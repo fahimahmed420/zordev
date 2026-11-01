@@ -19,7 +19,7 @@ export default function ServicesPage() {
       <PageHero eyebrow="Services" title="What Zordev builds" intro="Three kinds of build, plus fixes for apps made with AI tools. Each has a clear scope, a starting price and a typical timeline.">
         <nav aria-label="Services on this page" className="flex flex-wrap gap-3">
           {services.map((s) => (
-            <a key={s.slug} href={`#${s.slug}`} className="rounded-full border border-line-strong  px-4 py-2 text-sm hover:border-ink">
+            <a key={s.slug} href={`#${s.slug}`} className="inline-flex min-h-11 items-center rounded-full border border-line-strong px-4 text-sm hover:border-ink">
               {s.title}
             </a>
           ))}

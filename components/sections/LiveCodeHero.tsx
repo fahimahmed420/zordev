@@ -263,7 +263,7 @@ export function LiveCodeHero() {
         type="button"
         onClick={ui.done ? replay : togglePause}
         aria-label={ui.done ? "Replay the security-fix demo" : paused ? "Play the security-fix demo" : "Pause the security-fix demo"}
-        className="absolute -top-12 right-0 z-20 inline-flex min-h-9 items-center gap-2 rounded-full border border-line-strong bg-[#0c0c0c]/80 px-3.5 font-mono text-xs text-ink backdrop-blur transition-colors hover:border-orange hover:text-orange"
+        className="absolute -top-14 right-0 z-20 inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-[#0c0c0c]/80 px-3.5 font-mono text-xs text-ink backdrop-blur transition-colors hover:border-orange hover:text-orange"
       >
         <span aria-hidden="true">{ui.done ? "↻" : paused ? "▶" : "❚❚"}</span>
         {ui.done ? "Replay" : paused ? "Play" : "Pause"}

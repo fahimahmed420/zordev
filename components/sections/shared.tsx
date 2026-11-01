@@ -24,13 +24,13 @@ export function CtaBand({ title = "Have a project in mind?", location }: { title
             </span>
             Next step
           </p>
-          <h2 className="mt-6 max-w-4xl text-6xl leading-[0.98] sm:text-8xl">
+          <h2 className="mt-6 max-w-4xl text-[2.75rem] leading-[1] sm:text-8xl">
             {words.join(" ")} <em>{last}</em>
           </h2>
         </div>
         <div data-reveal style={{ ["--d" as string]: "120ms" }} className="mt-12 grid gap-8 border-t border-line pt-8 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <a href={`mailto:${site.email}`} className="link-u font-display text-3xl text-ink sm:text-4xl">
+            <a href={`mailto:${site.email}`} className="link-u break-all font-display text-2xl text-ink sm:text-4xl">
               {site.email}
             </a>
             <p className="mt-3 max-w-xl text-muted">
@@ -189,7 +189,7 @@ export function CaseStudyCard({ c, wide = false, index, priority = false }: { c:
           </span>
           <span>{c.year}</span>
         </div>
-        <h3 className={`mt-5 leading-[1.05] text-ink transition-colors group-hover:text-orange ${wide ? "text-4xl sm:text-5xl" : "text-3xl"}`}>{c.title}</h3>
+        <h3 className={`mt-5 leading-[1.05] text-ink transition-colors group-hover:text-orange ${wide ? "text-3xl sm:text-5xl" : "text-[1.75rem] sm:text-3xl"}`}>{c.title}</h3>
         <p className={`mt-4 leading-relaxed text-muted ${wide ? "text-lg" : ""}`}>{c.summary}</p>
         <div className="mt-6 flex items-center justify-between gap-4">
           <p className="font-mono text-xs text-muted">{c.stack.slice(0, wide ? 4 : 3).join(" · ")}</p>

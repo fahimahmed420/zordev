@@ -23,7 +23,7 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={`relative border-t border-line py-20 sm:py-28 ${dark ? "bg-paper" : ""} ${className}`}>
+    <section id={id} className={`relative border-t border-line py-14 sm:py-28 ${dark ? "bg-paper" : ""} ${className}`}>
       <Container>{children}</Container>
     </section>
   );
@@ -57,7 +57,7 @@ export function Heading({
   return (
     <div className="max-w-3xl" data-reveal={As === "h2" ? "" : undefined}>
       {eyebrow && <Eyebrow n={n}>{eyebrow}</Eyebrow>}
-      <As className={`mt-5 leading-[1.02] ${As === "h1" ? "text-6xl sm:text-8xl" : "text-5xl sm:text-6xl"}`}>{title}</As>
+      <As className={`mt-5 leading-[1.02] ${As === "h1" ? "text-[2.75rem] sm:text-8xl" : "text-[2.25rem] sm:text-6xl"}`}>{title}</As>
       {intro && <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">{intro}</p>}
     </div>
   );
@@ -73,7 +73,7 @@ export function PageHero({ eyebrow, title, intro, children }: { eyebrow: string;
         <div className="reveal">
           <Eyebrow>{eyebrow}</Eyebrow>
         </div>
-        <h1 className="reveal mt-6 max-w-5xl text-6xl leading-[0.98] sm:text-8xl" style={{ ["--d" as string]: "80ms" }}>
+        <h1 className="reveal mt-6 max-w-5xl text-[2.75rem] leading-[1] sm:text-8xl" style={{ ["--d" as string]: "80ms" }}>
           {title}
         </h1>
         {(intro || children) && (

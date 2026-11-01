@@ -121,7 +121,7 @@ export function Select({
               onPointerEnter={() => setActive(i)}
               onPointerDown={(e) => e.preventDefault()}
               onClick={() => choose(i)}
-              className={`flex cursor-pointer items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
+              className={`flex min-h-11 cursor-pointer items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
                 i === active ? "bg-orange text-[#0c0c0c]" : selected ? "text-orange hover:bg-orange hover:text-[#0c0c0c]" : "text-ink hover:bg-orange hover:text-[#0c0c0c]"
               }`}
             >

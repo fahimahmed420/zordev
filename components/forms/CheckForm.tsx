@@ -115,7 +115,7 @@ export function CheckForm() {
       </Field>
 
       <div>
-        <label className="flex items-start gap-3 text-sm">
+        <label className="flex min-h-11 cursor-pointer items-start gap-3 py-1 text-sm">
           <input
             type="checkbox"
             name="consent"
@@ -123,7 +123,7 @@ export function CheckForm() {
             defaultChecked={v.consent === "on"}
             aria-invalid={!!err.consent}
             aria-describedby={err.consent ? "consent-error" : undefined}
-            className="mt-0.5 h-5 w-5 shrink-0 accent-[#f37842]"
+            className="mt-0.5 h-6 w-6 shrink-0 accent-[#f37842]"
           />
           <span>I give Zordev permission to review my app with read-only access I&apos;ll provide.</span>
         </label>

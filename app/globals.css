@@ -290,3 +290,27 @@ body::before {
   border-radius: 4px;
 }
 
+
+/* Touch screens: every standalone link and control gets a finger-sized (44px) hit area.
+   Links inside running text keep their line height (WCAG 2.5.8 inline exception). */
+@media (pointer: coarse) {
+  footer li a,
+  footer p a,
+  .link-u:not(p .link-u),
+  dd > a,
+  header a[aria-label],
+  footer a[aria-label] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  main button,
+  footer a[href^="#"] {
+    min-height: 44px;
+  }
+}
+@media (pointer: coarse) {
+  dd > a {
+    min-width: 44px;
+  }
+}

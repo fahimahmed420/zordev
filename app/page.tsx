@@ -94,7 +94,7 @@ export default function Home() {
             </span>
             <span className="hidden sm:inline">Web development studio · </span>Dhaka → worldwide
           </p>
-          <h1 className="reveal mx-auto mt-6 max-w-5xl text-6xl leading-[0.95] sm:text-8xl lg:text-[6.5rem]" style={{ ["--d" as string]: "80ms" }}>
+          <h1 className="reveal mx-auto mt-6 max-w-5xl text-[2.9rem] leading-[0.98] sm:text-8xl lg:text-[6.5rem]" style={{ ["--d" as string]: "80ms" }}>
             Websites, online stores and web apps, <span className="text-gradient whitespace-nowrap">built properly.</span>
           </h1>
           <p className="reveal mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-muted" style={{ ["--d" as string]: "160ms" }}>
@@ -178,7 +178,7 @@ export default function Home() {
               href={`/services#${s.slug}`}
               data-reveal
               style={{ ["--d" as string]: `${i * 90}ms` }}
-              className="group relative flex min-h-[26rem] flex-col bg-surface p-8 transition-colors duration-300 hover:bg-surface-2 focus-visible:outline-offset-[-4px]"
+              className="group relative flex min-h-[20rem] flex-col sm:min-h-[26rem] bg-surface p-8 transition-colors duration-300 hover:bg-surface-2 focus-visible:outline-offset-[-4px]"
             >
               <div className="flex items-center justify-between">
                 <span aria-hidden="true" className="font-mono text-xs text-orange">0{i + 1}</span>
@@ -187,7 +187,7 @@ export default function Home() {
                 </span>
               </div>
               <div aria-hidden="true" className="mt-10 flex h-28 items-end transition-transform duration-500 group-hover:-translate-y-1">{serviceArt[s.slug]}</div>
-              <h3 className="mt-10 text-4xl leading-none text-ink">{s.title}</h3>
+              <h3 className="mt-8 text-3xl leading-none text-ink sm:mt-10 sm:text-4xl">{s.title}</h3>
               <p className="mb-8 mt-4 leading-relaxed text-muted">{s.short}</p>
               <p className="mt-auto flex items-center justify-between gap-3 whitespace-nowrap border-t border-line pt-5 font-mono text-xs text-muted">
                 <span>
@@ -279,7 +279,7 @@ export default function Home() {
         <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map((r, i) => (
             <div key={r.title} data-reveal style={{ ["--d" as string]: `${i * 80}ms` }} className="group bg-surface p-8 transition-colors hover:bg-surface-2">
-              <span className="block font-display text-5xl italic text-orange transition-transform duration-500 group-hover:translate-x-1">{r.icon}</span>
+              <span className="block font-display text-4xl italic text-orange sm:text-5xl transition-transform duration-500 group-hover:translate-x-1">{r.icon}</span>
               <h3 className="mt-8 text-2xl text-ink">{r.title}</h3>
               <p className="mt-3 leading-relaxed text-muted">{r.text}</p>
             </div>

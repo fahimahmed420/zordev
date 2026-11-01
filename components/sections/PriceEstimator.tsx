@@ -17,7 +17,7 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
       <div className="grid lg:grid-cols-[1.1fr_1fr]">
         <div className="p-7 sm:p-10">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Quick estimate</p>
-          <h3 className="mt-3 text-4xl sm:text-5xl">What are you <em>building?</em></h3>
+          <h3 className="mt-3 text-3xl sm:text-5xl">What are you <em>building?</em></h3>
           <div
             role="radiogroup"
             aria-label="Project type"

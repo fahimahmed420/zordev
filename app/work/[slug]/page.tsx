@@ -40,7 +40,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-orange/[0.07] blur-[120px]" />
         <Container className="relative grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <Link href="/work" className="reveal text-sm text-muted hover:text-ink">← All work</Link>
+            <Link href="/work" className="reveal inline-flex min-h-11 items-center text-sm text-muted hover:text-ink">← All work</Link>
             <div className="reveal mt-6"><Badge tone={labelTone[c.label]}>{labelText[c.label]}</Badge></div>
             <h1 className="reveal mt-5 text-5xl leading-[1.02] sm:text-6xl" style={{ ["--d" as string]: "80ms" }}>{c.title}</h1>
             <p className="reveal mt-5 max-w-xl text-lg text-muted" style={{ ["--d" as string]: "160ms" }}>{c.summary}</p>

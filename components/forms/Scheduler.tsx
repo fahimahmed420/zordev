@@ -183,4 +183,4 @@ export function Scheduler() {
 }
 
 const input =
-  "mt-1.5 block w-full rounded-xl border border-[#706a62] bg-[#0f0f0f] px-4 py-3 font-normal text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30";
+  "mt-1.5 block w-full rounded-xl border border-[#706a62] bg-[#0f0f0f] px-4 py-3 text-base font-normal text-ink placeholder:text-[#8a847c] focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/30";

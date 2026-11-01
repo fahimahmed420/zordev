@@ -61,7 +61,7 @@ export function ProcessTabs() {
 
       <div id="step-panel" role="tabpanel" aria-labelledby={`step-tab-${active}`} key={active} className="spot reveal rounded-3xl p-7 sm:p-9">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Step 0{s.n}</p>
-        <h3 className="mt-3 text-5xl">{s.name}</h3>
+        <h3 className="mt-3 text-4xl sm:text-5xl">{s.name}</h3>
         <p className="mt-4 text-lg text-muted">{s.what}</p>
         <dl className="mt-8 grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl bg-surface-2 p-5">
