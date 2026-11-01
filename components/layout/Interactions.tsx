@@ -11,7 +11,33 @@ export function Interactions() {
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const fine = window.matchMedia("(pointer: fine)").matches;
-    if (reduce || !fine) return;
+    if (!fine) {
+      // Touch: a no-op touchstart listener lets iOS apply :active (our tap "hover"), and a tap on a
+      // card lights its spotlight border where the finger landed.
+      let lit: HTMLElement | null = null;
+      let timer = 0;
+      const onDown = (e: PointerEvent) => {
+        const spot = (e.target as Element | null)?.closest<HTMLElement>(".spot");
+        if (!spot) return;
+        const r = spot.getBoundingClientRect();
+        spot.style.setProperty("--x", `${e.clientX - r.left}px`);
+        spot.style.setProperty("--y", `${e.clientY - r.top}px`);
+        lit?.classList.remove("touched");
+        spot.classList.add("touched");
+        lit = spot;
+        clearTimeout(timer);
+        timer = window.setTimeout(() => spot.classList.remove("touched"), 1200);
+      };
+      const noop = () => {};
+      document.addEventListener("touchstart", noop, { passive: true });
+      window.addEventListener("pointerdown", onDown, { passive: true });
+      return () => {
+        document.removeEventListener("touchstart", noop);
+        window.removeEventListener("pointerdown", onDown);
+        clearTimeout(timer);
+      };
+    }
+    if (reduce) return;
 
     let frame = 0;
     let last: PointerEvent | null = null;

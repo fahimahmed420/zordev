@@ -47,6 +47,17 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
               </button>
             ))}
           </div>
+          {/* Phones: the price updates right under the buttons you tap, not a screen further down. */}
+          <div aria-live="polite" className="mt-5 rounded-2xl border border-line bg-surface-2 p-5 lg:hidden">
+            <div className="flex items-baseline justify-between gap-3">
+              <p className="text-sm text-muted">Starting from</p>
+              <p className="font-mono text-xs text-muted">{p.timeline}</p>
+            </div>
+            <p key={total} className="reveal mt-1 font-display text-6xl">
+              {usd(total)}
+            </p>
+            <p className="mt-2 text-sm text-muted">{p.suits}.</p>
+          </div>
           <label className="mt-6 flex cursor-pointer items-center gap-3 text-sm text-muted">
             <span className="relative inline-flex h-6 w-11 shrink-0">
               <input type="checkbox" checked={withAi} onChange={(e) => setWithAi(e.target.checked)} className="peer sr-only" />
@@ -65,7 +76,7 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
           </ul>
         </div>
         <div className="relative flex flex-col justify-between gap-8 border-t border-line bg-surface-2 p-7 sm:p-10 lg:border-l lg:border-t-0">
-          <div aria-live="polite">
+          <div aria-live="polite" className="hidden lg:block">
             <p className="text-sm text-muted">Starting from</p>
             <p key={total} className="reveal mt-1 font-display text-7xl sm:text-8xl">
               {usd(total)}
@@ -73,7 +84,8 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
             <p className="mt-3 font-mono text-sm text-muted">Typical timeline · {p.timeline}</p>
             <p className="mt-4 text-sm text-muted">{p.suits}. Final price is fixed after a short call, for an agreed scope.</p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <p className="text-sm text-muted lg:hidden">Final price is fixed after a short call, for an agreed scope.</p>
+          <div className="-mt-4 flex flex-wrap gap-3 lg:mt-0">
             <ButtonLink href="/contact#book" location="estimator">
               Book a call
             </ButtonLink>

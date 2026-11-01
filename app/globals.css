@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Touch screens have no hover: every `hover:` style also plays while a finger is pressing. */
+@custom-variant hover {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      @slot;
+    }
+  }
+}
+
 /*
  * Deep charcoal editorial theme.
  * Contrast (WCAG) on the darkest surface used for text (#1a1a1a):
@@ -312,5 +326,52 @@ body::before {
 @media (pointer: coarse) {
   dd > a {
     min-width: 44px;
+  }
+}
+
+/* Touch: the same hover feedback on press, plus a small press-in so taps feel physical. */
+@media (hover: none) {
+  .spot:active,
+  .spot.touched {
+    border-color: var(--color-line-strong);
+  }
+  .spot:active::before,
+  .spot:active::after,
+  .spot.touched::before,
+  .spot.touched::after {
+    opacity: 1;
+  }
+  .link-u:active {
+    background-size: 100% 1px;
+  }
+  a,
+  button,
+  [role="tab"],
+  [role="radio"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+  a:active,
+  button:active {
+    transform: scale(0.97);
+  }
+  /* Footer wordmark: letters wave in once when scrolled into view; tap one to lift it. */
+  .wordmark.in .wm {
+    animation: wm-wave 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 110ms + 200ms);
+  }
+}
+@keyframes wm-wave {
+  0%,
+  100% {
+    transform: none;
+  }
+  40% {
+    transform: translateY(-14%);
+    background-image: linear-gradient(to bottom, var(--color-orange), #7a3416);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark.in .wm {
+    animation: none;
   }
 }

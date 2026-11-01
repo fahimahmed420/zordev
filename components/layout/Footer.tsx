@@ -101,11 +101,12 @@ export function Footer() {
 
       {/* Giant interactive wordmark */}
       <Container className="relative">
-        <p aria-hidden="true" className="flex select-none justify-between font-display text-[34vw] leading-[0.8] lg:text-[25rem]">
+        <p aria-hidden="true" data-reveal className="wordmark flex select-none justify-between font-display text-[34vw] leading-[0.8] lg:text-[25rem]">
           {"zordev".split("").map((ch, i) => (
             <span
               key={i}
-              className="inline-block bg-gradient-to-b from-[#3d3a36] to-[#0a0a0a] bg-clip-text text-transparent transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-4 hover:from-orange hover:to-[#7a3416]"
+              style={{ ["--i" as string]: i }}
+              className="wm inline-block bg-gradient-to-b from-[#3d3a36] to-[#0a0a0a] bg-clip-text text-transparent transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-4 hover:from-orange hover:to-[#7a3416]"
             >
               {ch}
             </span>
