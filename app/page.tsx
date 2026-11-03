@@ -118,8 +118,8 @@ export default function Home() {
             <ButtonLink href={cta.primary.href} location="hero">
               {cta.primary.label}
             </ButtonLink>
-            <ButtonLink href="/work" variant="ghost">
-              See the work
+            <ButtonLink href={cta.secondary.href} variant="ghost" location="hero_secondary">
+              {cta.secondary.label}
             </ButtonLink>
           </div>
           <div className="reveal mx-auto mt-16 max-w-5xl text-left" style={{ ["--d" as string]: "320ms" }}>
