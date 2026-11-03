@@ -91,6 +91,7 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "Small fashion brands need more than a storefront: an admin they can run alone, local payment methods, and a way to answer customer messages at any hour.",
     approach: [
+      "A cinematic storefront: a hero that renders instantly without WebGL, product cards that reveal a second photo on hover, and a sticky add-to-bag bar on phones.",
       "Storefront with filters, live search, coupons, checkout and order tracking without login.",
       "Customer accounts with Google sign-in, wishlist and loyalty points.",
       "Admin console with revenue charts, product variants, an order pipeline, flash sales, review moderation and an audit log.",
@@ -136,7 +137,8 @@ export const caseStudies: CaseStudy[] = [
       "Brand sites often look like every other template. This concept explores telling a product story through interaction without making the page heavy.",
     approach: [
       "A flame cursor that lights candles as you move, with tap-to-light on touch screens.",
-      "Pinned scroll sections and a smoke trail that follows the page.",
+      "A collection shelf of five hand-drawn vessels that light one by one, each casting its own coloured pool of light and revealing its scent notes.",
+      "Pinned scroll sections, a smoke trail that follows the page, and a closing candle you can blow out and relight.",
       "Artwork compressed to 8 WebP files and a single small script bundle.",
       "A full reduced-motion fallback and keyboard navigation.",
     ],
@@ -147,7 +149,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     results: [],
-    demonstrates: ["Distinctive brand storytelling", "About 62 KB of JavaScript in total", "Accessible motion design"],
+    demonstrates: ["Distinctive brand storytelling", "About 60 KB of JavaScript in total", "Accessible motion design"],
     gallery: [
       { src: "/work/ember-and-oak/desktop.png", alt: "Ember & Oak home page", device: "desktop" },
       { src: "/work/ember-and-oak/mobile.png", alt: "Ember & Oak on mobile", device: "mobile" },
@@ -220,6 +222,7 @@ export const caseStudies: CaseStudy[] = [
       "Most visitors to a contractor's site have a broken air conditioner and a phone in their hand. They want a price they can trust, a time slot and a number to call.",
     approach: [
       "A four-step booking form (what's wrong, when, where, who), checked at every step and emailed to the office.",
+      "A full-screen photo hero with the booking card hanging over its edge, and a thermostat dial that sweeps from January to July as you scroll.",
       "A sticky call bar on phones and an 'open now' indicator driven by the business hours.",
       "Service, maintenance-plan and service-area pages written for local search, with structured data for the business.",
       "Spam protection on the form: a hidden trap field and a limit on repeat submissions.",
