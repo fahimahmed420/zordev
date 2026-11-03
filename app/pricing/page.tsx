@@ -50,6 +50,11 @@ export default function PricingPage() {
                 ))}
               </ul>
               <div className="mt-auto pt-7">
+                {p.example && (
+                  <Link href={`/work/${p.example.slug}`} className="mb-4 inline-flex min-h-11 items-center text-sm text-muted underline-offset-4 hover:text-ink hover:underline">
+                    See an example: {p.example.label} →
+                  </Link>
+                )}
                 <ButtonLink href={cta.primary.href} location={`pricing_${p.id}`} variant={p.highlighted ? "primary" : "ghost"}>
                   {cta.primary.label}
                 </ButtonLink>

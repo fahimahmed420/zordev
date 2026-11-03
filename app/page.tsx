@@ -112,7 +112,7 @@ export default function Home() {
             <LiveCodeHero />
           </div>
           <p className="mx-auto mt-16 max-w-2xl text-sm text-muted">
-            <span className="text-ink">Shipped work:</span> a live import e-commerce store selling across Bangladesh, a demo store with a bilingual AI support assistant, and a scroll-driven brand site.
+            <span className="text-ink">Shipped work:</span> a live import e-commerce store selling across Bangladesh, a demo store with a bilingual AI support assistant, and labelled concept sites for every package, from a contractor's booking site to a SaaS site with its own CMS.
           </p>
         </Container>
 

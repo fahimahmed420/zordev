@@ -27,7 +27,7 @@ export default function ServicesPage() {
       </PageHero>
 
       {services.map((s, i) => {
-        const related = getCaseStudy(s.relatedCaseStudy);
+        const related = s.relatedCaseStudies.map(getCaseStudy).filter((c) => c !== undefined);
         return (
           <Section key={s.slug} id={s.slug} className={i % 2 ? "bg-paper" : ""}>
             <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
@@ -63,13 +63,13 @@ export default function ServicesPage() {
                     </ButtonLink>
                   </div>
                 </div>
-                {related && (
-                  <Link href={`/work/${related.slug}`} className="spot tilt block rounded-2xl bg-gradient-to-br from-orange/10 to-transparent p-7">
-                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Related work</p>
-                    <p className="mt-3 text-lg font-bold">{related.title}</p>
-                    <p className="mt-2 text-sm text-muted">{related.summary}</p>
+                {related.map((r, j) => (
+                  <Link key={r.slug} href={`/work/${r.slug}`} className="spot tilt block rounded-2xl bg-gradient-to-br from-orange/10 to-transparent p-7">
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{j === 0 ? "Related work" : "More work"}</p>
+                    <p className="mt-3 text-lg font-bold">{r.title}</p>
+                    <p className="mt-2 text-sm text-muted">{r.summary}</p>
                   </Link>
-                )}
+                ))}
                 <FaqList items={faqFor(s.faqTag).slice(0, 3)} />
               </aside>
             </div>

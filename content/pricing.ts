@@ -6,12 +6,14 @@ export type Package = {
   suits: string;
   includes: string[];
   highlighted?: boolean;
+  example?: { slug: string; label: string };
 };
 
 // Starter prices for a newer developer (Oct 2026). Raise them once case studies and reviews exist.
 export const packages: Package[] = [
   {
     id: "launch",
+    example: { slug: "saltbrook", label: "Saltbrook" },
     name: "Launch site",
     fromPrice: 1200,
     timeline: "2–3 weeks",
@@ -20,6 +22,7 @@ export const packages: Package[] = [
   },
   {
     id: "growth",
+    example: { slug: "lightkeep", label: "Lightkeep" },
     name: "Growth site",
     fromPrice: 2200,
     timeline: "3–5 weeks",
@@ -28,6 +31,7 @@ export const packages: Package[] = [
   },
   {
     id: "store",
+    example: { slug: "family-fashion-hub-china", label: "FFHC" },
     name: "Custom store",
     fromPrice: 4000,
     timeline: "5–8 weeks",
@@ -42,6 +46,7 @@ export const packages: Package[] = [
   },
   {
     id: "mvp",
+    example: { slug: "aura-goli", label: "Aura Goli" },
     name: "MVP sprint",
     fromPrice: 2500,
     timeline: "2-week sprints",

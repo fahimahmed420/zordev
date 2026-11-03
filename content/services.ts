@@ -9,7 +9,7 @@ export type Service = {
   timeline: string;
   fromPrice: number;
   stack: string[];
-  relatedCaseStudy: string;
+  relatedCaseStudies: string[];
   faqTag: string;
   /** Overrides the default "Book a call" button and pricing link. */
   cta?: { label: string; href: string; more: { label: string; href: string } };
@@ -34,7 +34,7 @@ export const services: Service[] = [
     timeline: "5–8 weeks",
     fromPrice: 4000,
     stack: ["Next.js", "TypeScript", "PostgreSQL or MongoDB", "Your payment and courier APIs"],
-    relatedCaseStudy: "family-fashion-hub-china",
+    relatedCaseStudies: ["family-fashion-hub-china", "aura-goli"],
     faqTag: "services:ecommerce",
   },
   {
@@ -55,7 +55,7 @@ export const services: Service[] = [
     timeline: "2–5 weeks",
     fromPrice: 1200,
     stack: ["Next.js", "Tailwind CSS", "MDX or a headless CMS"],
-    relatedCaseStudy: "ember-and-oak",
+    relatedCaseStudies: ["lightkeep", "saltbrook", "ember-and-oak"],
     faqTag: "services:websites",
   },
   {
@@ -76,7 +76,7 @@ export const services: Service[] = [
     timeline: "2-week sprints",
     fromPrice: 2500,
     stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-    relatedCaseStudy: "aura-goli",
+    relatedCaseStudies: ["aura-goli"],
     faqTag: "services:web-apps",
   },
   {
@@ -96,7 +96,7 @@ export const services: Service[] = [
     timeline: "Audit 3 days · fixes 2 weeks",
     fromPrice: 500,
     stack: ["React", "Next.js", "Supabase", "Your payment provider"],
-    relatedCaseStudy: "",
+    relatedCaseStudies: [],
     faqTag: "services:fix-ai-apps",
     cta: { label: "Get a free 3-risk check", href: "/audit#check", more: { label: "Audit details", href: "/audit" } },
   },
