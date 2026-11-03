@@ -26,7 +26,7 @@ const problems = [
 
 const stack = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma", "MongoDB", "Firebase", "Vercel", "Resend", "Cloudflare"];
 
-/* Each card's artwork tells its story on a loop (styles in globals.css under "Service cards"); reduced motion shows the finished state. */
+/* Each card's artwork plays its story on hover (styles in globals.css under "Service cards"). */
 const serviceArt: Record<string, React.ReactNode> = {
   "fix-ai-apps": (
     <div className="w-48 space-y-1.5 whitespace-nowrap font-mono text-[10px]">
@@ -126,7 +126,7 @@ export default function Home() {
             <LiveCodeHero />
           </div>
           <p className="mx-auto mt-16 max-w-2xl text-sm text-muted">
-            <span className="text-ink">Shipped work:</span> a bilingual learning platform for a language school, a demo store with a bilingual AI support assistant, and labelled concept sites for every package, from a contractor's booking site to a SaaS site with its own CMS.
+            <span className="text-ink">Above:</span> real fixes, replayed. Data leaks, exposed keys, fake payments, slow pages and manual work, solved in code.
           </p>
         </Container>
 

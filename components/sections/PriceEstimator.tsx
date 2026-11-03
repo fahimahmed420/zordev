@@ -12,7 +12,7 @@ export function PriceEstimator({ packages }: { packages: Package[] }) {
   const total = p.fromPrice;
 
   return (
-    <div className="spot overflow-hidden rounded-[2rem]">
+    <div className="spot rounded-[2rem]">
       <div className="grid lg:grid-cols-[1.1fr_1fr]">
         <div className="p-7 sm:p-10">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Quick estimate</p>
@@ -66,7 +66,7 @@ export function PriceEstimator({ packages }: { packages: Package[] }) {
             ))}
           </ul>
         </div>
-        <div className="relative flex flex-col justify-between gap-8 border-t border-line bg-surface-2 p-7 sm:p-10 lg:border-l lg:border-t-0">
+        <div className="relative flex flex-col justify-between gap-8 rounded-b-[2rem] border-t border-line bg-surface-2/40 p-7 lg:rounded-b-none lg:rounded-r-[2rem] sm:p-10 lg:border-l lg:border-t-0">
           <div aria-live="polite" className="hidden lg:block">
             <p className="text-sm text-muted">Starting from</p>
             <p key={total} className="reveal mt-1 font-display text-7xl sm:text-8xl">

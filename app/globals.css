@@ -376,8 +376,8 @@ body::before {
   }
 }
 
-/* Service cards: each artwork tells its story on a loop. Reduced motion shows the finished state (the base styles). */
-.art-bar {
+/* Service cards: each artwork plays its story while the card is hovered (or pressed on touch). At rest and with reduced motion it shows the finished state (the base styles). */
+:is(.group:hover, .group:active) .art-bar {
   transform-origin: bottom;
   animation: art-pulse 3.2s ease-in-out infinite;
   animation-delay: calc(var(--i, 0) * 0.4s);
@@ -391,7 +391,7 @@ body::before {
     transform: scaleY(0.55);
   }
 }
-.art-order {
+:is(.group:hover, .group:active) .art-order {
   animation: art-order 4.5s ease-in-out infinite both;
   animation-delay: calc(var(--i, 0) * 1.5s);
 }
@@ -412,7 +412,7 @@ body::before {
     transform: translateY(-6px);
   }
 }
-.art-build {
+:is(.group:hover, .group:active) .art-build {
   animation: art-build 5s ease-out infinite backwards;
   animation-delay: calc(var(--i, 0) * 0.28s);
 }
@@ -432,7 +432,7 @@ body::before {
     transform: translateY(5px);
   }
 }
-.art-fill {
+:is(.group:hover, .group:active) .art-fill {
   animation: art-fill 3.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
 @keyframes art-fill {
@@ -447,7 +447,7 @@ body::before {
     width: 6%;
   }
 }
-.art-check {
+:is(.group:hover, .group:active) .art-check {
   animation: art-check 3.4s ease-out infinite;
 }
 @keyframes art-check {
@@ -467,7 +467,7 @@ body::before {
     transform: scale(0.6);
   }
 }
-.art-exposed {
+:is(.group:hover, .group:active) .art-exposed {
   animation: art-exposed 4.2s ease-in-out infinite;
 }
 @keyframes art-exposed {
@@ -487,7 +487,7 @@ body::before {
     filter: none;
   }
 }
-.art-secured {
+:is(.group:hover, .group:active) .art-secured {
   animation: art-secured 4.2s ease-in-out infinite;
 }
 @keyframes art-secured {
@@ -508,13 +508,13 @@ body::before {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .art-bar,
-  .art-order,
-  .art-build,
-  .art-fill,
-  .art-check,
-  .art-exposed,
-  .art-secured {
+  .group .art-bar,
+  .group .art-order,
+  .group .art-build,
+  .group .art-fill,
+  .group .art-check,
+  .group .art-exposed,
+  .group .art-secured {
     animation: none !important;
   }
 }

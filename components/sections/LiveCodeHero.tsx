@@ -350,32 +350,17 @@ function segments(text: string, start: number, cur: number, rules: Rule[]): Seg[
   return out;
 }
 
-/* ── Shell: which problem is playing, paused or not ─────────────────────── */
+/* ── Shell: which problem is playing; loops forever ─────────────────────── */
 
 export function LiveCodeHero() {
   const [scn, setScn] = useState(0);
-  const [run, setRun] = useState(0);
-  const [paused, setPaused] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef(false);
-
-  const jump = (i: number) => {
-    pausedRef.current = false;
-    setPaused(false);
-    setScn(i);
-    setRun((r) => r + 1);
-  };
-
-  const togglePause = () => {
-    pausedRef.current = !pausedRef.current;
-    setPaused(pausedRef.current);
-  };
 
   const next = useCallback(() => setScn((i) => (i + 1) % SCENARIOS.length), []);
 
   return (
     <div ref={rootRef}>
-      <Player key={`${scn}-${run}`} scn={scn} paused={paused} pausedRef={pausedRef} rootRef={rootRef} onJump={jump} onTogglePause={togglePause} onFinished={next} />
+      <Player key={scn} scn={scn} rootRef={rootRef} onFinished={next} />
     </div>
   );
 }
@@ -396,19 +381,11 @@ const delayFor = (chunk: string, fast?: boolean) => {
 
 function Player({
   scn,
-  paused,
-  pausedRef,
   rootRef,
-  onJump,
-  onTogglePause,
   onFinished,
 }: {
   scn: number;
-  paused: boolean;
-  pausedRef: RefObject<boolean>;
   rootRef: RefObject<HTMLDivElement | null>;
-  onJump: (i: number) => void;
-  onTogglePause: () => void;
   onFinished: () => void;
 }) {
   const sc = SCENARIOS[scn];
@@ -425,7 +402,7 @@ function Player({
         }, ms);
         timers.add(t);
       });
-    // Typing only runs while the demo is on screen, the tab is visible and nobody pressed pause.
+    // Typing only runs while the demo is on screen and the tab is visible.
     // Checked directly on each tick rather than through an observer, so it can never get stuck "hidden".
     const inView = () => {
       const el = rootRef.current;
@@ -435,7 +412,7 @@ function Player({
     };
     const sleep = async (ms: number) => {
       await wait(ms);
-      while (alive && (document.hidden || pausedRef.current || !inView())) await wait(250);
+      while (alive && (document.hidden || !inView())) await wait(250);
     };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -521,7 +498,7 @@ function Player({
       alive = false;
       timers.forEach(clearTimeout);
     };
-  }, [sc, onFinished, pausedRef, rootRef]);
+  }, [sc, onFinished, rootRef]);
 
   const rules = sc.lang === "sql" ? SQL_RULES : TS_RULES;
   const lines = ui.buf.split("\n");
@@ -536,55 +513,6 @@ function Player({
 
   return (
     <div>
-      {/* ── Which problem ── */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        {/* display: contents, so the chips and the pause button share one wrapping row on phones. */}
-        <div role="tablist" aria-label="Problems solved in this demo" className="contents">
-          {SCENARIOS.map((s, i) => {
-            const active = i === scn;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => onJump(i)}
-                className={`relative inline-flex min-h-11 items-center gap-1.5 overflow-hidden rounded-full border px-3.5 font-mono text-[11px] transition-colors ${
-                  active ? "border-orange/60 bg-orange/10 text-ink" : "border-line-strong text-muted hover:border-ink hover:text-ink"
-                }`}
-              >
-                <span className={`hidden sm:inline ${active ? "text-orange" : ""}`}>{s.kind}</span>
-                <span aria-hidden="true" className="hidden sm:inline">
-                  ·
-                </span>
-                <span>{s.chip}</span>
-                {active && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-[2px] bg-orange transition-[width] duration-500 ease-linear"
-                    style={{ width: `${Math.round(ui.progress * 100)}%` }}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-        <button
-          type="button"
-          onClick={onTogglePause}
-          aria-label={paused ? "Play the demo" : "Pause the demo"}
-          className="ml-auto inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-[#0c0c0c]/80 px-3.5 font-mono text-xs text-ink backdrop-blur transition-colors hover:border-orange hover:text-orange"
-        >
-          <span aria-hidden="true">{paused ? "▶" : "❚❚"}</span>
-          {paused ? "Play" : "Pause"}
-        </button>
-      </div>
-      <p key={sc.id} className="mount mb-6 font-mono text-xs text-muted">
-        <span className="text-orange">
-          {String(scn + 1).padStart(2, "0")}/{String(SCENARIOS.length).padStart(2, "0")}
-        </span>{" "}
-        <span className="text-ink">{sc.kind}.</span> {sc.title}
-      </p>
       <p className="sr-only">Demo: {sc.summary}</p>
 
       <div className="relative mx-auto grid w-full max-w-xl items-center lg:max-w-none lg:grid-cols-[0.92fr_1.08fr]" aria-hidden="true">
