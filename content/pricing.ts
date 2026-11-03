@@ -55,11 +55,6 @@ export const packages: Package[] = [
   },
 ];
 
-export const addOns = [
-  { name: "AI chat assistant", detail: "Messenger or WhatsApp, multilingual, with human takeover.", from: 1500, note: "plus running costs at actual price" },
-  { name: "Paid scope sprint", detail: "A written spec, sitemap and fixed quote. Credited against the build if you go ahead.", from: 300, note: "" },
-];
-
 export const priceFactors = [
   "Number of pages, templates and custom features",
   "Integrations: payments, couriers, CRMs, AI services",

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CtaBand, FaqList } from "@/components/sections/shared";
 import { Badge, ButtonLink, Heading, Section, usd, PageHero } from "@/components/ui";
 import { faqFor } from "@/content/faq";
-import { addOns, carePlan, guarantees, notIncluded, offers, packages, paymentTerms, priceFactors } from "@/content/pricing";
+import { carePlan, guarantees, notIncluded, offers, packages, paymentTerms, priceFactors } from "@/content/pricing";
 import { cta, site } from "@/content/site";
 import { JsonLd, pageMeta } from "@/lib/seo";
 
@@ -59,20 +59,6 @@ export default function PricingPage() {
                   {cta.primary.label}
                 </ButtonLink>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {addOns.map((a) => (
-            <div key={a.name} className="rounded-2xl bg-paper p-6">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Add-on</p>
-              <h3 className="mt-2 text-lg">
-                {a.name}: from {usd(a.from)}
-              </h3>
-              <p className="mt-1 text-muted">
-                {a.detail} {a.note && <span className="text-sm">({a.note})</span>}
-              </p>
             </div>
           ))}
         </div>

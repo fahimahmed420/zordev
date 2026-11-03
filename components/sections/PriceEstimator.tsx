@@ -6,11 +6,10 @@ import type { Package } from "@/content/pricing";
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
-export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn: { name: string; from: number } }) {
+export function PriceEstimator({ packages }: { packages: Package[] }) {
   const [id, setId] = useState(packages[2]?.id ?? packages[0].id);
-  const [withAi, setWithAi] = useState(false);
   const p = packages.find((x) => x.id === id) ?? packages[0];
-  const total = p.fromPrice + (withAi ? addOn.from : 0);
+  const total = p.fromPrice;
 
   return (
     <div className="spot overflow-hidden rounded-[2rem]">
@@ -58,14 +57,6 @@ export function PriceEstimator({ packages, addOn }: { packages: Package[]; addOn
             </p>
             <p className="mt-2 text-sm text-muted">{p.suits}.</p>
           </div>
-          <label className="mt-6 flex cursor-pointer items-center gap-3 text-sm text-muted">
-            <span className="relative inline-flex h-6 w-11 shrink-0">
-              <input type="checkbox" checked={withAi} onChange={(e) => setWithAi(e.target.checked)} className="peer sr-only" />
-              <span className="absolute inset-0 rounded-full bg-line-strong transition-colors peer-checked:bg-orange peer-focus-visible:ring-2 peer-focus-visible:ring-orange" />
-              <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white transition-transform peer-checked:translate-x-5" />
-            </span>
-            Add an {addOn.name} (+{usd(addOn.from)})
-          </label>
           <ul className="mt-7 grid gap-2 text-sm text-muted sm:grid-cols-2">
             {p.includes.map((i) => (
               <li key={i} className="flex gap-2">

@@ -6,7 +6,7 @@ import { CaseStudyCard, CtaBand, FaqSection } from "@/components/sections/shared
 import { ButtonLink, Container, Heading, Section, usd } from "@/components/ui";
 import { Marquee } from "@/components/ui/Marquee";
 import { faqFor } from "@/content/faq";
-import { addOns, packages } from "@/content/pricing";
+import { packages } from "@/content/pricing";
 import { services } from "@/content/services";
 import { cta, site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
@@ -26,47 +26,61 @@ const problems = [
 
 const stack = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma", "MongoDB", "Firebase", "Vercel", "Resend", "Cloudflare"];
 
-const fixArt = (
-  <div className="w-44 space-y-1.5 font-mono text-[10px]">
-    <div className="flex items-center justify-between rounded-md border border-[#ef4444]/40 bg-[#ef4444]/10 px-2.5 py-1.5 text-[#fca5a5]">
-      <span>orders · public</span>
-      <span>exposed</span>
-    </div>
-    <div className="flex items-center justify-between rounded-md border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-1.5 text-emerald-300 transition-transform duration-500 group-hover:-translate-y-0.5">
-      <span>orders · own rows</span>
-      <span>secured ✓</span>
-    </div>
-  </div>
-);
-
+/* Each card's artwork tells its story on a loop (styles in globals.css under "Service cards"); reduced motion shows the finished state. */
 const serviceArt: Record<string, React.ReactNode> = {
-  "fix-ai-apps": fixArt,
+  "fix-ai-apps": (
+    <div className="w-48 space-y-1.5 whitespace-nowrap font-mono text-[10px]">
+      <div className="art-exposed flex items-center justify-between gap-3 rounded-md border border-[#ef4444]/40 bg-[#ef4444]/10 px-2.5 py-1.5 text-[#fca5a5]">
+        <span>orders · public</span>
+        <span>exposed</span>
+      </div>
+      <div className="art-secured flex items-center justify-between gap-3 rounded-md border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-1.5 text-emerald-300">
+        <span>orders · own rows</span>
+        <span>secured ✓</span>
+      </div>
+    </div>
+  ),
   ecommerce: (
-    <div className="flex items-end gap-2">
-      {[56, 84, 40].map((h, i) => (
-        <div key={i} className="w-9 rounded-md bg-gradient-to-t from-orange to-orange/25 transition-all duration-500" style={{ height: h }} />
-      ))}
-      <div className="ml-2 rounded-lg border border-line-strong bg-surface-2 px-3 py-2 font-mono text-[11px] text-ink">+ order #1043</div>
+    <div className="relative h-24 w-44">
+      <div className="absolute bottom-0 left-0 flex items-end gap-2">
+        {[48, 72, 36].map((h, i) => (
+          <div key={i} className="art-bar w-9 rounded-md bg-gradient-to-t from-orange to-orange/25" style={{ height: h, ["--i" as string]: i }} />
+        ))}
+      </div>
+      {/* New orders pop up over the chart, one after another. */}
+      <div className="absolute right-0 top-0 h-8 w-[6.4rem]">
+        {["#1043", "#1044", "#1045"].map((n, i) => (
+          <div
+            key={n}
+            className={`art-order absolute inset-0 flex items-center whitespace-nowrap rounded-lg border border-line-strong bg-surface-2 px-2.5 font-mono text-[10px] text-ink shadow-lg shadow-black/40 ${i ? "opacity-0" : ""}`}
+            style={{ ["--i" as string]: i }}
+          >
+            + order {n}
+          </div>
+        ))}
+      </div>
     </div>
   ),
   websites: (
     <div className="w-44 rounded-lg border border-line-strong bg-surface-2 p-2.5">
-      <div className="h-2 w-12 rounded bg-muted" />
-      <div className="mt-2 h-4 w-full rounded bg-orange/70" />
+      <div className="art-build h-2 w-12 rounded bg-muted" style={{ ["--i" as string]: 0 }} />
+      <div className="art-build mt-2 h-4 w-full rounded bg-orange/70" style={{ ["--i" as string]: 1 }} />
       <div className="mt-2 grid grid-cols-3 gap-1.5">
-        <div className="h-6 rounded bg-line-strong" />
-        <div className="h-6 rounded bg-line-strong" />
-        <div className="h-6 rounded bg-line-strong" />
+        <div className="art-build h-6 rounded bg-line-strong" style={{ ["--i" as string]: 2 }} />
+        <div className="art-build h-6 rounded bg-line-strong" style={{ ["--i" as string]: 3 }} />
+        <div className="art-build h-6 rounded bg-line-strong" style={{ ["--i" as string]: 4 }} />
       </div>
     </div>
   ),
   "web-apps": (
     <div className="grid w-44 grid-cols-2 gap-1.5">
       <div className="col-span-2 h-8 rounded-md border border-line-strong bg-surface-2 p-1.5">
-        <div className="h-full w-2/3 rounded-sm bg-orange/80 transition-all duration-700 group-hover:w-full" />
+        <div className="art-fill h-full w-full rounded-sm bg-orange/80" />
       </div>
       <div className="h-12 rounded-md border border-line-strong bg-surface-2" />
-      <div className="h-12 rounded-md bg-line-strong" />
+      <div className="flex h-12 items-center justify-center rounded-md bg-line-strong">
+        <span className="art-check font-mono text-sm text-emerald-300">✓ live</span>
+      </div>
     </div>
   ),
 };
@@ -198,20 +212,6 @@ export default function Home() {
             </Link>
           ))}
         </div>
-        <div data-reveal className="mt-4 flex flex-col gap-6 rounded-2xl border border-line bg-surface p-8 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-xl">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-orange">Add-on</p>
-            <h3 className="mt-3 text-3xl text-ink">AI chat assistant for your store</h3>
-            <p className="mt-3 leading-relaxed text-muted">
-              Answers product, delivery and returns questions on Messenger or WhatsApp in your customers&apos; language, with a one-tap handover to you.
-            </p>
-          </div>
-          <div className="flex w-full max-w-xs flex-col gap-2 text-sm md:w-auto">
-            <span className="self-start rounded-2xl rounded-bl-sm bg-surface-2 px-3.5 py-2 text-ink">Is this in stock in medium?</span>
-            <span className="self-end rounded-2xl rounded-br-sm bg-orange px-3.5 py-2 text-[#0c0c0c]">Yes, 4 left. Want me to reserve one?</span>
-            <span className="mt-2 self-end font-mono text-xs text-muted">from {usd(addOns[0].from)}</span>
-          </div>
-        </div>
       </Section>
 
       {/* 4. Work */}
@@ -315,7 +315,7 @@ export default function Home() {
           }
         />
         <div className="mt-16" data-reveal>
-          <PriceEstimator packages={packages} addOn={addOns[0]} />
+          <PriceEstimator packages={packages} />
         </div>
       </Section>
       <FaqSection items={faqFor("home")} n="07" schema />
