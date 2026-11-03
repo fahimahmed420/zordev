@@ -125,9 +125,6 @@ export default function Home() {
           <div className="reveal mx-auto mt-16 max-w-5xl text-left" style={{ ["--d" as string]: "320ms" }}>
             <LiveCodeHero />
           </div>
-          <p className="mx-auto mt-16 max-w-2xl text-sm text-muted">
-            <span className="text-ink">Above:</span> real fixes, replayed. Data leaks, exposed keys, fake payments, slow pages and manual work, solved in code.
-          </p>
         </Container>
 
         {/* Stack marquee */}
