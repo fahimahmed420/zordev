@@ -112,8 +112,14 @@ export const faq: FaqItem[] = [
   {
     id: "ai-privacy",
     q: "Do you use AI tools? Does my code go into them?",
-    a: "I use Claude, Claude Code and ChatGPT to move faster on routine code, and I read, test and understand every change before it reaches your project. Your code and data never go into a tool that trains on them.",
+    a: "I design and write your project myself. AI helps when it's useful, mostly with routine tasks, and every change is read and tested by me before it reaches your project. Your code and data never go into a tool that trains on them.",
     tags: ["home", "pricing", "services:fix-ai-apps"],
+  },
+  {
+    id: "security",
+    q: "How do you keep my site and my customers' data secure?",
+    a: "Security is part of every build, not an extra. Database rules deny access by default, logins and admin areas are protected and checked on the server, secret keys never reach the browser, payments are confirmed on the server rather than trusted from the page, forms are protected against spam, and backups and error alerts are switched on before launch.",
+    tags: ["home", "pricing", "services:ecommerce", "services:websites", "services:web-apps"],
   },
   {
     id: "fix-what",

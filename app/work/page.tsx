@@ -5,7 +5,7 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
   "Work and case studies",
-  "Case studies from Zordev: a client e-commerce store with courier automation, a full commerce stack with a bilingual AI assistant, and concept sites for a SaaS company, a local contractor and a candle brand.",
+  "Case studies from Zordev: a bilingual learning platform for a language school, a full commerce stack with a bilingual AI assistant, and concept sites for a SaaS company, a local contractor and a candle brand.",
   "/work",
 );
 

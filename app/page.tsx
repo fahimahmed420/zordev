@@ -74,7 +74,7 @@ const serviceArt: Record<string, React.ReactNode> = {
 const reasons = [
   { icon: "i.", title: "You talk to the builder", text: "No account managers. The person on the call writes the code." },
   { icon: "ii.", title: "Fixed scope, fixed price", text: "A written scope and price before work starts, and a refund if I don't deliver it." },
-  { icon: "iii.", title: "Real e-commerce experience", text: "A live store with an admin panel and courier automation, plus local payment integrations." },
+  { icon: "iii.", title: "Security built in", text: "Locked-down database rules, protected logins and admin areas, keys kept off the browser, and payments confirmed on the server. Part of every build, not an extra." },
   { icon: "iv.", title: "You own everything", text: "Code, domain and accounts are in your name, handed over in full." },
 ];
 
@@ -112,7 +112,7 @@ export default function Home() {
             <LiveCodeHero />
           </div>
           <p className="mx-auto mt-16 max-w-2xl text-sm text-muted">
-            <span className="text-ink">Shipped work:</span> a live import e-commerce store selling across Bangladesh, a demo store with a bilingual AI support assistant, and labelled concept sites for every package, from a contractor's booking site to a SaaS site with its own CMS.
+            <span className="text-ink">Shipped work:</span> a bilingual learning platform for a language school, a demo store with a bilingual AI support assistant, and labelled concept sites for every package, from a contractor's booking site to a SaaS site with its own CMS.
           </p>
         </Container>
 

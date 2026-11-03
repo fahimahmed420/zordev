@@ -16,7 +16,7 @@ const principles = [
   { title: "Leave it better than I found it", text: "Clean code, documentation and a proper handover, so you're never locked in." },
 ];
 
-const tools = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "Prisma", "PostgreSQL", "MongoDB", "Firebase", "Vercel", "Claude", "ChatGPT"];
+const tools = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "Prisma", "PostgreSQL", "MongoDB", "Firebase", "Vercel"];
 
 export default function AboutPage() {
   return (
@@ -41,13 +41,18 @@ export default function AboutPage() {
               weekly updates you never have to chase.
             </p>
             <p>
-              I've built a production online store that ships across Bangladesh with courier booking automated, a full commerce stack with a
-              bilingual AI assistant, and interactive brand sites. When a project needs specialist design or copywriting, I'll recommend
-              people and tell you upfront.
+              I've built real projects for paying clients, from online stores to full web apps with logins, payments and admin portals, along
+              with studio products and concept sites that show what each package looks like. When a project needs specialist design or
+              copywriting, I'll recommend people and tell you upfront.
             </p>
             <p>
-              I use Claude, Claude Code and ChatGPT to move faster on routine code, and I read, test and understand every line before it
-              reaches your project. Your code and data never go into a tool that trains on them.
+              Security isn't an add-on. Every build ships with locked-down database rules, protected logins and admin areas, secret keys kept
+              out of the browser, payments confirmed on the server, and backups switched on. You get a site that holds up when real people
+              and real money use it.
+            </p>
+            <p>
+              I design and write the code myself. AI helps when it's useful, mostly with routine tasks, and every change is read and
+              tested by me before it reaches your project. Your code and data never go into a tool that trains on them.
             </p>
             <p>
               I work from Dhaka ({site.timezoneLabel}). {site.overlap}

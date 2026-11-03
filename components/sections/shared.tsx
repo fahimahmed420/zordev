@@ -96,28 +96,6 @@ export const labelTone = { client: "orange", own: "blue", concept: "gray" } as c
 
 /** Generated cover art per project (used until real screenshots are added). */
 export function CoverArt({ slug }: { slug: string }) {
-  if (slug === "family-fashion-hub-china") {
-    return (
-      <div className="absolute inset-0 bg-[linear-gradient(140deg,#1a120d,#3a2216_55%,#a2522c)] p-6">
-        <div className="mx-auto mt-6 h-[80%] max-w-sm rounded-xl border border-line-strong bg-[#0c0c0c]/70 p-3.5">
-          <div className="flex justify-between text-[10px] text-[#d9d3cb]">
-            <span className="font-semibold text-[#f2eee8]">FFHC admin</span>
-            <span>Orders · Couriers</span>
-          </div>
-          <div className="mt-3 space-y-1.5">
-            {["Dhaka · auto-booked", "Chattogram · auto-booked", "Sylhet · review", "Khulna · auto-booked"].map((r, i) => (
-              <div key={r} className="flex items-center justify-between rounded-md bg-white/[0.06] px-2.5 py-1.5 text-[10px] text-[#e8e3dc]">
-                <span>
-                  #{1042 + i} {r.split(" · ")[0]}
-                </span>
-                <span className={r.includes("review") ? "text-[#ffd27a]" : "text-[#7ee2a8]"}>{r.split(" · ")[1]}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
   if (slug === "aura-goli") {
     return (
       <div className="absolute inset-0 bg-[linear-gradient(140deg,#12100e,#22201d_55%,#3b342c)] p-6">

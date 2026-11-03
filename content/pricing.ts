@@ -31,7 +31,7 @@ export const packages: Package[] = [
   },
   {
     id: "store",
-    example: { slug: "family-fashion-hub-china", label: "FFHC" },
+    example: { slug: "aura-goli", label: "Aura Goli" },
     name: "Custom store",
     fromPrice: 4000,
     timeline: "5–8 weeks",
@@ -46,7 +46,7 @@ export const packages: Package[] = [
   },
   {
     id: "mvp",
-    example: { slug: "aura-goli", label: "Aura Goli" },
+    example: { slug: "wlfbd", label: "We Learn French BD" },
     name: "MVP sprint",
     fromPrice: 2500,
     timeline: "2-week sprints",

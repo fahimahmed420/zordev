@@ -32,45 +32,50 @@ export const labelText: Record<CaseStudy["label"], string> = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "family-fashion-hub-china",
-    title: "A store that books its own couriers",
+    slug: "wlfbd",
+    title: "An online French school that runs itself",
     summary:
-      "An import e-commerce store that ships across Bangladesh, with courier booking automated for trusted repeat customers.",
+      "Live and recorded courses, quizzes and verifiable certificates for a Dhaka language school, in Bangla and English, with an admin portal the team runs alone.",
     label: "client",
     clientPermission: "named",
-    client: "Family Fashion Hub China",
-    industry: "Import retail and wholesale",
-    services: ["Custom online store", "Ongoing care"],
+    client: "We Learn French BD",
+    industry: "Online language school",
+    services: ["Web app", "Business website"],
     year: "2026",
-    duration: "About 4 months",
-    // liveUrl is added once the public stats band on ffhchina.com is fixed (plan §3a).
-    stack: ["Next.js 16", "React 19", "MongoDB", "Firebase Auth", "Steadfast courier API"],
+    duration: "Launching Nov 2026",
+    stack: ["Next.js 15", "React 19", "TypeScript", "Firebase Auth", "Firestore", "Tailwind 4"],
     problem:
-      "Orders arrived from all over the country, mostly cash on delivery. Every order meant copying an address into the courier dashboard and sending an invoice by hand.",
+      "A growing school preparing students for the DELF, TCF and TEF exams needed one place where students could enrol, pay, learn and practise, and where staff could run courses, payments and certificates without a developer.",
     approach: [
-      "Built a storefront with retail and bulk-buy options and a checkout that captures the full Bangladeshi address hierarchy.",
-      "Connected the Steadfast courier API so trusted repeat customers are booked automatically; everyone else gets one-click manual booking.",
-      "Emailed a PDF invoice automatically with every order and priced shipping by district.",
-      "Added a separate admin session, weekly database backups and an automated test suite covering the checkout money path.",
+      "A bilingual site with separate English and Bangla URLs: courses, schedules, a blog and a Canada CRS points calculator.",
+      "A student classroom with recorded lessons, progress tracking and auto-numbered certificates anyone can check on a public verification page.",
+      "Fifteen practice quizzes and mock tests with scoring and saved attempts.",
+      "An admin portal with fifteen sections (payments, enrolments, users, courses, quiz questions, certificates, reviews and more) and an audit log of every action.",
+      "Security throughout: database rules that deny everything by default, server-checked roles for the admin portal, and paid lessons that are only served after a payment is approved.",
     ],
     decisions: [
       {
-        decision: "Automate courier booking only for proven customers",
-        why: "Cash-on-delivery fraud is the main risk. Customers with three or more delivered and no cancelled orders are booked automatically; new customers are checked by a person first.",
+        decision: "Approve bKash and Nagad payments by hand, with a full record",
+        why: "Payment-gateway onboarding takes months for a small school. Students submit their transaction ID, an admin checks it and approves it in one click, the course unlocks and the student gets an email. Every approval is logged.",
       },
       {
-        decision: "Render the storefront on the server",
-        why: "Product pages load and get indexed without waiting for login code, which matters on slower mobile connections.",
+        decision: "Make certificates publicly verifiable",
+        why: "A certificate is only worth something if an employer or embassy can check it. Each one has a unique number and a public page that confirms it.",
       },
     ],
     results: [
-      { label: "Products live", value: "74", source: "ffhchina.com, Oct 2026" },
-      { label: "Automated test files", value: "14", source: "project repository" },
+      { label: "Languages", value: "2", source: "English and Bangla, every page" },
+      { label: "Practice quizzes and mock tests", value: "15", source: "project repository" },
+      { label: "Admin portal sections", value: "15", source: "project repository" },
     ],
-    demonstrates: [],
+    demonstrates: [
+      "A full learning platform: courses, payments, quizzes and certificates",
+      "Bilingual content with proper URLs for each language",
+      "Access rules and an audit log that keep student data and paid content safe",
+    ],
     gallery: [
-      { src: "/work/family-fashion-hub-china/desktop.png", alt: "Family Fashion Hub China storefront on desktop", device: "desktop" },
-      { src: "/work/family-fashion-hub-china/mobile.png", alt: "Family Fashion Hub China storefront on mobile", device: "mobile" },
+      { src: "/work/wlfbd/desktop.png", alt: "We Learn French BD home page with the headline Learn French. Open your world.", device: "desktop" },
+      { src: "/work/wlfbd/mobile.png", alt: "A DELF A1 course page in Bangla on a phone", device: "mobile" },
     ],
     featured: true,
     order: 1,
