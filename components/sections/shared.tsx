@@ -140,7 +140,13 @@ export function Media({ src, alt, slug, sizes, priority = false }: { src: Text; 
         <CoverArt slug={typeof src === "string" ? src.slice(4) : slug} />
       </div>
     );
-  return <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover object-top" />;
+  return (
+    <>
+      {/* Shimmer behind the screenshot: visible only until the image paints over it. */}
+      <div aria-hidden="true" className="img-skeleton absolute inset-0" />
+      <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover object-top" />
+    </>
+  );
 }
 
 export function CaseStudyCard({ c, wide = false, index, priority = false }: { c: CaseStudy; wide?: boolean; index?: number; priority?: boolean }) {

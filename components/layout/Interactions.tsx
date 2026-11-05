@@ -110,17 +110,37 @@ export function Interactions() {
           }
         }
       },
-      { rootMargin: "0px 0px -6% 0px", threshold: 0.05 },
+      // Start revealing just before a section scrolls into view, so fast scrolling never shows empty space.
+      { rootMargin: "0px 0px 15% 0px", threshold: 0 },
     );
     // Track observed elements in memory, never in DOM attributes: changing attributes before
     // React has hydrated a streamed segment causes hydration mismatches.
     const seen = new WeakSet<Element>();
+    const onScreen = (el: Element) => {
+      const r = el.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    };
     const scan = () =>
       document.querySelectorAll("[data-reveal]").forEach((el) => {
         if (seen.has(el)) return;
         seen.add(el);
-        io.observe(el);
+        // Content that arrives already in view (client navigation, streaming) shows at once
+        // instead of waiting on the observer, so cards and their screenshots never sit invisible.
+        if (onScreen(el)) el.classList.add("in");
+        else io.observe(el);
       });
+
+    // Ongoing safety net (not just after first load): reveal anything in view that is still hidden.
+    let sweep = 0;
+    const onScroll = () => {
+      clearTimeout(sweep);
+      sweep = window.setTimeout(() => {
+        document.querySelectorAll("[data-reveal]:not(.in)").forEach((el) => {
+          if (onScreen(el)) el.classList.add("in");
+        });
+      }, 250);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     // Batch to one scan per frame (the hero types into the DOM continuously).
     let queued = 0;
@@ -160,6 +180,8 @@ export function Interactions() {
 
     return () => {
       window.removeEventListener("load", onLoad);
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(sweep);
       if (typeof cancelIdleCallback === "function") cancelIdleCallback(idleId);
       clearTimeout(idleId);
       io.disconnect();
