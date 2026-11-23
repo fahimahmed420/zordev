@@ -4,7 +4,7 @@ export const faq: FaqItem[] = [
   {
     id: "cost",
     q: "How much does a website cost?",
-    a: "A one-page site is $700 and business websites start from $800. Custom online stores start from $2,800, and web apps are built in 2-week sprints from $2,000. The pricing page shows what each package includes. After a short call you get a fixed price for an agreed scope.",
+    a: "A one-page site is $450 and business websites start from $800. Custom online stores start from $2,800, and web apps are built in 2-week sprints from $2,000. The pricing page shows what each package includes. After a short call you get a fixed price for an agreed scope.",
     tags: ["home", "pricing"],
   },
   {

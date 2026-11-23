@@ -8,7 +8,7 @@ import { JsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
   "Pricing",
-  "Starting prices: a one-page site for $700, business websites from $800, custom online stores from $2,800 and MVP sprints from $2,000, plus a $500 audit for apps built with AI tools. Fixed price for an agreed scope.",
+  "Starting prices: a one-page site for $450, business websites from $800, custom online stores from $2,800 and MVP sprints from $2,000, plus a $500 audit for apps built with AI tools. Fixed price for an agreed scope.",
   "/pricing",
 );
 

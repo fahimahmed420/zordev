@@ -58,10 +58,10 @@ export const packages: Package[] = [
 /** Small fixed offer: a cheaper first step for buyers who aren't ready for a full site. */
 export const onePageSite = {
   name: "One-page site",
-  price: 700,
+  price: 450,
   timeline: "1 week",
   suits: "A launch page, a single product or service, or a personal brand",
-  includes: ["One long page with up to 6 sections", "Contact form, booking link or WhatsApp button", "On-page SEO and a social share image", "Upgrade to a Launch site later, with the $700 credited"],
+  includes: ["One long page with up to 10 sections", "Contact form, booking link or WhatsApp button", "On-page SEO and a social share image", "Upgrade to a Launch site later, with the $450 credited"],
 };
 
 /**

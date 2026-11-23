@@ -37,7 +37,7 @@ export function ThankYouNext({ bookingUrl }: { bookingUrl: string }) {
     <div className="rounded-2xl bg-paper p-7">
       <h2 className="text-2xl">A note on budget</h2>
       <p className="mt-3 text-muted">
-        Zordev builds start from $700, so I may not be the best fit for this one. I'll still reply with honest suggestions,
+        Zordev builds start from $450, so I may not be the best fit for this one. I'll still reply with honest suggestions,
         and the pricing page shows what each package includes.
       </p>
       <Link href="/pricing" className="mt-6 inline-flex font-semibold text-orange underline underline-offset-4">
