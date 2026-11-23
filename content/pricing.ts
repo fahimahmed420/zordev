@@ -55,6 +55,27 @@ export const packages: Package[] = [
   },
 ];
 
+/** Small fixed offer: a cheaper first step for buyers who aren't ready for a full site. */
+export const onePageSite = {
+  name: "One-page site",
+  price: 700,
+  timeline: "1 week",
+  suits: "A launch page, a single product or service, or a personal brand",
+  includes: ["One long page with up to 6 sections", "Contact form, booking link or WhatsApp button", "On-page SEO and a social share image", "Upgrade to a Launch site later, with the $700 credited"],
+};
+
+/**
+ * Founding-client offer. Update `spotsLeft` by hand each time a founding client signs;
+ * when it reaches 0 the band disappears from the pricing page on its own.
+ */
+export const foundingOffer = {
+  discountPercent: 25,
+  spots: 3,
+  spotsLeft: 3,
+  appliesTo: "Launch site, Growth site, Custom store and MVP sprints",
+  inReturn: ["A written testimonial", "Permission to show the work as a named case study", "A short review call after launch"],
+};
+
 export const priceFactors = [
   "Number of pages, templates and custom features",
   "Integrations: payments, couriers, CRMs, AI services",

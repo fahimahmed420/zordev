@@ -31,7 +31,8 @@ export const site = {
   },
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL ?? "",
   currency: "USD",
-  minProjectSize: 1200,
+  // Smallest build: the one-page site. Briefs below this are flagged as a poor fit.
+  minProjectSize: 700,
   commitments: {
     replySla: "within one business day",
     supportDays: 30,

@@ -2,13 +2,13 @@ import Link from "next/link";
 import { CtaBand, FaqList } from "@/components/sections/shared";
 import { Badge, ButtonLink, Heading, Section, usd, PageHero } from "@/components/ui";
 import { faqFor } from "@/content/faq";
-import { carePlan, guarantees, notIncluded, offers, packages, paymentTerms, priceFactors } from "@/content/pricing";
+import { carePlan, foundingOffer, guarantees, notIncluded, offers, onePageSite, packages, paymentTerms, priceFactors } from "@/content/pricing";
 import { cta, site } from "@/content/site";
 import { JsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
   "Pricing",
-  "Starting prices for business websites from $1,200, custom online stores from $4,000 and MVP sprints from $2,500, plus a $500 audit for apps built with AI tools. Fixed price for an agreed scope.",
+  "Starting prices: a one-page site for $700, business websites from $1,200, custom online stores from $4,000 and MVP sprints from $2,500, plus a $500 audit for apps built with AI tools. Fixed price for an agreed scope.",
   "/pricing",
 );
 
@@ -25,6 +25,25 @@ export default function PricingPage() {
       <PageHero eyebrow="Pricing" title="Clear starting prices" intro={`Every project gets a fixed price for an agreed scope. Builds start from ${usd(site.minProjectSize)}.`} />
 
       <Section>
+        {foundingOffer.spotsLeft > 0 && (
+          <div className="spot mb-10 grid gap-6 rounded-2xl p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center" id="founding">
+            <div>
+              <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-orange">
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-orange" />
+                Founding clients · {foundingOffer.spotsLeft} of {foundingOffer.spots} spots left
+              </p>
+              <h2 className="mt-3 text-3xl sm:text-4xl">
+                {foundingOffer.discountPercent}% off your project, <em>for the first {foundingOffer.spots} clients</em>
+              </h2>
+              <p className="mt-3 max-w-2xl text-muted">
+                Applies to the {foundingOffer.appliesTo}. In return: {foundingOffer.inReturn.join(", ").toLowerCase()}. Same scope, same guarantees.
+              </p>
+            </div>
+            <ButtonLink href={cta.primary.href} location="pricing_founding">
+              Claim a spot
+            </ButtonLink>
+          </div>
+        )}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {packages.map((p) => (
             <div
@@ -61,6 +80,28 @@ export default function PricingPage() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 grid gap-6 rounded-2xl border border-line p-7 md:grid-cols-[1.1fr_1.4fr_auto] md:items-center" id="one-page">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">Smaller first step</p>
+            <h2 className="mt-2 text-3xl">{onePageSite.name}</h2>
+            <p className="mt-1 text-sm text-muted">{onePageSite.suits}</p>
+            <p className="mt-4 font-display text-5xl">
+              {usd(onePageSite.price)} <span className="font-mono text-xs text-muted">· {onePageSite.timeline}</span>
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm">
+            {onePageSite.includes.map((i) => (
+              <li key={i} className="flex gap-2">
+                <span aria-hidden="true" className="text-orange">✓</span>
+                {i}
+              </li>
+            ))}
+          </ul>
+          <ButtonLink href={cta.secondary.href} variant="ghost" location="pricing_one_page">
+            {cta.secondary.label}
+          </ButtonLink>
         </div>
       </Section>
 

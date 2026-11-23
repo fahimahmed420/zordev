@@ -2,7 +2,8 @@
 export const needOptions = ["Online store", "Business website", "Web app or MVP", "Fix an AI-built app", "Redesign", "Not sure yet"] as const;
 
 export const budgetOptions = [
-  { value: "under-1200", label: "Under $1,200", qualified: false },
+  { value: "under-700", label: "Under $700", qualified: false },
+  { value: "700-1200", label: "$700 – $1,200", qualified: true },
   { value: "1200-2500", label: "$1,200 – $2,500", qualified: true },
   { value: "2500-5000", label: "$2,500 – $5,000", qualified: true },
   { value: "5000-10000", label: "$5,000 – $10,000", qualified: true },
